@@ -28,12 +28,6 @@ If you did not request a password reset, no further action is required. Your pas
 ---
 
 <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e1e8ed;">
-<p style="color: #7b8aa3; font-size: 13px;">
-If you're having trouble clicking the "Reset Password" button, copy and paste the URL below into your web browser:
-</p>
-<p style="color: #415A77; font-size: 12px; word-break: break-all;">
-{{ $resetUrl }}
-</p>
 </div>
 
 Thanks,<br>

@@ -65,6 +65,7 @@ class AuthController extends Controller
     {
         $user = Auth::user();
         if ($user->isAdmin()) {
+            return redirect()->route('admin.index');
             
         } elseif ($user->isTeacher()) {
             return redirect()->route('teacher.index');
@@ -73,13 +74,13 @@ class AuthController extends Controller
         }
         
     }
-    // SHOW FORGOT PASSWORD FORM
+    //? Show Forgot Password Form
     public function showForgotPassword()
     {
         return view('auth.forgot-password');
     }
 
-    // SEND RESET LINK
+    //? Send Reset Link
     public function sendResetLink(Request $request)
     {
         $request->validate([
@@ -99,7 +100,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // SHOW RESET PASSWORD FORM
+    //? Show Reset Password Form
     public function showResetPassword(Request $request, $token)
     {
         return view('auth.reset-password', [
@@ -108,7 +109,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // RESET PASSWORD
+    //? Reset Password
     public function resetPassword(Request $request)
     {
         $request->validate([
