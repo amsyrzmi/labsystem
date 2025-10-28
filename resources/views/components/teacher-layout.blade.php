@@ -29,8 +29,21 @@
         </button>
 
         <div id="navMenu" class="nav-menu" data-open="false">
+          @auth
+          <ul class="nav-left" role="menubar" aria-label="Primary">
+            <li role="none"><a role="menuitem" href="{{ route('teacher.index') }}" class="nav-link {{ request()->routeIs('teacher.index') ? 'active' : '' }}">Home</a></li>
+            <li role="none"><a role="menuitem" href="{{ route('teacher.requests.list') }}" class="nav-link {{ request()->routeIs('teacher.requests.list') ? 'active' : '' }}">Request</a></li>
+            <li role="none"><a role="menuitem" href="{{ route('teacher.history') }}" class="nav-link {{ request()->routeIs('teacher.history') ? 'active' : '' }}">History</a></li>
+          </ul>
+          @endauth
 
           <div class="nav-right">
+            @auth
+              <form action="{{ route('logout') }}" method="POST" class="inline">
+              @csrf
+              <button type="submit" class="nav-link logout">Logout</button>
+            </form>
+            @endauth
             @guest
             <a href="{{ route('show.login') }}" class="nav-link">Login</a>
             <a href="{{ route('show.register') }}" class="nav-link">Register</a>

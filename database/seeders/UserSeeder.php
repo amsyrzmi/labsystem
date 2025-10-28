@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             ]
         );
         DB::table('users')->updateOrInsert(
-            ['email' => 'amsyarhansem@gmail.com'],
+            ['email' => 'siakkcool@gmail.com'],
             [
                 'name' => 'Faz Ahmad',
                 'email' => 'siakkcool@gmail.com',

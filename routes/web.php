@@ -6,13 +6,29 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
 
 
+Route::middleware('guest')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('show.login');
+    });
+
+    //? authentication Routes
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+
+    //? reset Password Routes
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+});
 
 Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     //! Role admin
     Route::middleware('role:admin')->group(function () {
@@ -21,7 +37,7 @@ Route::middleware('auth')->group(function () {
 
     //! Role lab assistant
     Route::middleware('role:lab_assistant')->group(function () {
-        Route::get('/Labassistant', [LabassistantController::class, 'index'])->name('lab_assistant.index');
+        Route::get('/lab-assistant', [LabassistantController::class, 'index'])->name('lab_assistant.index');
     
         Route::get('/lab-assistant/requests', [LabassistantController::class, 'listAllRequests'])->name('lab_assistant.requests.list');
         Route::get('/lab-assistant/history', [LabassistantController::class, 'listAllHistory'])->name('lab_assistant.history');
@@ -38,7 +54,7 @@ Route::middleware('auth')->group(function () {
     });
     //! Role teacher
     Route::middleware('role:teacher')->group(function () {
-        Route::get('/Teacher', [TeacherController::class, 'index'])->name('teacher.index');
+        Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
         Route::get('/requests',[TeacherController::class, 'requests'])->name('teacher.requests');
         Route::get('/subjects-by-form', [TeacherController::class, 'getSubjectsByFormLevel'])->name('subjects.by.form');
         Route::get('/topics-by-subject', [TeacherController::class, 'getTopicsBySubject'])->name('topics.by.subject');
@@ -58,15 +74,5 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-//? authentication Routes
-Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-//? reset Password Routes
-Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
-Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
-Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
-Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+

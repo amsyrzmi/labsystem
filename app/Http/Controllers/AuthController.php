@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException as ValidationValidationException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Password;
@@ -56,7 +55,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return $this->redirectBasedOnRole();
         }
-        throw ValidationValidationException::withMessages([
+        throw ValidationException::withMessages([
             'credentials' => 'The provided credentials are incorrect.',
         ]);
     }

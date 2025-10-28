@@ -1,4 +1,4 @@
-<x-layout>
+<x-teacher-layout>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -137,4 +137,4 @@
         .btn-details:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(66,102,178,0.08); }
         .btn-new-request:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(65,90,119,0.15); }
     </style>
-</x-layout>
+</x-teacher-layout>
