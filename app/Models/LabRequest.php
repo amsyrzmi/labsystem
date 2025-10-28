@@ -77,8 +77,8 @@ class LabRequest extends Model
     // Check if this request conflicts with another
     public function hasConflict($date, $time, $labNumber, $duration, $excludeId = null)
     {
-        $startTime = Carbon::parse($time);
-        $endTime = $startTime->copy()->addMinutes((int) $duration); // Cast here too as safety
+        $startTime = \Carbon\Carbon::parse($time);
+        $endTime = $startTime->copy()->addMinutes((int) $duration);
 
         return self::where('lab_number', $labNumber)
             ->where('status', 'approved')
@@ -88,9 +88,10 @@ class LabRequest extends Model
             })
             ->get()
             ->filter(function($request) use ($startTime, $endTime) {
-                $reqStart = Carbon::parse($request->approved_time);
-                $reqEnd = $reqStart->copy()->addMinutes((int) $request->duration); // Cast here
+                $reqStart = \Carbon\Carbon::parse($request->approved_time);
+                $reqEnd = $reqStart->copy()->addMinutes((int) $request->duration);
                 
+                // Times overlap if: start < other_end AND end > other_start
                 return $startTime->lt($reqEnd) && $endTime->gt($reqStart);
             })
             ->isNotEmpty();

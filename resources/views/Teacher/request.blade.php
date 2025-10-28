@@ -120,7 +120,27 @@
 
                 <div class="input-group">
                     <label for="preferredTime">Preferred Time</label>
-                    <input type="time" id="preferredTime" name="preferred_time" required>
+                    <select id="preferredTime" name="preferred_time" required style="width: 100%; padding: 15px; border: 2px solid #e1e8ed; border-radius: 12px; font-size: 16px; background: #f5f7fa; color: #333;">
+                        <option value="">Select a time slot</option>
+                        <option value="08:00">08:00 AM</option>
+                        <option value="08:30">08:30 AM</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="09:30">09:30 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="10:30">10:30 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="11:30">11:30 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="12:30">12:30 PM</option>
+                        <option value="13:00">01:00 PM</option>
+                        <option value="13:30">01:30 PM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="14:30">02:30 PM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="15:30">03:30 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                        <option value="16:30">04:30 PM</option>
+                    </select>
                 </div>
 
                 <div class="button-container">

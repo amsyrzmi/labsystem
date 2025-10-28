@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- teacher-layout.blade.php (inside <head>) -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="check-availability-url" content="{{ route('teacher.check.availability') }}">
   <title>@yield('title', 'My App')</title>
 
   <!-- change paths to suit your build (Vite/Mix/public) -->
@@ -35,6 +38,7 @@
             <li role="none"><a role="menuitem" href="{{ route('teacher.requests.list') }}" class="nav-link {{ request()->routeIs('teacher.requests.list') ? 'active' : '' }}">Request</a></li>
             <li role="none"><a role="menuitem" href="{{ route('teacher.history') }}" class="nav-link {{ request()->routeIs('teacher.history') ? 'active' : '' }}">History</a></li>
           </ul>
+          
           @endauth
 
           <div class="nav-right">

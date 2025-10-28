@@ -75,13 +75,27 @@
 
                 <div class="form-group">
                     <label class="form-label">Approved Time</label>
-                    <input 
-                        type="time" 
-                        name="approved_time" 
-                        class="form-control" 
-                        value="{{ old('approved_time', $request->preferred_time) }}"
-                        required
-                    >
+                    <select name="approved_time" class="form-control" required>
+                        <option value="">Select time slot</option>
+                        <option value="08:00" {{ old('approved_time', $request->preferred_time) == '08:00' ? 'selected' : '' }}>08:00 AM</option>
+                        <option value="08:30" {{ old('approved_time', $request->preferred_time) == '08:30' ? 'selected' : '' }}>08:30 AM</option>
+                        <option value="09:00" {{ old('approved_time', $request->preferred_time) == '09:00' ? 'selected' : '' }}>09:00 AM</option>
+                        <option value="09:30" {{ old('approved_time', $request->preferred_time) == '09:30' ? 'selected' : '' }}>09:30 AM</option>
+                        <option value="10:00" {{ old('approved_time', $request->preferred_time) == '10:00' ? 'selected' : '' }}>10:00 AM</option>
+                        <option value="10:30" {{ old('approved_time', $request->preferred_time) == '10:30' ? 'selected' : '' }}>10:30 AM</option>
+                        <option value="11:00" {{ old('approved_time', $request->preferred_time) == '11:00' ? 'selected' : '' }}>11:00 AM</option>
+                        <option value="11:30" {{ old('approved_time', $request->preferred_time) == '11:30' ? 'selected' : '' }}>11:30 AM</option>
+                        <option value="12:00" {{ old('approved_time', $request->preferred_time) == '12:00' ? 'selected' : '' }}>12:00 PM</option>
+                        <option value="12:30" {{ old('approved_time', $request->preferred_time) == '12:30' ? 'selected' : '' }}>12:30 PM</option>
+                        <option value="13:00" {{ old('approved_time', $request->preferred_time) == '13:00' ? 'selected' : '' }}>01:00 PM</option>
+                        <option value="13:30" {{ old('approved_time', $request->preferred_time) == '13:30' ? 'selected' : '' }}>01:30 PM</option>
+                        <option value="14:00" {{ old('approved_time', $request->preferred_time) == '14:00' ? 'selected' : '' }}>02:00 PM</option>
+                        <option value="14:30" {{ old('approved_time', $request->preferred_time) == '14:30' ? 'selected' : '' }}>02:30 PM</option>
+                        <option value="15:00" {{ old('approved_time', $request->preferred_time) == '15:00' ? 'selected' : '' }}>03:00 PM</option>
+                        <option value="15:30" {{ old('approved_time', $request->preferred_time) == '15:30' ? 'selected' : '' }}>03:30 PM</option>
+                        <option value="16:00" {{ old('approved_time', $request->preferred_time) == '16:00' ? 'selected' : '' }}>04:00 PM</option>
+                        <option value="16:30" {{ old('approved_time', $request->preferred_time) == '16:30' ? 'selected' : '' }}>04:30 PM</option>
+                    </select>
                     <div class="form-helper">Select the start time for this lab session</div>
                 </div>
 

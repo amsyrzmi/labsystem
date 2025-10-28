@@ -62,16 +62,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/experiment-details', [TeacherController::class, 'getExperimentDetails'])->name('experiment.details');
         Route::post('/teacher/requests/submit', [TeacherController::class, 'submitRequest'])->name('teacher.requests.submit');
 
+        //? Availability check 
+        Route::post('/teacher/check-availability', [TeacherController::class, 'checkAvailability'])->name('teacher.check.availability');
+
         //? list all requests by the currently authenticated teacher
         Route::get('/teacher/requests/list', [TeacherController::class, 'listUserRequests'])->name('teacher.requests.list');
 
-         //? list all requests history by the currently authenticated teacher
+        //? list all requests history by the currently authenticated teacher
         Route::get('/teacher/requests/history', [TeacherController::class, 'listUserHistory'])->name('teacher.history');
 
         //? show details (materials & apparatus) for a specific request
         Route::get('/teacher/requests/{id}/details', [TeacherController::class, 'requestDetails'])->name('teacher.requests.details');
         Route::get('/teacher/requests/{id}/history', [TeacherController::class, 'requestDetailsH'])->name('teacher.requests.detailsH');
-        });
+    });
     });
 
 
