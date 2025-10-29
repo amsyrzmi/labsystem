@@ -52,11 +52,22 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            // Check if user is approved
+            if (!$user->is_approved) {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Your account is pending approval. Please wait for an administrator to approve your account.',
+                ])->withInput($request->only('email'));
+            }
+
             $request->session()->regenerate();
             return $this->redirectBasedOnRole();
         }
+
         throw ValidationException::withMessages([
-            'credentials' => 'The provided credentials are incorrect.',
+            'email' => ['The provided credentials are incorrect.'],
         ]);
     }
 

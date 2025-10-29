@@ -25,6 +25,9 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'is_approved' => true,
+                'approved_at' => now(),
+                'approved_by' => 1,
             ]
         );
         DB::table('users')->updateOrInsert(
@@ -38,6 +41,9 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'is_approved' => false,
+                'approved_at' => now(),
+                'approved_by' => 1,
             ]
         );
         DB::table('users')->updateOrInsert(
@@ -51,6 +57,9 @@ class UserSeeder extends Seeder
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'is_approved' => true,
+                'approved_at' => now(),
+                'approved_by' => 1,
             ]
         );
     }

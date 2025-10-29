@@ -31,10 +31,10 @@
         <div id="navMenu" class="nav-menu" data-open="false">
           @auth
           <ul class="nav-left" role="menubar" aria-label="Primary">
-            <li role="none"><a role="menuitem" href="#" class="nav-link ">Home</a></li>
+            <li role="none"><a role="menuitem" href="{{ route('admin.index') }}" class="nav-link {{ request()->routeIs('admin.index') ? 'active' : '' }}">Home</a></li>
             <li role="none"><a role="menuitem" href="#" class="nav-link ">Request</a></li>
             <li role="none"><a role="menuitem" href="#" class="nav-link ">History</a></li>
-            <li role="none"><a role="menuitem" href="#" class="nav-link ">Manage Users</a></li>
+            <li role="none"><a role="menuitem" href="{{ route('admin.users') }}" class="nav-link {{ request()->routeIs('admin.users') ? 'active' : '' }}">Manage Users</a></li>
           </ul>
           @endauth
 

@@ -31,8 +31,22 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     //! Role admin
-    Route::middleware('role:admin')->group(function () {
-        Route::get('/Admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [AdminController::class, 'index'])->name('index');
+        
+        // User Management
+        Route::get('/users', [AdminController::class, 'manageUsers'])->name('users');
+        Route::post('/users/{id}/approve', [AdminController::class, 'approveUser'])->name('users.approve');
+        Route::post('/users/{id}/reject', [AdminController::class, 'rejectUser'])->name('users.reject');
+        Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('users.delete');
+        
+        // Edit User
+        Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('users.edit');
+        Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('users.update');
+        
+        // Create User
+        Route::get('/users/create', [AdminController::class, 'createUser'])->name('users.create');
+        Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
     });
 
     //! Role lab assistant
