@@ -124,24 +124,41 @@ class TeacherController extends Controller
         ]);
 
         // Check for conflicts
-        $conflict = LabRequest::where('lab_number', $validated['lab_number'])
+        // Check for conflicts with BOTH approved and pending requests
+        $approvedConflicts = LabRequest::where('lab_number', $validated['lab_number'])
             ->where('status', 'approved')
             ->where('approved_date', $validated['preferred_date'])
             ->get()
             ->filter(function($existingRequest) use ($validated) {
                 $existingStart = \Carbon\Carbon::parse($existingRequest->approved_time);
-                $existingEnd = $existingStart->copy()->addMinutes($existingRequest->duration);
+                $existingEnd = $existingStart->copy()->addMinutes((int)$existingRequest->duration);
                 
                 $newStart = \Carbon\Carbon::parse($validated['preferred_time']);
-                $newEnd = $newStart->copy()->addMinutes($validated['duration']);
+                $newEnd = $newStart->copy()->addMinutes((int)$validated['duration']);
                 
                 return $newStart->lt($existingEnd) && $newEnd->gt($existingStart);
-            })
-            ->isNotEmpty();
+            });
 
-        if ($conflict) {
+        $pendingConflicts = LabRequest::where('lab_number', $validated['lab_number'])
+            ->where('status', 'pending')
+            ->where('preferred_date', $validated['preferred_date'])
+            ->where('user_id', '!=', Auth::id()) // Exclude current user's own requests
+            ->get()
+            ->filter(function($existingRequest) use ($validated) {
+                $existingStart = \Carbon\Carbon::parse($existingRequest->preferred_time);
+                $existingEnd = $existingStart->copy()->addMinutes((int)$existingRequest->duration);
+                
+                $newStart = \Carbon\Carbon::parse($validated['preferred_time']);
+                $newEnd = $newStart->copy()->addMinutes((int)$validated['duration']);
+                
+                return $newStart->lt($existingEnd) && $newEnd->gt($existingStart);
+            });
+
+        $hasConflict = $approvedConflicts->isNotEmpty() || $pendingConflicts->isNotEmpty();
+
+        if ($hasConflict) {
             return redirect()->back()->withInput()->withErrors([
-                'preferred_time' => 'This time slot is already booked for ' . $validated['lab_number'] . '. Please choose a different time.'
+                'preferred_time' => 'This time slot is already booked or pending for ' . $validated['lab_number'] . '. Please choose a different time.'
             ]);
         }
 
@@ -305,26 +322,42 @@ class TeacherController extends Controller
             'duration' => 'required|integer|min:30',
         ]);
 
-        // Check if this time slot is already booked
-        $conflict = LabRequest::where('lab_number', $validated['lab_number'])
+        // Check both approved requests (with approved_date/time) 
+        // and pending requests (with preferred_date/time)
+        $approvedConflicts = LabRequest::where('lab_number', $validated['lab_number'])
             ->where('status', 'approved')
             ->where('approved_date', $validated['preferred_date'])
             ->get()
             ->filter(function($request) use ($validated) {
                 $requestStart = \Carbon\Carbon::parse($request->approved_time);
-                $requestEnd = $requestStart->copy()->addMinutes($request->duration);
+                $requestEnd = $requestStart->copy()->addMinutes((int)$request->duration);
                 
                 $checkStart = \Carbon\Carbon::parse($validated['preferred_time']);
-                $checkEnd = $checkStart->copy()->addMinutes($validated['duration']);
+                $checkEnd = $checkStart->copy()->addMinutes((int)$validated['duration']);
                 
-                // Check if times overlap
                 return $checkStart->lt($requestEnd) && $checkEnd->gt($requestStart);
-            })
-            ->isNotEmpty();
+            });
+
+        // Also check pending requests to prevent double-booking
+        $pendingConflicts = LabRequest::where('lab_number', $validated['lab_number'])
+            ->where('status', 'pending')
+            ->where('preferred_date', $validated['preferred_date'])
+            ->get()
+            ->filter(function($request) use ($validated) {
+                $requestStart = \Carbon\Carbon::parse($request->preferred_time);
+                $requestEnd = $requestStart->copy()->addMinutes((int)$request->duration);
+                
+                $checkStart = \Carbon\Carbon::parse($validated['preferred_time']);
+                $checkEnd = $checkStart->copy()->addMinutes((int)$validated['duration']);
+                
+                return $checkStart->lt($requestEnd) && $checkEnd->gt($requestStart);
+            });
+
+        $hasConflict = $approvedConflicts->isNotEmpty() || $pendingConflicts->isNotEmpty();
 
         return response()->json([
-            'available' => !$conflict,
-            'message' => $conflict ? 'This time slot is already booked for this lab.' : 'Time slot is available.',
+            'available' => !$hasConflict,
+            'message' => $hasConflict ? 'This time slot is already booked or pending for this lab.' : 'Time slot is available.',
         ]);
     }
 }
