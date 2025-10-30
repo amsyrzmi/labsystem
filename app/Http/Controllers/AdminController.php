@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use App\Models\LabRequest;
+use App\Models\DefaultMaterial;
+use App\Models\DefaultApparatus;
 
 class AdminController extends Controller
 {
@@ -18,6 +21,11 @@ class AdminController extends Controller
             'pending_approvals' => User::pending()->count(),
             'teachers' => User::byRole('teacher')->approved()->count(),
             'lab_assistants' => User::byRole('lab_assistant')->approved()->count(),
+            // NEW: Request stats
+            'pending_requests' => LabRequest::where('status', 'pending')->count(),
+            'upcoming_sessions' => LabRequest::where('status', 'approved')
+                ->where('approved_date', '>=', now())
+                ->count(),
         ];
 
         return view('admin.index', compact('stats'));
@@ -155,5 +163,173 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin.users')->with('success', 'User created successfully.');
+    }
+    public function allRequests(Request $request)
+    {
+        $query = LabRequest::with(['subject', 'topic', 'experiment', 'user']);
+
+        // Filter by status
+        $status = $request->get('status');
+        if ($status && in_array($status, ['pending', 'approved', 'rejected'])) {
+            $query->where('status', $status);
+        }
+
+        // Filter by lab number
+        $labNumber = $request->get('lab_number');
+        if ($labNumber) {
+            $query->where('lab_number', $labNumber);
+        }
+
+        // Search by teacher name or class
+        $search = $request->get('search');
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', function($userQuery) use ($search) {
+                    $userQuery->where('name', 'like', "%{$search}%");
+                })
+                ->orWhere('classname', 'like', "%{$search}%");
+            });
+        }
+
+        // Only show upcoming/active requests
+        $query->where('preferred_date', '>=', now()->subDays(1))
+            ->orderBy('preferred_date', 'asc')
+            ->orderBy('created_at', 'desc');
+
+        $requests = $query->paginate(20);
+
+        // Get unique lab numbers for filter
+        $labNumbers = LabRequest::distinct()->pluck('lab_number')->sort();
+
+        return view('admin.requests', compact('requests', 'status', 'labNumber', 'search', 'labNumbers'));
+    }
+
+    /**
+     * View all history (completed/past requests)
+     */
+    public function allHistory(Request $request)
+    {
+        $query = LabRequest::with(['subject', 'topic', 'experiment', 'user']);
+
+        // Filter by status
+        $status = $request->get('status');
+        if ($status && in_array($status, ['completed', 'cancelled', 'no_show', 'rejected'])) {
+            $query->where('status', $status);
+        }
+
+        // Filter by lab number
+        $labNumber = $request->get('lab_number');
+        if ($labNumber) {
+            $query->where('lab_number', $labNumber);
+        }
+
+        // Search
+        $search = $request->get('search');
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', function($userQuery) use ($search) {
+                    $userQuery->where('name', 'like', "%{$search}%");
+                })
+                ->orWhere('classname', 'like', "%{$search}%");
+            });
+        }
+
+        // Only show past/completed
+        $query->where(function($q) {
+            $q->whereIn('status', ['completed', 'cancelled', 'no_show', 'rejected'])
+            ->orWhere('preferred_date', '<', now());
+        })
+        ->orderBy('preferred_date', 'desc')
+        ->orderBy('completed_at', 'desc');
+
+        $requests = $query->paginate(20);
+
+        // Get unique lab numbers for filter
+        $labNumbers = LabRequest::distinct()->pluck('lab_number')->sort();
+
+        return view('admin.history', compact('requests', 'status', 'labNumber', 'search', 'labNumbers'));
+    }
+
+    /**
+     * View request details
+     */
+    public function requestDetails($id)
+    {
+        $labRequest = LabRequest::with(['subject', 'topic', 'experiment', 'user'])->findOrFail($id);
+
+        $materials = collect();
+        $apparatuses = collect();
+
+        if ($labRequest->experiment_id) {
+            $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+                ->select('id', 'name', 'quantity', 'unit')
+                ->orderBy('name')
+                ->get();
+
+            $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+                ->select('id', 'name', 'quantity')
+                ->orderBy('name')
+                ->get();
+        }
+
+        return view('admin.request-details', [
+            'request' => $labRequest,
+            'materials' => $materials,
+            'apparatuses' => $apparatuses,
+        ]);
+    }
+
+    /**
+     * Mark request as completed
+     */
+    public function markCompleted($id)
+    {
+        $request = LabRequest::findOrFail($id);
+        
+        $request->update([
+            'status' => 'completed',
+            'completed_at' => now(),
+        ]);
+
+        return back()->with('success', 'Request marked as completed.');
+    }
+
+    /**
+     * Mark request as no-show
+     */
+    public function markNoShow($id)
+    {
+        $request = LabRequest::findOrFail($id);
+        
+        $request->update([
+            'status' => 'no_show',
+        ]);
+
+        return back()->with('success', 'Request marked as no-show.');
+    }
+
+    /**
+     * Cancel request
+     */
+    public function cancelRequest($id)
+    {
+        $request = LabRequest::findOrFail($id);
+        
+        $request->update([
+            'status' => 'cancelled',
+        ]);
+
+        return back()->with('success', 'Request has been cancelled.');
+    }
+
+    /**
+     * Delete request
+     */
+    public function deleteRequest($id)
+    {
+        $request = LabRequest::findOrFail($id);
+        $request->delete();
+
+        return redirect()->route('admin.requests')->with('success', 'Request has been deleted.');
     }
 }

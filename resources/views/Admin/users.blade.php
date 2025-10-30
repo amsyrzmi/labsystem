@@ -33,7 +33,7 @@
                 <div style="flex: 1; min-width: 250px;">
                     <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #415A77; font-size: 14px;">Search</label>
                     <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Name or email..." 
-                           style="width: 100%; padding: 10px 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 14px;">
+                           style="color: #415A77;width: 100%; padding: 10px 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 14px;">
                 </div>
 
                 <!-- Status Filter -->

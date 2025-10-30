@@ -32,8 +32,8 @@
           @auth
           <ul class="nav-left" role="menubar" aria-label="Primary">
             <li role="none"><a role="menuitem" href="{{ route('admin.index') }}" class="nav-link {{ request()->routeIs('admin.index') ? 'active' : '' }}">Home</a></li>
-            <li role="none"><a role="menuitem" href="#" class="nav-link ">Request</a></li>
-            <li role="none"><a role="menuitem" href="#" class="nav-link ">History</a></li>
+            <li role="none"><a role="menuitem" href="{{ route('admin.requests') }}" class="nav-link {{ request()->routeIs('admin.requests') ? 'active' : '' }}">Request</a></li>
+            <li role="none"><a role="menuitem" href="{{ route('admin.history') }}" class="nav-link {{ request()->routeIs('admin.history') ? 'active' : '' }}">History</a></li>
             <li role="none"><a role="menuitem" href="{{ route('admin.users') }}" class="nav-link {{ request()->routeIs('admin.users') ? 'active' : '' }}">Manage Users</a></li>
           </ul>
           @endauth

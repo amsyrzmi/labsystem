@@ -47,6 +47,17 @@ Route::middleware('auth')->group(function () {
         // Create User
         Route::get('/users/create', [AdminController::class, 'createUser'])->name('users.create');
         Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
+
+        // NEW: Lab Request Management
+        Route::get('/requests', [AdminController::class, 'allRequests'])->name('requests');
+        Route::get('/requests/{id}', [AdminController::class, 'requestDetails'])->name('requests.details');
+        Route::post('/requests/{id}/complete', [AdminController::class, 'markCompleted'])->name('requests.complete');
+        Route::post('/requests/{id}/no-show', [AdminController::class, 'markNoShow'])->name('requests.noshow');
+        Route::post('/requests/{id}/cancel', [AdminController::class, 'cancelRequest'])->name('requests.cancel');
+        Route::delete('/requests/{id}', [AdminController::class, 'deleteRequest'])->name('requests.delete');
+        
+        // NEW: History
+        Route::get('/history', [AdminController::class, 'allHistory'])->name('history');
     });
 
     //! Role lab assistant
@@ -66,6 +77,8 @@ Route::middleware('auth')->group(function () {
        //? Timetable
         Route::get('/lab-assistant/timetable', [LabassistantController::class, 'timetable'])->name('lab_assistant.timetable');
     });
+
+    
     //! Role teacher
     Route::middleware('role:teacher')->group(function () {
         Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
