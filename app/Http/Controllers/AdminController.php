@@ -11,8 +11,6 @@ use App\Models\LabRequest;
 use App\Models\DefaultMaterial;
 use App\Models\DefaultApparatus;
 
-
-
 class AdminController extends Controller
 {
     public function index()
