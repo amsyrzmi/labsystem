@@ -13,7 +13,7 @@ Route::middleware('guest')->group(function () {
         return redirect()->route('show.login');
     });
 
-    //?      authentication Routes
+    //?   authentication Routes
     Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
