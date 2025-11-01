@@ -1,11 +1,11 @@
 <x-admin-layout>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <a href="{{ route('admin.requests') }}" style="display:inline-block;margin-bottom:18px;color:white;text-decoration:none;">
+    <a href="{{ route('admin.requests') }}" style="display:inline-block;margin-bottom:18px;color:var(--text);text-decoration:none;">
         ← Back to Requests
     </a>
 
-    <div class="container" style="max-width:960px;margin:10px auto 40px;padding:18px;background:transparent;">
+    <div class="container no-shadow" style="max-width:960px;margin:10px auto 40px;padding:18px;background:transparent;">
         @if(session('success'))
             <div style="background:#d4edda;padding:12px;border-radius:8px;margin-bottom:18px;color:#155724;">
                 ✓ {{ session('success') }}
@@ -13,7 +13,7 @@
         @endif
 
         <!-- Rest of the content same as teacher view, then add admin actions at the bottom -->
-       <h1 style="font-size:26px;color:white;margin-bottom:6px;">Request #{{ $request->id }}</h1>
+       <h1 style="font-size:26px;color:var(--accent);margin-bottom:6px;">Request #{{ $request->id }}</h1>
         <div style="color:#7b8aa3;margin-bottom:18px;">Created: {{ $request->created_at->format('d M Y H:i') }}</div>
 
         <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start;">

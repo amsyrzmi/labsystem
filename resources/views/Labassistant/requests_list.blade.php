@@ -5,7 +5,7 @@
     
     @vite('resources/css/lab-assistant.css')
 
-    <div class="container">
+    <div class="container no-shadow">
         <div class="page-header">
             <h1 class="page-title">Lab Requests</h1>
         </div>

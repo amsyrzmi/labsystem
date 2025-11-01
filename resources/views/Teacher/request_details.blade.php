@@ -2,35 +2,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <a href="{{ route('teacher.requests.list') }}" style="display:inline-block;margin-bottom:18px;color:white;text-decoration:none;">← Back to my requests</a>
+    <a href="{{ route('teacher.requests.list') }}" style="display:inline-block;margin-bottom:18px;color:var(--accent);text-decoration:none;">← Back to my requests</a>
 
     <div class="container" style="max-width:960px;margin:10px auto 40px;padding:18px;background:transparent;">
-        <h1 style="font-size:26px;color:white;margin-bottom:6px;">Request #{{ $request->id }}</h1>
+        <h1 style="font-size:26px;color:var(--accent);margin-bottom:6px;">Request #{{ $request->id }}</h1>
         <div style="color:#7b8aa3;margin-bottom:18px;">Created: {{ $request->created_at->format('d M Y H:i') }}</div>
 
         <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start;">
             {{-- Left: request summary & notes --}}
             <div style="background:#fff;border:1px solid #e6eef6;border-radius:12px;padding:16px;">
-                <div style="font-weight:700;color:#1b263b;font-size:18px;">
+                <div style="font-weight:700;color:var(--accent);font-size:18px;">
                     {{ optional($request->subject)->name ?? '— Subject —' }}
                 </div>
-                <div style="color:#415A77;margin-top:6px;">Experiment: {{ optional($request->experiment)->name ?? '— No experiment —' }}</div>
+                <div style="color:var(--text);margin-top:6px;">Experiment: {{ optional($request->experiment)->name ?? '— No experiment —' }}</div>
 
                 <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;">
                     <div>
-                        <div style="font-size:12px;color:#7b8aa3;">Students</div>
+                        <div style="font-size:12px;color:var(--text);">Students</div>
                         <div style="font-weight:600;">{{ $request->num_students }}</div>
                     </div>
                     <div>
-                        <div style="font-size:12px;color:#7b8aa3;">Group size</div>
+                        <div style="font-size:12px;color:var(--text);">Group size</div>
                         <div style="font-weight:600;">{{ $request->group_size }}</div>
                     </div>
                     <div>
-                        <div style="font-size:12px;color:#7b8aa3;">Date</div>
+                        <div style="font-size:12px;color:var(--text);">Date</div>
                         <div style="font-weight:600;">{{ \Carbon\Carbon::parse($request->preferred_date)->format('d M Y') }}</div>
                     </div>
                     <div>
-                        <div style="font-size:12px;color:#7b8aa3;">Time</div>
+                        <div style="font-size:12px;color:var(--text);">Time</div>
                         <div style="font-weight:600;">{{ \Carbon\Carbon::parse($request->preferred_time)->format('H:i') }}</div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                         @foreach($materials as $m)
                             <li style="background:#f8f9fa;padding:10px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
                                 <div style="font-weight:600;color:#243444;">{{ $m->name }}</div>
-                                <div style="font-weight:700;color:#415A77;">{{ $m->quantity }} {{ $m->unit ?? '' }}</div>
+                                <div style="font-weight:700;color:var(--accent);">{{ $m->quantity }} {{ $m->unit ?? '' }}</div>
                             </li>
                         @endforeach
                     </ul>
@@ -87,7 +87,7 @@
                         @foreach($apparatuses as $a)
                             <li style="background:#f8f9fa;padding:10px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
                                 <div style="font-weight:600;color:#243444;">{{ $a->name }}</div>
-                                <div style="font-weight:700;color:#415A77;">{{ $a->quantity }}</div>
+                                <div style="font-weight:700;color:var(--accent);">{{ $a->quantity }}</div>
                             </li>
                         @endforeach
                     </ul>

@@ -12,11 +12,12 @@
 
 /* ========== Theme variables (customize these) ========== */
 :root{
-  --nav-bg: #0D1B2A;        /* navbar background */
-  --page-bg: #0D1B2A;       /* page background */
-  --text: white;          /* main text */
-  --muted: #6b7280;         /* muted text */
-  --accent: #E0E1DD;        /* accent / brand color */
+  --nav-bg: #E0F2FE;        /* navbar background */
+  --page-bg: #E0F2FE;       /* page background */
+  --text: #2563EB;          /* main text */
+  --muted: #9CA3AF;         /* muted text */
+  --accent: #1947ae;        /* accent / brand color */
+  --accentlight:#5186f2;
   --link-hover: #778DA9;
   --container-width: 1100px;
   --gutter: 2rem;
@@ -34,7 +35,7 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe 
 .nav-row{max-width:var(--container-width);margin:0 auto;padding:.5rem var(--gutter);display:flex;align-items:center;gap:1rem}
 
 /* Brand */
-.brand{font-weight:700;text-decoration:none;color:var(--text);font-size:2rem}
+.brand{font-weight:700;text-decoration:none;color:var(--accent);font-size:2rem}
 
 /* Toggle (mobile) */
 .nav-toggle{margin-left:auto;background:transparent;border:0;padding:.45rem;border-radius:6px;display:inline-flex;align-items:center;cursor:pointer}
@@ -95,7 +96,7 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe 
 
 /* right area (logout) */
 .nav-right{padding:.5rem var(--gutter);display:flex;justify-content:flex-end}
-.logout{background:transparent;border:1px solid rgba(15,23,42,0.06);padding:.45rem .6rem;border-radius:8px;text-decoration:none}
+.logout{background:transparent;padding:.45rem .6rem;border-radius:8px;text-decoration:none}
 
 
 
@@ -117,14 +118,20 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe 
 background: transparent;
 border-radius: 20px;
 padding: 40px;
+box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 margin: 40px auto;
 max-width: 1000px;
+
 width: 100%;
-box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.no-shadow
+{
+box-shadow:none;
 }
 
 h2 {
-color: white;
+color: var(--accent);
 margin-bottom: 30px;
 font-size: 28px;
 }
@@ -135,7 +142,7 @@ margin-bottom: 35px;
 
 .form-section label.section-title {
 display: block;
-color: white;
+color: var(--accent);
 font-size: 18px;
 font-weight: 600;
 margin-bottom: 15px;
@@ -165,25 +172,25 @@ height: 0;
 .radio-button label {
 display: block;
 padding: 15px 20px;
-background: #f5f7fa;
-border: 2px solid #e1e8ed;
+background: white;
+border: 2px solid var(--accent);
 border-radius: 12px;
 text-align: center;
 cursor: pointer;
 transition: all 0.3s ease;
 font-weight: 500;
-color: #555;
+color: var(--text);
 }
 
 .radio-button label:hover {
-background: #e8eef5;
-border-color: #415A77;
+background: var(--accentlight);
+color:var(--page-bg);
+border-color: var(--accentlight);
 transform: translateY(-2px);
 }
 
 .radio-button input[type="radio"]:checked + label {
-background: #1B263B;
-border-color: #415A77;
+background: var(--accent);
 color: white;
 box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
@@ -242,12 +249,13 @@ transition: all 0.3s ease;
 }
 
 .btn-next, .btn-submit {
-background: #415A77;
+background: var(--accentlight);
 color: white;
 }
 
 .btn-next:hover, .btn-submit:hover {
 transform: translateY(-2px);
+background: var(--accent);
 box-shadow: #778DA9;
 }
 
@@ -264,7 +272,7 @@ transform: translateY(-2px);
 }
 
 .btn:disabled {
-background: #ccc;
+background: var(--muted);
 cursor: not-allowed;
 transform: none;
 opacity: 0.6;
@@ -336,7 +344,7 @@ margin-bottom: 25px;
 }
 
 .info-card h3 {
-color: #415A77;
+color: var(--accent);
 font-size: 20px;
 margin-bottom: 15px;
 display: flex;
@@ -347,6 +355,21 @@ gap: 10px;
 .info-card h3::before {
 content: '•';
 font-size: 30px;
+}
+.request-card
+{
+  background: linear-gradient(130deg, var(--page-bg) 0%, #ffffff 100%);
+  border: 1px solid #e6eef6;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(30,60,90,0.06);
+  transition: all 0.3s ease;
+
+}
+
+.request-card:hover
+{
+  transform: translateY(-5px);
 }
 
 .item-list {
@@ -359,7 +382,7 @@ background: white;
 padding: 12px 15px;
 margin-bottom: 10px;
 border-radius: 8px;
-border-left: 4px solid #778DA9;
+border-left: 4px solid var(--accent);
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -391,7 +414,7 @@ margin-bottom: 25px;
 
 .notes-section label {
 display: block;
-color: #555;
+color: var(--accent);
 font-size: 16px;
 font-weight: 600;
 margin-bottom: 10px;

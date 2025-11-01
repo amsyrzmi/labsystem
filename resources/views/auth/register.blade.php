@@ -19,7 +19,7 @@
             <input 
                 id="name" name="name" type="text" value="{{ old('name') }}" required
 
-              class="block w-full rounded-xl border border-transparent bg-white/6 px-4 py-3 placeholder:text-[--muted] focus:outline-none focus:ring-2 focus:ring-[--accent] focus:border-transparent"
+              class="block w-full rounded-xl border border-[var(--muted)] bg-white/6 px-4 py-3 placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent" 
               placeholder="Ariffin Mateko" />
           </div>
 
@@ -31,7 +31,7 @@
             <input 
                 id="email" name="email" type="email" value="{{ old('email') }}" required
 
-              class="block w-full rounded-xl border border-transparent bg-white/6 px-4 py-3 placeholder:text-[--muted] focus:outline-none focus:ring-2 focus:ring-[--accent] focus:border-transparent"
+              class="block w-full rounded-xl border border-[var(--muted)] bg-white/6 px-4 py-3 placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent" 
               placeholder="you@Nexus.com" />
           </div>
 
@@ -46,8 +46,8 @@
                 <div
                     class="w-full text-center rounded-lg py-3 border transition-all duration-200 font-medium"
                     :class="role === 'teacher'
-                    ? 'bg-white text-black border-[--accent]'
-                    : 'bg-white/5 text-white hover:bg-white/10 border-transparent'">
+                    ? 'bg-[var(--accent)] text-[var(--nav-bg)] border-[var(--muted)]'
+                    : 'bg-white/5 text-[var(--accent)] hover:bg-white/10 border-[--var(--muted)]'">
                     Teacher
                 </div>
                 </label>
@@ -60,8 +60,8 @@
                 <div
                     class="w-full text-center rounded-lg py-3 border transition-all duration-200 font-medium"
                     :class="role === 'lab_assistant'
-                    ? 'bg-white text-black border-[--accent]'
-                    : 'bg-white/5 text-white hover:bg-white/10 border-transparent'">
+                    ? 'bg-[var(--accent)] text-[var(--nav-bg)] border-[var(--muted)]'
+                    : 'bg-white/5 text-[var(--accent)] hover:bg-white/10 border-[--var(--muted)]'">
                     Lab Assistant
                 </div>
                 </label>
@@ -78,7 +78,7 @@
             <input 
                 id="password" name="password" type="password" required
 
-              class="block w-full rounded-xl border border-transparent bg-white/6 px-4 py-3 placeholder:text-[--muted] focus:outline-none focus:ring-2 focus:ring-[--accent] focus:border-transparent"
+              class="block w-full rounded-xl border border-[var(--muted)] bg-white/6 px-4 py-3 placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
               placeholder="Choose a strong password" />
           </div>
 
@@ -89,13 +89,13 @@
             <input 
                 id="password_confirmation" name="password_confirmation" type="password" required
 
-              class="block w-full rounded-xl border border-transparent bg-white/6 px-4 py-3 placeholder:text-[--muted] focus:outline-none focus:ring-2 focus:ring-[--accent] focus:border-transparent"
+              class="block w-full rounded-xl border border-[var(--muted)] bg-white/6 px-4 py-3 placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent"
               placeholder="Repeat password" />
           </div>
 
           <div>
             <button type="submit"
-              class="w-full rounded-xl py-3 font-semibold text-[--nav-bg] bg-[--accent] hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-[--link-hover]">
+              class="w-full rounded-xl py-3 font-semibold text-[var(--nav-bg)] bg-[var(--accent)] hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-[var(--link-hover)]">
               Create account
             </button>
           </div>
@@ -124,10 +124,10 @@
       <!-- full-height card look -->
       <div class="w-full h-full rounded-2xl flex flex-col items-center justify-center">
         <!-- Large decorative text — low opacity to be subtle -->
-        <div class=" select-none" style="color: white;">
+        <div class=" select-none" style="color: var(--accent);">
           made by NexusSphere
         </div>
-        <div class="text-7xl font-extrabold select-none" style="color: white;">
+        <div class="text-7xl font-extrabold select-none" style="color: var(--accent);">
           LabCore
         </div>
       </div>

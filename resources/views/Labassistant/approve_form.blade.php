@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @vite('resources/css/lab-assistant.css')
-    <div class="container">
+    <div class="container no-shadow">
         <a href="{{ route('lab_assistant.requests.details', $request->id) }}" class="back-link">
             ← Back to Request
         </a>

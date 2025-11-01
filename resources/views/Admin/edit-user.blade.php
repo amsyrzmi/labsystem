@@ -2,13 +2,13 @@
     <div style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
         <div style="margin-bottom: 24px;">
             <a href="{{ route('admin.users') }}" 
-               style="display: inline-flex; align-items: center; gap: 8px; color: #fff; text-decoration: none; font-weight: 600;">
+               style="display: inline-flex; align-items: center; gap: 8px; color: var(--accent); text-decoration: none; font-weight: 600;">
                 ← Back to Users
             </a>
         </div>
 
         <div style="background: white; padding: 32px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
-            <h1 style="color: #1b263b; font-size: 28px; margin-bottom: 24px;">Edit User</h1>
+            <h1 style="color: var(--accent); font-size: 28px; margin-bottom: 24px;">Edit User</h1>
 
             @if($errors->any())
                 <div style="background: #f8d7da; color: #721c24; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
@@ -115,7 +115,7 @@
                         Cancel
                     </a>
                     <button type="submit" 
-                            style="padding: 12px 24px; background: #415A77; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            style="padding: 12px 24px; background: var(--accentlight); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
                         Save Changes
                     </button>
                 </div>
@@ -131,7 +131,7 @@
                     @csrf
                     <input type="hidden" name="email" value="{{ $user->email }}">
                     <button type="submit" 
-                            style="padding: 10px 20px; background: #1B263B; color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            style="padding: 10px 20px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
                         Send Password Reset Link
                     </button>
                 </form>

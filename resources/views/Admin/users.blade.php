@@ -1,9 +1,9 @@
 <x-admin-layout>
     <div style="max-width: 1400px; margin: 40px auto; padding: 0 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-            <h1 style="color: #fffff; font-size: 32px; margin: 0;">Manage Users</h1>
+            <h1 style="margin:0;font-size:32px;color:var(--accent);font-weight:700;">Manage Users</h1>
             <a href="{{ route('admin.users.create') }}" 
-               style="display: inline-block; padding: 12px 24px; background: #415A77; color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
+               style="display: inline-block; padding: 12px 24px; background: var(--accent); color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
                 + Create User
             </a>
         </div>
@@ -59,10 +59,10 @@
 
                 <!-- Buttons -->
                 <div style="display: flex; gap: 8px;">
-                    <button type="submit" style="padding: 10px 20px; background: #1B263B; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    <button type="submit" style="padding: 10px 20px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
                         Filter
                     </button>
-                    <a href="{{ route('admin.users') }}" style="padding: 10px 20px; background: #778DA9; color: white; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: 600;">
+                    <a href="{{ route('admin.users') }}" style="padding: 10px 20px; background: var(--muted); color: white; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: 600;">
                         Reset
                     </a>
                 </div>
@@ -80,11 +80,11 @@
                 <table style="width: 100%; border-collapse: collapse;">
                     <thead style="background: #f8f9fa;">
                         <tr>
-                            <th style="padding: 16px; text-align: left; font-weight: 600; color: #415A77; border-bottom: 2px solid #e1e8ed;">User</th>
-                            <th style="padding: 16px; text-align: left; font-weight: 600; color: #415A77; border-bottom: 2px solid #e1e8ed;">Role</th>
-                            <th style="padding: 16px; text-align: left; font-weight: 600; color: #415A77; border-bottom: 2px solid #e1e8ed;">Status</th>
-                            <th style="padding: 16px; text-align: left; font-weight: 600; color: #415A77; border-bottom: 2px solid #e1e8ed;">Registered</th>
-                            <th style="padding: 16px; text-align: center; font-weight: 600; color: #415A77; border-bottom: 2px solid #e1e8ed;">Actions</th>
+                            <th style="padding: 16px; text-align: left; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">User</th>
+                            <th style="padding: 16px; text-align: left; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">Role</th>
+                            <th style="padding: 16px; text-align: left; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">Status</th>
+                            <th style="padding: 16px; text-align: left; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">Registered</th>
+                            <th style="padding: 16px; text-align: center; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -133,7 +133,7 @@
                                         @endif
                                         
                                         <a href="{{ route('admin.users.edit', $user->id) }}" 
-                                           style="padding: 6px 12px; background: #1B263B; color: white; border-radius: 6px; font-size: 13px; text-decoration: none; font-weight: 600;">
+                                           style="padding: 6px 12px; background: var(--accent); color: white; border-radius: 6px; font-size: 13px; text-decoration: none; font-weight: 600;">
                                             Edit
                                         </a>
                                         

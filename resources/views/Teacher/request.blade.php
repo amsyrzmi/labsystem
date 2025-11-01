@@ -5,12 +5,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Select Form & Subject</title>
     <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px;">
-    <h1 style="margin:0;font-size:32px;color:white;font-weight:700;">Request A Lab</h1>
-    <a href="{{ route('teacher.requests.list') }}" class="btn-new-request" style="
+    <h1 style="margin:0;font-size:32px;color:var(--accent);font-weight:700;">Request A Lab</h1>
+    <a href="{{ route('teacher.requests.list') }}" class="btnbackmain" style="
                 display:inline-block;
                 padding:10px 16px;
                 border-radius:10px;
-                background:#415A77;
+                background:var(--accent);
                 color:white;
                 font-weight:700;
                 text-decoration:none;

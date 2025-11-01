@@ -4,10 +4,10 @@
 
     <div style="max-width:1100px;margin:20px auto;padding:0 16px;">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px;">
-            <h1 style="margin:0;font-size:32px;color:white;font-weight:700;">Requests History</h1>
+            <h1 style="margin:0;font-size:32px;color:var(--accent);font-weight:700;">Requests History</h1>
         </div>
 
-        <div class="container" style="max-width: 1100px; margin: 0 auto;">
+        <div class="container no-shadow" style="max-width: 1100px; margin: 0 auto;">
             @if(session('success'))
                 <div style="background:#e6ffed;padding:12px;border-radius:8px;margin-bottom:18px;color:#1f8a46;">
                     {{ session('success') }}
@@ -22,7 +22,7 @@
                 <div style="display:grid;grid-template-columns:1fr;gap:18px;">
                     @foreach($requests as $r)
                         <div class="request-card" style="
-                            background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+                            background: linear-gradient(130deg, var(--page-bg) 0%, #ffffff 100%);
                             border: 1px solid #e6eef6;
                             border-radius: 12px;
                             padding: 18px;
@@ -30,10 +30,10 @@
                             ">
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                                 <div>
-                                    <div style="font-weight:700;font-size:18px;color:#1b263b;">
+                                    <div style="font-weight:700;font-size:18px;color:var(--accent);">
                                         {{ optional($r->subject)->name ?? '— No subject —' }}
                                     </div>
-                                    <div style="margin-top:4px;color:#415A77;font-size:14px;">
+                                    <div style="margin-top:4px;color:var(--text);font-size:14px;">
                                         Experiment: {{ optional($r->experiment)->name ?? '— No experiment selected —' }}
                                     </div>
                                 </div>
@@ -60,42 +60,42 @@
 
                             <div style="display:flex;gap:5px;flex-wrap:wrap;">
                                 <div style="flex:1;min-width:140px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Students</div>
-                                    <div style="font-weight:600;color:#26394f;">{{ $r->num_students ?? '—' }}</div>
+                                    <div style="font-size:12px;color:var(--text);">Students</div>
+                                    <div style="font-weight:600;color:var(--accent);">{{ $r->num_students ?? '—' }}</div>
                                 </div>
 
                                 <div style="flex:1;min-width:140px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Lab Number</div>
-                                    <div style="font-weight:600;color:#26394f;">{{ $r->lab_number ?? '—' }}</div>
+                                    <div style="font-size:12px;color:var(--text);">Lab Number</div>
+                                    <div style="font-weight:600;color:var(--accent);">{{ $r->lab_number ?? '—' }}</div>
                                 </div>
 
                                 <div style="flex:1;min-width:140px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Class Name</div>
-                                    <div style="font-weight:600;color:#26394f;">{{ $r->classname ?? '—' }}</div>
+                                    <div style="font-size:12px;color:var(--text);">Class Name</div>
+                                    <div style="font-weight:600;color:var(--accent);">{{ $r->classname ?? '—' }}</div>
                                 </div>
 
                                 <div style="flex:1;min-width:140px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Group size</div>
-                                    <div style="font-weight:600;color:#26394f;">{{ $r->group_size ?? '—' }}</div>
+                                    <div style="font-size:12px;color:var(--text);">Group size</div>
+                                    <div style="font-weight:600;color:var(--accent);">{{ $r->group_size ?? '—' }}</div>
                                 </div>
 
                                 <div style="flex:1;min-width:160px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Date</div>
-                                    <div style="font-weight:600;color:#26394f;">
+                                    <div style="font-size:12px;color:var(--text);">Date</div>
+                                    <div style="font-weight:600;color:var(--accent);">
                                         {{ optional($r->preferred_date)->format('d M Y') ?? \Carbon\Carbon::parse($r->preferred_date)->format('d M Y') }}
                                     </div>
                                 </div>
 
                                 <div style="flex:1;min-width:120px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Time</div>
-                                    <div style="font-weight:600;color:#26394f;">
+                                    <div style="font-size:12px;color:var(--text);">Time</div>
+                                    <div style="font-weight:600;color:var(--accent);">
                                         {{ \Carbon\Carbon::parse($r->preferred_time)->format('H:i') }}
                                     </div>
                                 </div>
                             </div>
 
                             @if($r->additional_notes)
-                                <div style="margin-top:12px;padding:10px;background:#f5f8ff;border-radius:8px;color:#415A77;font-size:14px;">
+                                 <div style="margin-top:12px;padding:10px;background:linear-gradient(150deg, var(--accentlight) 0%, #ffffff 100%);border-radius:8px;color:white;font-size:14px;border-left:6px solid var(--accent);">
                                     <strong>Notes:</strong> {{ $r->additional_notes }}
                                 </div>
                             @endif
@@ -103,10 +103,7 @@
                             
 
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;">
-                                <a href="{{ route('teacher.requests.detailsH', $r->id) }}" class="btn-details" style="
-                                    display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #e1e8ed;
-                                    background:white;color:#1b263b;text-decoration:none;font-weight:600;
-                                    ">
+                                <a href="{{ route('teacher.requests.detailsH', $r->id) }}" class="btn-details">
                                     Details
                                 </a>
                             </div>
@@ -118,7 +115,17 @@
     </div>
 
     <style>
-        .btn-details:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(66,102,178,0.08); }
+        .btn-details {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #e1e8ed;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-details:hover {background:var(--accentlight); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(66,102,178,0.08); }
         .btn-new-request:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(65,90,119,0.15); }
     </style>
 </x-teacher-layout>

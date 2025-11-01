@@ -29,56 +29,56 @@
 
     /* Button-specific gradients */
     .btn-requests {
-        background: #0D1B2A;
+        background: var(--accent);
     }
     .btn-requests:hover {
-        background: linear-gradient(135deg, #0D1B2A 0%, #d09a00 100%);
+        background: linear-gradient(135deg, var(--accent) 0%, #d09a00 100%);
     }
 
     .btn-pending {
-        background: #0D1B2A;
+        background: var(--accent);
     }
     .btn-pending:hover {
-        background: linear-gradient(135deg, #0D1B2A 0%, #b50023 100%);
+        background: linear-gradient(135deg, var(--accent) 0%, #b50023 100%);
     }
 
     .btn-users {
-        background: #0D1B2A;
+        background: var(--accent);
     }
     .btn-users:hover {
-        background: linear-gradient(135deg, #0D1B2A 0%, #0097b3 100%);
+        background: linear-gradient(135deg, var(--accent) 0%, #0097b3 100%);
     }
 
     .btn-create {
-        background: #415A77;
+        background: var(--accentlight);
     }
     .btn-create:hover {
-        background: #0D1B2A;
+        background: var(--accent);
     }
     </style>
     <div style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
-        <h1 style="margin:0;font-size:32px;color:white;font-weight:700;">Admin Dashboard</h1>
+        <h1 style="margin:20px;font-size:32px;color:var(--accent);font-weight:700;">Admin Dashboard</h1>
         
         <!-- Stats Cards -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px;">
-            <div class="stat-card" style="background: linear-gradient(135deg, #0D1B2A 0%, #00D4FF 100%); color: white; padding: 24px; border-radius: 12px;">
+            <div class="stat-card" style="background: linear-gradient(135deg, var(--accent) 0%, #00D4FF 100%); color: white; padding: 24px; border-radius: 12px;">
                 <div style="font-size: 40px; font-weight: 700;">{{ $stats['total_users'] }}</div>
                 <div style="margin-top: 8px; opacity: 0.9;">Total Users</div>
             </div>
-            <div class="stat-card" style="background: linear-gradient(135deg, #0D1B2A 0%, #1E90FF 100%); color: white; padding: 24px; border-radius: 12px;">
+            <div class="stat-card" style="background: linear-gradient(135deg, var(--accent) 0%, #1E90FF 100%); color: white; padding: 24px; border-radius: 12px;">
                 <div style="font-size: 40px; font-weight: 700;">{{ $stats['teachers'] }}</div>
                 <div style="margin-top: 8px; opacity: 0.9;">Teachers</div>
             </div>
 
-            <div class="stat-card" style="background: linear-gradient(135deg, #0D1B2A 0%, #00F5A0 100%); color: white; padding: 24px; border-radius: 12px;">
+            <div class="stat-card" style="background: linear-gradient(135deg, var(--accent) 0%, #00F5A0 100%); color: white; padding: 24px; border-radius: 12px;">
                 <div style="font-size: 40px; font-weight: 700;">{{ $stats['lab_assistants'] }}</div>
                 <div style="margin-top: 8px; opacity: 0.9;">Lab Assistants</div>
             </div>
-            <div class="stat-card" style="background: linear-gradient(135deg, #0D1B2A 0%, #FF0033 100%); color: white; padding: 24px; border-radius: 12px;">
+            <div class="stat-card" style="background: linear-gradient(135deg, var(--accent) 0%, #FF0033 100%); color: white; padding: 24px; border-radius: 12px;">
                 <div style="font-size: 40px; font-weight: 700;">{{ $stats['pending_approvals'] }}</div>
                 <div style="margin-top: 8px; opacity: 0.9;">Pending Approvals</div>
             </div>
-            <div class="stat-card" style="background: linear-gradient(135deg, #0D1B2A 0%, #FFB800 100%); color: white; padding: 24px; border-radius: 12px;">
+            <div class="stat-card" style="background: linear-gradient(135deg, var(--accent) 0%, #FFB800 100%); color: white; padding: 24px; border-radius: 12px;">
                 <div style="font-size: 40px; font-weight: 700;">{{ $stats['pending_requests'] }}</div>
                 <div style="margin-top: 8px; opacity: 0.9;">Pending Requests</div>
             </div>
@@ -90,7 +90,7 @@
         </div>
 
         <!-- Quick Actions -->
-        <div style="background: linear-gradient(90deg, #0D1B2A 0%, #415A77 100%); padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <div style="background: linear-gradient(90deg, var(--accent) 0%, var(--accentlight) 100%); padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
             <h2 style="margin:5px;font-size:28px;color:white;font-weight:700;">Quick Actions</h2>
             <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                 <a href="{{ route('admin.requests') }}" class="admin-btn btn-requests">

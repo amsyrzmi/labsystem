@@ -14,19 +14,20 @@
           </div>
         @endif
 
+
         <form action="{{ route('password.email') }}" method="POST" class="space-y-5" novalidate>
           @csrf
 
           <div>
             <label for="email" class="block text-sm font-medium mb-2">Email</label>
             <input id="email" name="email" type="email" value="{{ old('email') }}" required
-              class="block w-full rounded-xl border border-transparent bg-white/6 px-4 py-3 placeholder:text-[--muted] focus:outline-none focus:ring-2 focus:ring-[--accent] focus:border-transparent" 
+              class="block w-full rounded-xl border border-[var(--muted)] bg-white/6 px-4 py-3 placeholder:text-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent" 
               placeholder="you@Nexus.com" />
           </div>
 
           <div>
             <button type="submit"
-              class="w-full rounded-xl py-3 font-semibold text-[--nav-bg] bg-[--accent] hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-[--link-hover]">
+              class="w-full rounded-xl py-3 font-semibold text-[var(--nav-bg)] bg-[var(--accent)] hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-[var(--link-hover)]">
               Send Reset Link
             </button>
           </div>
@@ -53,10 +54,10 @@
     <aside class="hidden md:flex md:w-1/2 items-center justify-center p-8"
       style="background: transparent;">
       <div class="w-full h-full rounded-2xl flex flex-col items-center justify-center">
-        <div class="select-none" style="color: white;">
+        <div class="select-none" style="color: var(--accentlight);">
           made by NexusSphere
         </div>
-        <div class="text-7xl font-extrabold select-none" style="color: white;">
+        <div class="text-7xl font-extrabold select-none" style="color: var(--accent);">
           LabCore
         </div>
       </div>

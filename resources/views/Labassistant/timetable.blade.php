@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @vite('resources/css/lab-assistant.css')
-    <div class="container">
+    <div class="container no-shadow">
         <div class="page-header">
             <h1 class="page-title">Lab Timetable</h1>
             <div class="view-controls">
@@ -15,19 +15,19 @@
         <!-- Filters -->
         <div class="filter-bar">
             <div class="filter-group">
-                <span class="filter-label">Week:</span>
-                <select id="weekSelect" class="filter-select" onchange="changeWeek(this.value)">
-                    <option value="current">Current Week</option>
-                    <option value="next">Next Week</option>
-                    <option value="next2">2 Weeks Ahead</option>
+                <span class="filter-label2">Week:</span>
+                <select id="weekSelect" class="filter-select option-select" onchange="changeWeek(this.value)">
+                    <option class="option-select"value="current">Current Week</option>
+                    <option class="option-select"value="next">Next Week</option>
+                    <option class="option-select"value="next2">2 Weeks Ahead</option>
                 </select>
             </div>
             <div class="filter-group">
-                <span class="filter-label">Lab:</span>
-                <select id="labFilter" class="filter-select" onchange="filterByLab(this.value)">
-                    <option value="all">All Labs</option>
+                <span class="filter-label2">Lab:</span>
+                <select id="labFilter" class="filter-select option-select" onchange="filterByLab(this.value)">
+                    <option class="option-select"value="all">All Labs</option>
                     @foreach($labs as $lab)
-                        <option value="{{ $lab }}">{{ $lab }}</option>
+                        <option class="option-select"value="{{ $lab }}">{{ $lab }}</option>
                     @endforeach
                 </select>
             </div>
@@ -36,7 +36,7 @@
         <!-- Legend -->
         <div class="legend">
             <div class="legend-item">
-                <div class="legend-color" style="background: #1B263B;"></div>
+                <div class="legend-color" style="background: var(--accent);"></div>
                 <span style="color: black;">Scheduled Session</span>
             </div>
             <div class="legend-item">
@@ -106,7 +106,7 @@
             @else
                 @foreach($schedulesByDate as $date => $sessions)
                     <div class="date-group">
-                        <div style="color: white;" class="date-header">
+                        <div style="color: var(--text);" class="date-header">
                             {{ \Carbon\Carbon::parse($date)->format('l, d M Y') }}
                         </div>
                         @foreach($sessions as $session)

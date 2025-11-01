@@ -2,13 +2,13 @@
     <div style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
         <div style="margin-bottom: 24px;">
             <a href="{{ route('admin.users') }}" 
-               style="display: inline-flex; align-items: center; gap: 8px; color: #fff; text-decoration: none; font-weight: 600;">
+               style="display: inline-flex; align-items: center; gap: 8px; color: var(--accent); text-decoration: none; font-weight: 600;">
                 ← Back to Users
             </a>
         </div>
 
         <div style="background: white; padding: 32px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
-            <h1 style="color: #1b263b; font-size: 28px; margin-bottom: 8px;">Create New User</h1>
+            <h1 style="color: var(--accent); font-size: 28px; margin-bottom: 8px;">Create New User</h1>
             <p style="color: #7b8aa3; margin-bottom: 24px;">
                 Admin-created users are automatically approved and can log in immediately.
             </p>
@@ -104,7 +104,7 @@
                 </div>
 
                 <!-- Info Box -->
-                <div style="background: #778DA9; padding: 16px; border-radius: 8px; margin-bottom: 24px; border-left: 4px solid #1B263B;">
+                <div style="background: var(--accentlight); padding: 16px; border-radius: 8px; margin-bottom: 24px; border-left: 4px solid var(--accent);">
                     <div style="display: flex; gap: 12px;">
                         <div style="color: #fff; font-size: 20px;">ℹ</div>
                         <div style="color: #fff; font-size: 14px;">
@@ -121,7 +121,7 @@
                         Cancel
                     </a>
                     <button type="submit" 
-                            style="padding: 12px 24px; background: #415A77; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            style="padding: 12px 24px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
                         Create User
                     </button>
                 </div>

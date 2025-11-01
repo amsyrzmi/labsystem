@@ -5,7 +5,7 @@
 
     @vite('resources/css/lab-assistant.css')
 
-    <div class="container">
+    <div class="container no-shadow">
         <a href="{{ route('lab_assistant.requests.list') }}" class="back-link">
             ← Back to Requests
         </a>

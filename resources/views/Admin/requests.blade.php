@@ -4,7 +4,7 @@
 
     <div style="max-width:1200px;margin:20px auto;padding:0 16px;">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px;">
-            <h1 style="margin:0;font-size:32px;color:white;font-weight:700;">All Lab Requests</h1>
+            <h1 style="margin:0;font-size:32px;color:var(--accent);font-weight:700;">All Lab Requests</h1>
         </div>
 
         <!-- Filters -->
@@ -12,15 +12,15 @@
             <form method="GET" action="{{ route('admin.requests') }}" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: end;">
                 <!-- Search -->
                 <div style="flex: 1; min-width: 250px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #fff; font-size: 14px;">Search</label>
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text); font-size: 14px;">Search</label>
                     <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Teacher or class..." 
                            style="width: 100%; padding: 10px 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 14px;">
                 </div>
 
                 <!-- Status Filter -->
                 <div style="min-width: 150px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #fff; font-size: 14px;">Status</label>
-                    <select name="status" style="background:#0D1B2A;width: 100%; padding: 10px 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 14px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text); font-size: 14px;">Status</label>
+                    <select name="status" style="background:var(--accent);color:var(--page-bg);width: 100%; padding: 10px 12px; border: 2px solid var(--accent); border-radius: 8px; font-size: 14px;">
                         <option value="">All Status</option>
                         <option value="pending" {{ $status === 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="approved" {{ $status === 'approved' ? 'selected' : '' }}>Approved</option>
@@ -30,8 +30,8 @@
 
                 <!-- Lab Number Filter -->
                 <div style="min-width: 150px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #fff; font-size: 14px;">Lab</label>
-                    <select name="lab_number" style="background:#0D1B2A;width: 100%; padding: 10px 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 14px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text); font-size: 14px;">Lab</label>
+                    <select name="lab_number" style="background:var(--accent);color:var(--page-bg);width: 100%; padding: 10px 12px; border: 2px solid var(--accent); border-radius: 8px; font-size: 14px;">
                         <option value="">All Labs</option>
                         @foreach($labNumbers as $lab)
                             <option value="{{ $lab }}" {{ $labNumber === $lab ? 'selected' : '' }}>{{ $lab }}</option>
@@ -41,17 +41,17 @@
 
                 <!-- Buttons -->
                 <div style="display: flex; gap: 8px;">
-                    <button type="submit" style="padding: 10px 20px; background: #778DA9; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                    <button type="submit" style="padding: 10px 20px; background: var(--accentlight); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
                         Filter
                     </button>
-                    <a href="{{ route('admin.requests') }}" style="padding: 10px 20px; background: #6c757d; color: white; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: 600;">
+                    <a href="{{ route('admin.requests') }}" style="padding: 10px 20px; background: var(--muted); color: white; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: 600;">
                         Reset
                     </a>
                 </div>
             </form>
         </div>
 
-        <div class="container" style="max-width: 1200px; margin: 0 auto;">
+        <div class="container no-shadow" style="max-width: 1200px; margin: 0 auto;">
             @if(session('success'))
                 <div style="background:#e6ffed;padding:12px;border-radius:8px;margin-bottom:18px;color:#1f8a46;">
                     {{ session('success') }}
@@ -65,23 +65,17 @@
             @else
                 <div style="display:grid;grid-template-columns:1fr;gap:18px;">
                     @foreach($requests as $r)
-                        <div class="request-card" style="
-                            background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
-                            border: 1px solid #e6eef6;
-                            border-radius: 12px;
-                            padding: 18px;
-                            box-shadow: 0 6px 18px rgba(30,60,90,0.06);
-                            ">
+                        <div class="request-card" >
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                                 <div>
-                                    <div style="font-weight:700;font-size:18px;color:#1b263b;">
+                                    <div style="font-weight:700;font-size:18px;color:var(--accent);">
                                         {{ optional($r->subject)->name ?? '— No subject —' }}
                                     </div>
-                                    <div style="margin-top:4px;color:#415A77;font-size:14px;">
+                                    <div style="margin-top:4px;color:var(--text);font-size:14px;">
                                         Experiment: {{ optional($r->experiment)->name ?? '— No experiment selected —' }}
                                     </div>
                                     <!-- NEW: Show Teacher Name -->
-                                    <div style="margin-top:4px;color:#7b8aa3;font-size:14px;">
+                                    <div style="margin-top:4px;color:var(--text);font-size:14px;">
                                         👤 Teacher: <strong>{{ optional($r->user)->name ?? 'Unknown' }}</strong>
                                     </div>
                                 </div>
@@ -105,35 +99,35 @@
 
                             <div style="display:flex;gap:5px;flex-wrap:wrap;">
                                 <div style="flex:1;min-width:140px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Students</div>
-                                    <div style="font-weight:600;color:#26394f;">{{ $r->num_students ?? '—' }}</div>
+                                    <div style="font-size:12px;color:var(--accent);">Students</div>
+                                    <div style="font-weight:600;color:var(--text);">{{ $r->num_students ?? '—' }}</div>
                                 </div>
 
                                 <div style="flex:1;min-width:140px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Lab Number</div>
-                                    <div style="font-weight:600;color:#26394f;">{{ $r->lab_number ?? '—' }}</div>
+                                    <div style="font-size:12px;color:var(--accent);">Lab Number</div>
+                                    <div style="font-weight:600;color:var(--text);">{{ $r->lab_number ?? '—' }}</div>
                                 </div>
 
                                 <div style="flex:1;min-width:140px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Class Name</div>
-                                    <div style="font-weight:600;color:#26394f;">{{ $r->classname ?? '—' }}</div>
+                                    <div style="font-size:12px;color:var(--accent);">Class Name</div>
+                                    <div style="font-weight:600;color:var(--text);">{{ $r->classname ?? '—' }}</div>
                                 </div>
 
                                 <div style="flex:1;min-width:140px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Group size</div>
-                                    <div style="font-weight:600;color:#26394f;">{{ $r->group_size ?? '—' }}</div>
+                                    <div style="font-size:12px;color:var(--accent);">Group size</div>
+                                    <div style="font-weight:600;color:var(--text);">{{ $r->group_size ?? '—' }}</div>
                                 </div>
 
                                 <div style="flex:1;min-width:160px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Date</div>
-                                    <div style="font-weight:600;color:#26394f;">
+                                    <div style="font-size:12px;color:var(--accent);">Date</div>
+                                    <div style="font-weight:600;color:var(--text);">
                                         {{ \Carbon\Carbon::parse($r->preferred_date)->format('d M Y') }}
                                     </div>
                                 </div>
 
                                 <div style="flex:1;min-width:120px;">
-                                    <div style="font-size:12px;color:#7b8aa3;">Time</div>
-                                    <div style="font-weight:600;color:#26394f;">
+                                    <div style="font-size:12px;color:var(--accent);">Time</div>
+                                    <div style="font-weight:600;color:var(--text);">
                                         {{ \Carbon\Carbon::parse($r->preferred_time)->format('H:i') }}
                                     </div>
                                 </div>
@@ -146,10 +140,7 @@
                             @endif
 
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;flex-wrap:wrap;">
-                                <a href="{{ route('admin.requests.details', $r->id) }}" class="btn-details" style="
-                                    display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #e1e8ed;
-                                    background:white;color:#1b263b;text-decoration:none;font-weight:600;
-                                    ">
+                                <a href="{{ route('admin.requests.details', $r->id) }}" class="btn-details">
                                     View Details
                                 </a>
 
@@ -195,13 +186,23 @@
 
                 <!-- Pagination -->
                 <div style="margin-top: 24px;">
-                    {{ $requests->links() }}
+                    {{ $requests->links('vendor.pagination.tailwind') }}
                 </div>
             @endif
         </div>
     </div>
 
     <style>
-        .btn-details:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(66,102,178,0.08); }
+        .btn-details {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #e1e8ed;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-details:hover { background:var(--accentlight);transform: translateY(-2px); box-shadow: 0 6px 18px rgba(66,102,178,0.08); }
     </style>
 </x-admin-layout>

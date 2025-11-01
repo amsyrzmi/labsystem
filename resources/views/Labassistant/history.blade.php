@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @vite(['resources/css/lab-assistant.css'])
-    <div class="container">
+    <div class="container no-shadow">
         <div class="page-header">
             <h1 class="page-title">Request History</h1>
         </div>
@@ -70,7 +70,7 @@
 
                         <div class="teacher-info">
                             👤 <strong>Teacher:</strong> {{ optional($req->user)->name ?? 'Unknown' }} 
-                            <span style="color: #7b8aa3; margin-left: 8px;">Request #{{ $req->id }}</span>
+                            <span style="color: var(--page-bg); margin-left: 8px;">Request #{{ $req->id }}</span>
                             <span class="date-badge" style="float: right;">
                                 {{ \Carbon\Carbon::parse($req->preferred_date)->format('d M Y') }}
                             </span>
@@ -124,7 +124,7 @@
                             </div>
                         @endif
 
-                        <a href="{{ route('lab_assistant.requests.details', $req->id) }}" class="btn-view">
+                        <a href="{{ route('lab_assistant.requests.details', $req->id) }}" class="btn btn-view">
                             View Full Details
                         </a>
                     </div>
