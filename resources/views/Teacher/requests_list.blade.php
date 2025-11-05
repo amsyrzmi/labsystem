@@ -18,6 +18,49 @@
                 + New Request
             </a>
         </div>
+        <!-- Filters -->
+        <div style="background: transparent; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <form method="GET" action="{{ route('teacher.requests.list') }}" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: end;">
+                <!-- Search -->
+                <div style="flex: 1; min-width: 250px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text); font-size: 14px;">Search</label>
+                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Class..." 
+                           style="width: 100%; padding: 10px 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 14px;">
+                </div>
+
+                <!-- Status Filter -->
+                <div style="min-width: 150px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text); font-size: 14px;">Status</label>
+                    <select name="status" style="background:var(--accent);color:var(--page-bg);width: 100%; padding: 10px 12px; border: 2px solid var(--accent); border-radius: 8px; font-size: 14px;">
+                        <option value="">All Status</option>
+                        <option value="pending" {{ $status === 'pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="approved" {{ $status === 'approved' ? 'selected' : '' }}>Approved</option>
+                        <option value="rejected" {{ $status === 'rejected' ? 'selected' : '' }}>Rejected</option>
+                    </select>
+                </div>
+
+                <!-- Lab Number Filter -->
+                <div style="min-width: 150px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: var(--text); font-size: 14px;">Lab</label>
+                    <select name="lab_number" style="background:var(--accent);color:var(--page-bg);width: 100%; padding: 10px 12px; border: 2px solid var(--accent); border-radius: 8px; font-size: 14px;">
+                        <option value="">All Labs</option>
+                        @foreach($labNumbers as $lab)
+                            <option value="{{ $lab }}" {{ $labNumber === $lab ? 'selected' : '' }}>{{ $lab }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Buttons -->
+                <div style="display: flex; gap: 8px;">
+                    <button type="submit" style="padding: 10px 20px; background: var(--accentlight); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        Filter
+                    </button>
+                    <a href="{{ route('teacher.requests.list') }}" style="padding: 10px 20px; background: var(--muted); color: white; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: 600;">
+                        Reset
+                    </a>
+                </div>
+            </form>
+        </div>
 
         <div class="container no-shadow" style="max-width: 1100px; margin: 0 auto;">
             @if(session('success'))
