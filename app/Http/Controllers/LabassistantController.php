@@ -18,18 +18,44 @@ class LabassistantController extends Controller
     /**
      * Show ALL pending/approved requests (not user-specific)
      */
-    public function listAllRequests()
+    public function listAllRequests(Request $request)
     {
-        $requests = LabRequest::with(['subject', 'topic', 'experiment', 'user'])
-            ->whereIn('status', ['pending', 'approved'])
-            ->where('preferred_date', '>=', now())
-            ->orderBy('preferred_date', 'asc')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $query = LabRequest::with(['subject', 'topic', 'experiment', 'user']);
 
-        return view('Labassistant.requests_list', [
-            'requests' => $requests,
-        ]);
+        // Filter by status
+        $status = $request->get('status');
+        if ($status && in_array($status, ['pending', 'approved', 'rejected'])) {
+            $query->where('status', $status);
+        }
+
+        // Filter by lab number
+        $labNumber = $request->get('lab_number');
+        if ($labNumber) {
+            $query->where('lab_number', $labNumber);
+        }
+
+        // Search by teacher name or class
+        $search = $request->get('search');
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', function($userQuery) use ($search) {
+                    $userQuery->where('name', 'like', "%{$search}%");
+                })
+                ->orWhere('classname', 'like', "%{$search}%");
+            });
+        }
+
+        // Only show upcoming/active requests
+        $query->where('preferred_date', '>=', now()->subDays(1))
+            ->orderBy('preferred_date', 'asc')
+            ->orderBy('created_at', 'desc');
+
+        $requests = $query->paginate(20);
+
+        // Get unique lab numbers for filter
+        $labNumbers = LabRequest::distinct()->pluck('lab_number')->sort();
+
+        return view('Labassistant.requests_list', compact('requests', 'status', 'labNumber', 'search', 'labNumbers'));
     }
 
     /**

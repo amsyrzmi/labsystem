@@ -207,7 +207,8 @@ class TeacherController extends Controller
     /**
      * IMPROVED: Show active/upcoming requests only
      */
-    public function listUserRequests()
+    /**
+     *     public function listUserRequests()
     {
         $requests = LabRequest::with(['subject', 'topic', 'experiment'])
             ->where('user_id', Auth::id())
@@ -227,6 +228,49 @@ class TeacherController extends Controller
         return view('Teacher.requests_list', [
             'requests' => $requests,
         ]);
+    }
+     * 
+     */
+
+
+    public function listUserRequests(Request $request)
+    {
+        $query = LabRequest::with(['subject', 'topic', 'experiment'])->where('user_id', Auth::id());
+
+        // Filter by status
+        $status = $request->get('status');
+        if ($status && in_array($status, ['pending', 'approved', 'rejected'])) {
+            $query->where('status', $status);
+        }
+
+        // Filter by lab number
+        $labNumber = $request->get('lab_number');
+        if ($labNumber) {
+            $query->where('lab_number', $labNumber);
+        }
+
+        // Search by teacher name or class
+        $search = $request->get('search');
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', function($userQuery) use ($search) {
+                    $userQuery->where('name', 'like', "%{$search}%");
+                })
+                ->orWhere('classname', 'like', "%{$search}%");
+            });
+        }
+
+        // Only show upcoming/active requests
+        $query->where('preferred_date', '>=', now()->subDays(1))
+            ->orderBy('preferred_date', 'asc')
+            ->orderBy('created_at', 'desc');
+
+        $requests = $query->paginate(20);
+
+        // Get unique lab numbers for filter
+        $labNumbers = LabRequest::distinct()->pluck('lab_number')->sort();
+
+        return view('Teacher.requests_list', compact('requests', 'status', 'labNumber', 'search', 'labNumbers'));
     }
 
     /**
