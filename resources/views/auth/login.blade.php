@@ -1,14 +1,14 @@
 <x-layout>
 <div class="min-h-[calc(100vh-0px)] flex flex-col md:flex-row">
     <!-- LEFT: Login form (full height/width of left column) -->
-    <div class="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12">
+    <div class="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12 ">
       <div class="w-full max-w-md h-full md:h-auto bg-white/5 backdrop-blur-sm rounded-2xl shadow-lg p-8 md:p-10 flex flex-col justify-center">
         <header class="mb-6">
           <h1 class="text-3xl font-bold tracking-tight">Welcome back</h1>
           <p class="text-sm mt-1 text-[--muted]">Sign in to your LabCore account</p>
         </header>
 
-        <form action="{{ route('login') }}" method="POST" class="space-y-5" novalidate>
+        <form action="{{ route('login') }}" method="POST" class="space-y-5 " novalidate>
           @csrf
 
           <div>
@@ -70,8 +70,32 @@
         <div class="text-7xl font-extrabold select-none" style="color: var(--accent);">
           LabCore
         </div>
+        
+        <div class="microscope w-100 m-8 transition duration-500 ease-in-out transform hover:scale-90">
+          <img src="{{ asset('images/microscope.png') }}" alt="">
+        </div>
+      </div>
       </div>
     </aside>
   </div>
+  <style>
+    .microscope{
+      animation: pulseeffect 2s ease-in infinite;
+    }
+    @keyframes pulseeffect{
+      0%{
+        transform:scale(1);
+        opacity: 1;
+      }
+      50%{
+        transform:scale(1.05);
+        opacity: 0.90;
+      }
+      100%{
+        transform:scale(1.0);
+        opacity: 1;
+      }
+    }
+  </style>
 
 </x-layout>

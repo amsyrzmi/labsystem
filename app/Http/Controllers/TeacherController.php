@@ -221,7 +221,7 @@ class TeacherController extends Controller
                       });
             })
             ->orderBy('preferred_date', 'asc') 
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         return view('Teacher.requests_list', [

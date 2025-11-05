@@ -130,7 +130,29 @@
         <div class="text-7xl font-extrabold select-none" style="color: var(--accent);">
           LabCore
         </div>
+        <div class="microscope w-100 m-8 transition duration-500 ease-in-out transform hover:scale-90">
+          <img src="{{ asset('images/microscope.png') }}" alt="">
+        </div>
       </div>
     </aside>
   </div>
+    <style>
+    .microscope{
+      animation: pulseeffect 2s ease-in infinite;
+    }
+    @keyframes pulseeffect{
+      0%{
+        transform:scale(1);
+        opacity: 1;
+      }
+      50%{
+        transform:scale(1.05);
+        opacity: 0.90;
+      }
+      100%{
+        transform:scale(1.0);
+        opacity: 1;
+      }
+    }
+  </style>
 </x-layout>

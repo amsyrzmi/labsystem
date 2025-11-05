@@ -59,6 +59,17 @@
   </header>
 
   <main class="main">
+      <div id="loader"
+          style="display: none;
+                  position: fixed;
+                  z-index: 9999;
+                  top: 0; left: 0;
+                  width: 100%; height: 100%;
+                  background: var(--page-bg);
+                  justify-content: center;
+                  align-items: center;">
+          <img src="{{ asset('images/loading.gif') }}" alt="Loading..." style="width:250px;">
+      </div>
     {{ $slot }}
   </main>
 

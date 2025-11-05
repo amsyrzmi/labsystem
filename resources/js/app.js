@@ -16,6 +16,52 @@ document.addEventListener('DOMContentLoaded', function () {
     const isOpen = btn.getAttribute('aria-expanded') === 'true';
     setOpen(!isOpen);
   });
+  const loader = document.getElementById('loader');
+  const header = document.querySelector('header');
+
+  if (!loader) return;
+
+  // Helper to show loader with optional header-covering logic
+  function showLoader() {
+    // If header contains class "hide-on-load" (you can rename), let the loader cover header
+    if (header && header.classList.contains('hide-on-load')) {
+      loader.classList.add('cover-header');
+    } else {
+      loader.classList.remove('cover-header');
+    }
+
+    // show with class for transition
+    loader.classList.add('is-visible');
+
+    // ensure it becomes display:flex (CSS transition needs display set)
+    loader.style.display = 'flex';
+  }
+
+  // Helper to hide loader (useful for AJAX flows; page navigation will unload anyway)
+  function hideLoader() {
+    loader.classList.remove('is-visible');
+    // wait for transition then remove display to avoid overlaying invisible element
+    setTimeout(() => {
+      if (!loader.classList.contains('is-visible')) {
+        loader.style.display = 'none';
+      }
+    }, 250);
+  }
+
+  // Show loader on any normal HTML form submit
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', function (e) {
+      // If a form submit is done via JS/AJAX and prevented, consider not showing loader.
+      // Here we show loader unconditionally — modify if you have AJAX forms.
+      showLoader();
+    });
+  });
+
+  // Show loader on navigation / refresh
+  window.addEventListener('beforeunload', function () {
+    // show loader right before leaving (browser may ignore heavy work but overlay will appear)
+    showLoader();
+  });
 
   // close on Escape
   document.addEventListener('keydown', (e) => {
@@ -277,6 +323,8 @@ backBtn2.addEventListener('click', function() {
     page3.classList.remove('active');
     page2.classList.add('active');
 });
+
+
 
 
 

@@ -9,7 +9,7 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-  <header>
+  <header class="hide-on-load">
     <nav class="nav" aria-label="Main navigation">
       <div class="nav-row">
         <a class="brand" href="#">LabCore</a>
@@ -45,6 +45,9 @@
   </header>
 
   <main class="main">
+      <div id="loader">
+          <img src="{{ asset('images/Authloading.gif') }}" alt="Loading..." style="width:250px;">
+      </div>
     {{ $slot }}
   </main>
 
