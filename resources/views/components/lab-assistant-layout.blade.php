@@ -83,6 +83,9 @@
   </header>
 
   <main class="main">
+      <div id="loader">
+          <img src="{{ asset('images/loading.gif') }}" alt="Loading..." style="width:250px;">
+      </div>
     {{ $slot }}
   </main>
 
