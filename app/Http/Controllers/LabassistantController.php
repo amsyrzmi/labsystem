@@ -201,6 +201,33 @@ class LabassistantController extends Controller
             ->orderBy('approved_time')
             ->get();
 
+        // Process schedules to split into individual 30-minute segments
+        $processedSchedules = collect();
+        
+        foreach($schedules as $session) {
+            $startTime = Carbon::parse($session->approved_time);
+            $duration = $session->duration;
+            
+            // Calculate how many 30-minute slots this session occupies
+            $slotsNeeded = ceil($duration / 30);
+            
+            // Create individual segment for each 30-minute slot
+            for ($i = 0; $i < $slotsNeeded; $i++) {
+                $slotTime = $startTime->copy()->addMinutes($i * 30);
+                $segmentDuration = min(30, $duration - ($i * 30)); // Remaining duration or 30 min
+                
+                $segment = clone $session;
+                $segment->segment_time = $slotTime->format('H:i');
+                $segment->segment_date = $session->approved_date;
+                $segment->segment_duration = $segmentDuration;
+                $segment->segment_number = $i + 1;
+                $segment->total_segments = $slotsNeeded;
+                $segment->original_start_time = $startTime->format('H:i');
+                
+                $processedSchedules->push($segment);
+            }
+        }
+
         // Group schedules by date for list view
         $schedulesByDate = $schedules->groupBy(function($item) {
             return Carbon::parse($item->approved_date)->format('Y-m-d');
@@ -233,7 +260,7 @@ class LabassistantController extends Controller
         ];
 
         return view('Labassistant.timetable', [
-            'schedules' => $schedules,
+            'schedules' => $processedSchedules,
             'schedulesByDate' => $schedulesByDate,
             'labs' => $labs,
             'weekDays' => $weekDays,
