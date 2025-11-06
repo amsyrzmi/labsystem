@@ -805,7 +805,7 @@ textarea.form-control {
 }
 
 .day-header.today {
-    background: #415A77;
+    background: var(--accentlight);
     color: white;
 }
 

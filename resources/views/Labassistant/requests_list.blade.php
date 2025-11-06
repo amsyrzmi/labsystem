@@ -154,6 +154,10 @@
                     </div>
                 @endforeach
             </div>
+                <!-- Pagination -->
+                <div style="margin-top: 24px;">
+                    {{ $requests->links('vendor.pagination.tailwind') }}
+                </div>
         @endif
     </div>
 

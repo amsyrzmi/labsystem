@@ -50,7 +50,7 @@ class LabassistantController extends Controller
             ->orderBy('preferred_date', 'asc')
             ->orderBy('created_at', 'desc');
 
-        $requests = $query->paginate(20);
+        $requests = $query->paginate(10);
 
         // Get unique lab numbers for filter
         $labNumbers = LabRequest::distinct()->pluck('lab_number')->sort();
