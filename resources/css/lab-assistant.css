@@ -750,9 +750,10 @@ textarea.form-control {
 }
 
 /* ============================================
-   TIMETABLE SPECIFIC
+   TIMETABLE SPECIFIC STYLES
    ============================================ */
 
+/* Legend */
 .legend {
     display: flex;
     gap: 20px;
@@ -775,6 +776,7 @@ textarea.form-control {
     border-radius: 4px;
 }
 
+/* Timetable Container */
 .timetable-week {
     background: white;
     border-radius: 12px;
@@ -783,6 +785,7 @@ textarea.form-control {
     overflow-x: auto;
 }
 
+/* Week Grid - Main Table Structure */
 .week-grid {
     display: grid;
     grid-template-columns: 80px repeat(7, 1fr);
@@ -792,11 +795,7 @@ textarea.form-control {
     min-width: 900px;
 }
 
-.time-slot, .day-header, .schedule-cell {
-    background: white;
-    padding: 12px;
-}
-
+/* Day Headers */
 .day-header {
     text-align: center;
     font-weight: 700;
@@ -810,44 +809,104 @@ textarea.form-control {
     color: white;
 }
 
+/* Time Slot Column */
 .time-slot {
     font-weight: 600;
     color: #7b8aa3;
     font-size: 13px;
     text-align: center;
     background: #f8f9fa;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Schedule Cell - Individual Time Slot Cell */
 .schedule-cell {
+    background: white;
+    padding: 4px;
     min-height: 80px;
     position: relative;
 }
 
+/* Container for Multiple Sessions in Same Time Slot */
+.session-blocks-container {
+    display: flex;
+    gap: 4px;
+    height: 100%;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+/* Individual Session Block */
 .session-block {
     background: linear-gradient(135deg, var(--accent) 0%, var(--accentlight) 100%);
     color: white;
-    padding: 8px;
+    padding: 6px;
     border-radius: 6px;
-    margin-bottom: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 13px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
 }
 
+
+
+/* Session Block Hover Effect */
 .session-block:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+    z-index: 20;
 }
 
+/* Session Block Content */
 .session-title {
     font-weight: 700;
     margin-bottom: 2px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .session-detail {
-    font-size: 11px;
-    opacity: 0.9;
+    font-size: 10px;
+    opacity: 0.95;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 1px;
 }
+
+/* Visual Indicator for Multi-Segment Sessions */
+.session-block::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    display: none;
+}
+
+.session-block[data-session-id]::after {
+    display: block;
+}
+
+/* ============================================
+   LIST VIEW STYLES
+   ============================================ */
 
 .timetable-list {
     display: none;
@@ -857,6 +916,21 @@ textarea.form-control {
     display: block;
 }
 
+/* Date Group in List View */
+.date-group {
+    margin-bottom: 32px;
+}
+
+.date-header {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1b263b;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #415A77;
+}
+
+/* Session Card in List View */
 .session-card {
     background: white;
     border-radius: 12px;
@@ -902,11 +976,219 @@ textarea.form-control {
     margin-top: 12px;
 }
 
+/* Mobile Message */
 .mobile-message {
     text-align: center;
     color: #7b8aa3;
     padding: 20px;
     display: none;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN FOR TIMETABLE
+   ============================================ */
+
+/* Tablets and Small Laptops */
+@media (max-width: 1200px) {
+    .week-grid {
+        grid-template-columns: 70px repeat(7, 1fr);
+        min-width: 800px;
+    }
+    
+    .session-block {
+        font-size: 10px;
+        padding: 4px;
+    }
+    
+    .session-title {
+        font-size: 11px;
+    }
+    
+    .session-detail {
+        font-size: 9px;
+    }
+    
+    .time-slot {
+        font-size: 12px;
+        padding: 8px;
+    }
+    
+    .day-header {
+        padding: 12px 8px;
+        font-size: 14px;
+    }
+}
+
+/* Tablets Portrait */
+@media (max-width: 992px) {
+    .timetable-week {
+        padding: 12px;
+    }
+    
+    .week-grid {
+        grid-template-columns: 60px repeat(7, 1fr);
+        min-width: 700px;
+    }
+    
+    .session-block {
+        padding: 3px;
+        font-size: 9px;
+    }
+    
+    .session-title {
+        font-size: 10px;
+    }
+    
+    .session-detail {
+        font-size: 8px;
+    }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+    .legend {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .legend-item {
+        font-size: 13px;
+    }
+    
+    .legend-color {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .session-time {
+        font-size: 16px;
+    }
+    
+    .session-lab {
+        font-size: 12px;
+        padding: 3px 10px;
+    }
+}
+
+/* ============================================
+   PRINT STYLES FOR TIMETABLE
+   ============================================ */
+
+@media print {
+    .timetable-week {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .week-grid {
+        background: white;
+        border: 2px solid #000;
+    }
+    
+    .session-block {
+        background: white !important;
+        color: black !important;
+        border: 1px solid #000;
+    }
+    
+    .session-block:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .filter-bar,
+    .view-controls,
+    .legend {
+        display: none;
+    }
+    
+    .mobile-message {
+        display: none !important;
+    }
+    
+    .week-grid {
+        display: grid !important;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================ */
+
+/* Focus styles for keyboard navigation */
+.session-block:focus {
+    outline: 3px solid #FFD700;
+    outline-offset: 2px;
+    z-index: 30;
+}
+
+.session-card:focus {
+    outline: 3px solid #FFD700;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .session-block {
+        border: 2px solid white;
+    }
+    
+    .week-grid {
+        gap: 2px;
+        border: 2px solid #000;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .session-block,
+    .session-card {
+        transition: none;
+    }
+    
+    .session-block:hover,
+    .session-card:hover {
+        transform: none;
+    }
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+
+.schedule-cell.loading {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e0e0e0 50%,
+        #f0f0f0 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
+.schedule-cell:empty::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.schedule-cell:hover:empty {
+    background: #f8f9fa;
 }
 
 /* ============================================
@@ -947,7 +1229,7 @@ textarea.form-control {
         width: 100%;
     }
 
-    /* Timetable mobile */
+    /* Hide week grid on mobile */
     .week-grid {
         display: none;
     }
@@ -959,9 +1241,40 @@ textarea.form-control {
     .mobile-message {
         display: block;
     }
-
+    
+    /* Stack session blocks vertically when multiple in same slot */
+    .session-blocks-container {
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    .session-block {
+        min-height: 60px;
+        font-size: 11px;
+        padding: 8px;
+    }
+    
+    .session-title {
+        font-size: 12px;
+    }
+    
+    .session-detail {
+        font-size: 10px;
+    }
+    
+    /* List view adjustments */
     .session-info {
         grid-template-columns: 1fr;
+    }
+    
+    .session-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .date-header {
+        font-size: 18px;
     }
 }
 
