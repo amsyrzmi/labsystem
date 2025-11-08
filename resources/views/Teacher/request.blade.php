@@ -1,4 +1,4 @@
-
+<!-- Updated Request Form with Dynamic Class Selection -->
 <x-teacher-layout>
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +17,7 @@
             ">
                 Back
             </a>
+
   </div>
   <div class="container">
         <h2>Book Lab Session</h2>
@@ -92,9 +93,14 @@
                     <input type="number" id="repetition" name="repetition" min="1" max="50" required>
                 </div>
 
-                <div class="input-group">
-                    <label for="classname">Class</label>
-                    <input type="text" id="classname" name="classname" required>
+                <!-- UPDATED: Class selection with radio buttons -->
+                <div class="form-section">
+                    <label class="section-title">Select Class</label>
+                    <div class="radio-group" id="classnameGroup">
+                        <!-- Classes will be dynamically populated based on form level -->
+                    </div>
+                    <!-- Hidden input to store selected class -->
+                    <input type="hidden" name="classname" id="classnameValue" required>
                 </div>
 
                 <div class="form-section">
@@ -197,286 +203,5 @@
             </div>
         </form>
     </div>
-<script>
-    // Get CSRF token
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-    // Real-time availability checking
-    let availabilityCheckTimeout;
-
-    // Get selected lab number from radio buttons
-    function getSelectedLabNumber() {
-        const selectedLab = document.querySelector('input[name="lab_number"]:checked');
-        return selectedLab ? selectedLab.value : null;
-    }
-
-    function checkAvailability() {
-        const labValue = getSelectedLabNumber();
-        const preferredDate = document.getElementById('preferredDate');
-        const preferredTime = document.getElementById('preferredTime');
-        const duration = document.getElementById('duration');
-        const nextBtn2 = document.getElementById('nextBtn2');
-
-        // Check if elements exist and have values
-        if (!preferredDate || !preferredTime || !duration || !nextBtn2) {
-            return;
-        }
-
-        const dateValue = preferredDate.value;
-        const timeValue = preferredTime.value;
-        const durationValue = duration.value;
-
-        // Only check if all fields are filled
-        if (!labValue || !dateValue || !timeValue || !durationValue) {
-            // Enable button if fields are not complete yet
-            nextBtn2.disabled = false;
-            return;
-        }
-
-        // Clear previous timeout
-        clearTimeout(availabilityCheckTimeout);
-
-        // Show checking message
-        showAvailabilityMessage('Checking availability...', 'info');
-        
-        // Disable button while checking
-        nextBtn2.disabled = true;
-
-        // Debounce the check (wait 500ms after user stops typing)
-        availabilityCheckTimeout = setTimeout(async () => {
-            try {
-                const response = await fetch('{{ route("teacher.check.availability") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        lab_number: labValue,
-                        preferred_date: dateValue,
-                        preferred_time: timeValue,
-                        duration: parseInt(durationValue)
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-
-                if (data.available) {
-                    showAvailabilityMessage('✓ Time slot is available!', 'success');
-                    nextBtn2.disabled = false; // ENABLE button
-                } else {
-                    showAvailabilityMessage('⚠ ' + data.message, 'warning');
-                    nextBtn2.disabled = true; // KEEP button DISABLED
-                }
-            } catch (error) {
-                console.error('Error checking availability:', error);
-                showAvailabilityMessage('Unable to check availability. Please try again.', 'error');
-                nextBtn2.disabled = false; // Allow to proceed despite error
-            }
-        }, 500);
-    }
-
-    function showAvailabilityMessage(message, type) {
-        // Remove existing message
-        const existingMsg = document.getElementById('availabilityMessage');
-        if (existingMsg) {
-            existingMsg.remove();
-        }
-
-        // Create new message
-        const msgDiv = document.createElement('div');
-        msgDiv.id = 'availabilityMessage';
-        msgDiv.style.padding = '12px';
-        msgDiv.style.borderRadius = '8px';
-        msgDiv.style.marginTop = '12px';
-        msgDiv.style.fontSize = '14px';
-        msgDiv.style.fontWeight = '600';
-
-        if (type === 'success') {
-            msgDiv.style.background = '#d4edda';
-            msgDiv.style.color = '#155724';
-            msgDiv.style.border = '1px solid #c3e6cb';
-        } else if (type === 'warning') {
-            msgDiv.style.background = '#fff3cd';
-            msgDiv.style.color = '#856404';
-            msgDiv.style.border = '1px solid #ffc107';
-        } else if (type === 'info') {
-            msgDiv.style.background = '#d1ecf1';
-            msgDiv.style.color = '#0c5460';
-            msgDiv.style.border = '1px solid #bee5eb';
-        } else {
-            msgDiv.style.background = '#f8d7da';
-            msgDiv.style.color = '#721c24';
-            msgDiv.style.border = '1px solid #f5c6cb';
-        }
-
-        msgDiv.textContent = message;
-
-        // Insert after the time input
-        const timeInput = document.getElementById('preferredTime');
-        if (timeInput && timeInput.parentElement) {
-            timeInput.parentElement.appendChild(msgDiv);
-        }
-    }
-
-    // Add event listeners when DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all lab number radio buttons
-        const labRadios = document.querySelectorAll('input[name="lab_number"]');
-        const preferredDate = document.getElementById('preferredDate');
-        const preferredTime = document.getElementById('preferredTime');
-        const duration = document.getElementById('duration');
-
-        // Add listeners to lab radio buttons
-        labRadios.forEach(radio => {
-            radio.addEventListener('change', checkAvailability);
-        });
-
-        if (preferredDate) preferredDate.addEventListener('change', checkAvailability);
-        if (preferredTime) preferredTime.addEventListener('change', checkAvailability);
-        if (duration) duration.addEventListener('change', checkAvailability);
-    });
-    // ============================================
-    // PAGE 2 VALIDATION - Disable Next until all fields filled
-    // ============================================
-    
-    function validatePage2() {
-        const numStudents = document.getElementById('numStudents');
-        const groupSize = document.getElementById('groupSize');
-        const repetition = document.getElementById('repetition');
-        const classname = document.getElementById('classname');
-        const labNumber = document.querySelector('input[name="lab_number"]:checked');
-        const preferredDate = document.getElementById('preferredDate');
-        const duration = document.getElementById('duration');
-        const preferredTime = document.getElementById('preferredTime');
-        const nextBtn2 = document.getElementById('nextBtn2');
-
-        if (!nextBtn2) return;
-
-        // Check if all required fields are filled
-        const allFilled = numStudents && numStudents.value &&
-                         groupSize && groupSize.value &&
-                         repetition && repetition.value &&
-                         classname && classname.value &&
-                         labNumber &&
-                         preferredDate && preferredDate.value &&
-                         duration && duration.value &&
-                         preferredTime && preferredTime.value;
-
-        // Validate number fields are within range
-        const validNumbers = numStudents && parseInt(numStudents.value) >= 1 && parseInt(numStudents.value) <= 100 &&
-                            groupSize && parseInt(groupSize.value) >= 1 && parseInt(groupSize.value) <= 50 &&
-                            repetition && parseInt(repetition.value) >= 1 && parseInt(repetition.value) <= 50;
-
-        // Only enable if all fields filled AND numbers are valid
-        // Note: availability check will override this if slot is not available
-        if (allFilled && validNumbers) {
-            // Don't enable yet - let availability check decide
-            // Just trigger availability check
-            if (typeof checkAvailability === 'function') {
-                checkAvailability();
-            }
-        } else {
-            nextBtn2.disabled = true;
-        }
-    }
-
-    // Disable submit until ready
-    
-    function validatePage3() {
-        const submitBtn = document.querySelector('.btn-submit');
-        
-        if (!submitBtn) return;
-
-        // Page 3 has materials/apparatus loaded, which means:
-        // - Page 1 is complete (experiment selected)
-        // - Page 2 is complete (all fields filled)
-        // So we can enable submit immediately when page 3 loads
-        
-        // But let's double-check all previous fields are still filled
-        const numStudents = document.getElementById('numStudents');
-        const groupSize = document.getElementById('groupSize');
-        const repetition = document.getElementById('repetition');
-        const classname = document.getElementById('classname');
-        const labNumber = document.querySelector('input[name="lab_number"]:checked');
-        const preferredDate = document.getElementById('preferredDate');
-        const duration = document.getElementById('duration');
-        const preferredTime = document.getElementById('preferredTime');
-
-        const allFilled = numStudents && numStudents.value &&
-                         groupSize && groupSize.value &&
-                         repetition && repetition.value &&
-                         classname && classname.value &&
-                         labNumber &&
-                         preferredDate && preferredDate.value &&
-                         duration && duration.value &&
-                         preferredTime && preferredTime.value;
-
-        submitBtn.disabled = !allFilled;
-    }
-
-    // Event Listeners
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        // Page 2 fields
-        const page2Fields = [
-            document.getElementById('numStudents'),
-            document.getElementById('groupSize'),
-            document.getElementById('repetition'),
-            document.getElementById('classname'),
-            document.getElementById('preferredDate'),
-            document.getElementById('duration'),
-            document.getElementById('preferredTime')
-        ];
-
-        // Add event listeners to all page 2 fields
-        page2Fields.forEach(field => {
-            if (field) {
-                field.addEventListener('input', validatePage2);
-                field.addEventListener('change', validatePage2);
-            }
-        });
-
-        // Add listeners to lab number radio buttons
-        const labRadios = document.querySelectorAll('input[name="lab_number"]');
-        labRadios.forEach(radio => {
-            radio.addEventListener('change', validatePage2);
-        });
-
-        // Initial validation on page load
-        validatePage2();
-
-        // Override the nextBtn2 click to validate page 3 when it loads
-        const originalNextBtn2Click = document.getElementById('nextBtn2');
-        if (originalNextBtn2Click) {
-            const originalOnClick = originalNextBtn2Click.onclick;
-            originalNextBtn2Click.onclick = function(e) {
-                
-                if (originalOnClick) {
-                    originalOnClick.call(this, e);
-                }
-                
-                // Then validate page 3 after a short delay (to let materials load)
-                setTimeout(() => {
-                    validatePage3();
-                }, 100);
-            };
-        }
-    });
-
-    // Also validate page 3 whenever we navigate to it
-    const originalNextBtn2Handler = document.getElementById('nextBtn2');
-    if (originalNextBtn2Handler) {
-        originalNextBtn2Handler.addEventListener('click', function() {
-            setTimeout(() => {
-                validatePage3();
-            }, 100);
-        });
-    }
-</script>
 </x-teacher-layout>
