@@ -19,7 +19,39 @@ class TeacherController extends Controller
 {
     public function index()
     {
-        return view('Teacher.index', ["Name" => Auth::user()->name]);
+        $user = Auth::user();
+        
+        // Get statistics
+        $stats = [
+            'total' => LabRequest::where('user_id', $user->id)->count(),
+            'pending' => LabRequest::where('user_id', $user->id)->where('status', 'pending')->count(),
+            'approved' => LabRequest::where('user_id', $user->id)->where('status', 'approved')->count(),
+            'rejected' => LabRequest::where('user_id', $user->id)->where('status', 'rejected')->count(),
+        ];
+        
+        // Get upcoming approved sessions (next 7 days)
+        $upcomingSessions = LabRequest::where('user_id', $user->id)
+            ->where('status', 'approved')
+            ->where(function($query) {
+                $query->where('approved_date', '>=', now())
+                    ->orWhere(function($q) {
+                        $q->where('approved_date', '>=', now()->subDay())
+                            ->where('approved_time', '>=', now()->format('H:i'));
+                    });
+            })
+            ->orderBy('approved_date')
+            ->orderBy('approved_time')
+            ->take(5)
+            ->get();
+        
+        // Get recent requests (last 5)
+        $recentRequests = LabRequest::where('user_id', $user->id)
+            ->with(['experiment', 'subject'])
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+        
+        return view('teacher.index', compact('stats', 'upcomingSessions', 'recentRequests'));
     }
 
     public function requests()
