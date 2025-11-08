@@ -13,21 +13,21 @@ class LabRequestSeeder extends Seeder
      */
     public function run(): void
     {
-        LabRequest::factory()->pending()->count(10)->create();
+        LabRequest::factory()->pending()->count(20)->create();
 
         
-        LabRequest::factory()->approved()->count(15)->create();
+        LabRequest::factory()->approved()->count(20)->create();
 
         
-        LabRequest::factory()->rejected()->count(5)->create();
+        LabRequest::factory()->rejected()->count(20)->create();
 
         
-        LabRequest::factory()->completed()->count(100)->create();
+        LabRequest::factory()->completed()->count(20)->create();
 
        
-        LabRequest::factory()->cancelled()->count(3)->create();
+        LabRequest::factory()->cancelled()->count(20)->create();
 
         
-        LabRequest::factory()->noShow()->count(2)->create();
+        LabRequest::factory()->noShow()->count(20)->create();
     }
 }

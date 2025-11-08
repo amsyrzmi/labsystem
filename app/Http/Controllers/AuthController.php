@@ -32,8 +32,7 @@ class AuthController extends Controller
             'role' => 'required|string|in:lab_assistant,teacher,admin',
         ]);
         $user = User::create($validated);
-        Auth::login($user);
-        return $this->redirectBasedOnRole();
+        return redirect()->route('show.login');
     }
 
     public function logout(Request $request)

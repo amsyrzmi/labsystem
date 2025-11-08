@@ -3,8 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Subject;
+use App\Models\Topic;
+use App\Models\Experiment;
+use App\Models\DefaultMaterial;
+use App\Models\DefaultApparatus;
 use App\Models\LabRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+
 
 class LabassistantController extends Controller
 {
@@ -266,6 +275,104 @@ class LabassistantController extends Controller
             'weekDays' => $weekDays,
             'timeSlots' => $timeSlots,
             'currentWeek' => $weekParam,
+        ]);
+    }
+    public function printRequest($id)
+    {
+        $labRequest = LabRequest::with(['subject', 'topic', 'experiment', 'user'])
+            ->findOrFail($id);
+
+        $materials = collect();
+        $apparatuses = collect();
+
+        if ($labRequest->experiment_id) {
+            $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+                ->select('id', 'name', 'quantity', 'unit')
+                ->orderBy('name')
+                ->get();
+
+            $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+                ->select('id', 'name', 'quantity')
+                ->orderBy('name')
+                ->get();
+        }
+
+        return view('Labassistant.print_request', [
+            'request' => $labRequest,
+            'materials' => $materials,
+            'apparatuses' => $apparatuses,
+        ]);
+    }
+
+    /**
+     * Show batch print selection form
+     */
+    public function showBatchPrint()
+    {
+        $labNumbers = LabRequest::all()
+            ->pluck('lab_number')
+            ->sort();
+
+        return view('Labassistant.batch_print', compact('labNumbers'));
+    }
+
+    /**
+     * Print requests for a date range
+     */
+    public function printBatch(Request $request)
+    {
+        $validated = $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'status' => 'nullable|in:pending,approved,rejected,completed,cancelled,no_show',
+            'lab_number' => 'nullable|string',
+        ]);
+
+        $query = LabRequest::with(['subject', 'topic', 'experiment', 'user'])
+            ->whereBetween('preferred_date', [$validated['start_date'], $validated['end_date']]);
+
+        if (!empty($validated['status'])) {
+            $query->where('status', $validated['status']);
+        }
+
+        if (!empty($validated['lab_number'])) {
+            $query->where('lab_number', $validated['lab_number']);
+        }
+
+        $requests = $query->orderBy('preferred_date', 'asc')
+            ->orderBy('preferred_time', 'asc')
+            ->get();
+
+        // Get materials and apparatuses for each request
+        $requestsWithDetails = $requests->map(function($labRequest) {
+            $materials = collect();
+            $apparatuses = collect();
+
+            if ($labRequest->experiment_id) {
+                $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+                    ->select('id', 'name', 'quantity', 'unit')
+                    ->orderBy('name')
+                    ->get();
+
+                $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+                    ->select('id', 'name', 'quantity')
+                    ->orderBy('name')
+                    ->get();
+            }
+
+            return [
+                'request' => $labRequest,
+                'materials' => $materials,
+                'apparatuses' => $apparatuses,
+            ];
+        });
+
+        return view('Labassistant.print_batch', [
+            'requestsWithDetails' => $requestsWithDetails,
+            'startDate' => $validated['start_date'],
+            'endDate' => $validated['end_date'],
+            'status' => $validated['status'] ?? null,
+            'labNumber' => $validated['lab_number'] ?? null,
         ]);
     }
 }

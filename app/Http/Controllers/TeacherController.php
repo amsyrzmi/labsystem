@@ -204,38 +204,20 @@ class TeacherController extends Controller
         }
     }
 
-    /**
-     * IMPROVED: Show active/upcoming requests only
-     */
-    /**
-     *     public function listUserRequests()
-    {
-        $requests = LabRequest::with(['subject', 'topic', 'experiment'])
-            ->where('user_id', Auth::id())
-            ->where(function($query) {
-                // Show pending/approved requests regardless of date
-                $query->whereIn('status', ['pending', 'approved'])
-                      // OR show future rejected requests
-                      ->orWhere(function($q) {
-                          $q->where('status', 'rejected')
-                            ->where('preferred_date', '>=', now());
-                      });
-            })
-            ->orderBy('preferred_date', 'asc') 
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        return view('Teacher.requests_list', [
-            'requests' => $requests,
-        ]);
-    }
-     * 
-     */
 
 
     public function listUserRequests(Request $request)
     {
-        $query = LabRequest::with(['subject', 'topic', 'experiment'])->where('user_id', Auth::id());
+        
+        $query = LabRequest::with(['subject', 'topic', 'experiment']) 
+            ->where('user_id', Auth::id())
+            ->where(function($query) {
+                $query->whereIn('status', ['pending', 'approved', 'rejected'])
+                    ->orWhere(function($q) {
+                        $q->whereIn('status', ['approved', 'rejected'])
+                            ->where('preferred_date', '>=', now());
+                    });
+            });
 
         // Filter by status
         $status = $request->get('status');
@@ -265,7 +247,7 @@ class TeacherController extends Controller
             ->orderBy('preferred_date', 'asc')
             ->orderBy('created_at', 'desc');
 
-        $requests = $query->paginate(20);
+        $requests = $query->paginate(10);
 
         // Get unique lab numbers for filter
         $labNumbers = LabRequest::distinct()->pluck('lab_number')->sort();
@@ -276,25 +258,50 @@ class TeacherController extends Controller
     /**
      * IMPROVED: Show completed/past requests only
      */
-    public function listUserHistory()
+    public function listUserHistory(Request $request)
     {
-        $requests = LabRequest::with(['subject', 'topic', 'experiment']) 
+        $query = LabRequest::with(['subject', 'topic', 'experiment']) 
             ->where('user_id', Auth::id())
             ->where(function($query) {
-                $query->whereIn('status', ['completed', 'cancelled', 'no_show'])
-                    ->orWhere(function($q) {
-                        $q->whereIn('status', ['approved', 'rejected'])
-                            ->where('preferred_date', '<', now());
-                    });
-            })
-            ->orderBy('preferred_date', 'desc')
-            ->orderBy('completed_at', 'desc')
-            ->get();
+                $query->whereIn('status', ['completed', 'cancelled', 'no_show']);
+            });
 
-        return view('Teacher.history', [
-            'requests' => $requests,
-        ]);
+        // Filter by status
+        $status = $request->get('status');
+        if ($status && in_array($status, ['completed', 'cancelled', 'no_show'])) {
+            $query->where('status', $status);
+        }
+
+        // Filter by lab number
+        $labNumber = $request->get('lab_number');
+        if ($labNumber) {
+            $query->where('lab_number', $labNumber);
+        }
+
+        // Search by teacher name or class
+        $search = $request->get('search');
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->whereHas('user', function($userQuery) use ($search) {
+                    $userQuery->where('name', 'like', "%{$search}%");
+                })
+                ->orWhere('classname', 'like', "%{$search}%");
+            });
+        }
+
+        // Only show upcoming/active requests
+        $query->where('preferred_date', '<', now()->subDays(1))
+            ->orderBy('preferred_date', 'asc')
+            ->orderBy('created_at', 'desc');
+
+        $requests = $query->paginate(10);
+
+        // Get unique lab numbers for filter
+        $labNumbers = LabRequest::distinct()->pluck('lab_number')->sort();
+
+        return view('Teacher.history', compact('requests', 'status', 'labNumber', 'search', 'labNumbers'));
     }
+    
 
     /**
      * Show details for active request
@@ -402,6 +409,107 @@ class TeacherController extends Controller
         return response()->json([
             'available' => !$hasConflict,
             'message' => $hasConflict ? 'This time slot is already booked or pending for this lab.' : 'Time slot is available.',
+        ]);
+    }
+    public function printRequest($id)
+    {
+        $labRequest = LabRequest::with(['subject', 'topic', 'experiment', 'user'])
+            ->where('user_id', Auth::id())
+            ->findOrFail($id);
+
+        $materials = collect();
+        $apparatuses = collect();
+
+        if ($labRequest->experiment_id) {
+            $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+                ->select('id', 'name', 'quantity', 'unit')
+                ->orderBy('name')
+                ->get();
+
+            $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+                ->select('id', 'name', 'quantity')
+                ->orderBy('name')
+                ->get();
+        }
+
+        return view('Teacher.print_request', [
+            'request' => $labRequest,
+            'materials' => $materials,
+            'apparatuses' => $apparatuses,
+        ]);
+    }
+
+    /**
+     * Show batch print selection form
+     */
+    public function showBatchPrint()
+    {
+        $labNumbers = LabRequest::where('user_id', Auth::id())
+            ->distinct()
+            ->pluck('lab_number')
+            ->sort();
+
+        return view('Teacher.batch_print', compact('labNumbers'));
+    }
+
+    /**
+     * Print requests for a date range
+     */
+    public function printBatch(Request $request)
+    {
+        $validated = $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'status' => 'nullable|in:pending,approved,rejected,completed,cancelled,no_show',
+            'lab_number' => 'nullable|string',
+        ]);
+
+        $query = LabRequest::with(['subject', 'topic', 'experiment', 'user'])
+            ->where('user_id', Auth::id())
+            ->whereBetween('preferred_date', [$validated['start_date'], $validated['end_date']]);
+
+        if (!empty($validated['status'])) {
+            $query->where('status', $validated['status']);
+        }
+
+        if (!empty($validated['lab_number'])) {
+            $query->where('lab_number', $validated['lab_number']);
+        }
+
+        $requests = $query->orderBy('preferred_date', 'asc')
+            ->orderBy('preferred_time', 'asc')
+            ->get();
+
+        // Get materials and apparatuses for each request
+        $requestsWithDetails = $requests->map(function($labRequest) {
+            $materials = collect();
+            $apparatuses = collect();
+
+            if ($labRequest->experiment_id) {
+                $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+                    ->select('id', 'name', 'quantity', 'unit')
+                    ->orderBy('name')
+                    ->get();
+
+                $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+                    ->select('id', 'name', 'quantity')
+                    ->orderBy('name')
+                    ->get();
+            }
+
+            return [
+                'request' => $labRequest,
+                'materials' => $materials,
+                'apparatuses' => $apparatuses,
+            ];
+        });
+
+        return view('Teacher.print_batch', [
+            'requestsWithDetails' => $requestsWithDetails,
+            'startDate' => $validated['start_date'],
+            'endDate' => $validated['end_date'],
+            'status' => $validated['status'] ?? null,
+            'labNumber' => $validated['lab_number'] ?? null,
         ]);
     }
 }

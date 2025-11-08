@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <a href="{{ route('teacher.history') }}" style="display:inline-block;margin-bottom:18px;color:var(--accent);text-decoration:none;">← Back to my requests</a>
+    <a href="{{ route('teacher.history') }}" style="display:inline-block;margin-bottom:18px;color:var(--accent);text-decoration:none;">← Back to my history</a>
 
     <div class="container" style="max-width:960px;margin:10px auto 40px;padding:18px;background:transparent;">
         <h1 style="font-size:26px;color:var(--accent);margin-bottom:6px;">Request #{{ $request->id }}</h1>

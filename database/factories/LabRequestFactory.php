@@ -148,9 +148,11 @@ class LabRequestFactory extends Factory
      */
     public function cancelled(): static
     {
+        $preferredDate = $this->faker->dateTimeBetween('-30 days', '-1 days');
         return $this->state(fn (array $attributes) => [
             'status' => 'cancelled',
             'rejection_reason' => 'Teacher cancelled the request',
+            'preferred_date' => $preferredDate->format('Y-m-d'),
             'completed_at' => null,
         ]);
     }
