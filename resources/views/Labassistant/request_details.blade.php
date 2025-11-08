@@ -120,7 +120,7 @@
         <!-- Action Buttons -->
         @if($request->status === 'pending')
             <div class="action-bar">
-                <form action="{{ route('lab_assistant.requests.approve.schedule', $request->id) }}" method="POST" style="display: inline;">
+                <form action="{{ route('lab_assistant.requests.approve.form', $request->id) }}" method="GET" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn btn-approve" onclick="return confirm('Are you sure you want to approve this request?')">
                         ✓ Approve Request

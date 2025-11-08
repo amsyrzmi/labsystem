@@ -56,7 +56,6 @@ class LabassistantController extends Controller
 
         // Only show upcoming/active requests
         $query->where('preferred_date', '>=', now()->subDays(1))
-            ->orderBy('preferred_date', 'asc')
             ->orderBy('created_at', 'desc');
 
         $requests = $query->paginate(10);

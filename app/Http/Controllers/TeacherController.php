@@ -12,6 +12,8 @@ use App\Models\LabRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Mail\LabRequestNotification;
+use Illuminate\Support\Facades\Mail;
 
 class TeacherController extends Controller
 {
@@ -81,7 +83,7 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function submitRequest(Request $request)
+public function submitRequest(Request $request)
     {
         // Validation
         $validated = $request->validate([
@@ -183,6 +185,23 @@ class TeacherController extends Controller
                 'status' => 'pending',
             ]);
 
+            // Load relationships for email
+            $labRequest->load(['user', 'subject', 'topic', 'experiment']);
+
+            // Send email notifications to all lab assistants
+            $labAssistants = \App\Models\User::where('role', 'lab_assistant')
+                ->where('is_approved', true)
+                ->get();
+
+            foreach ($labAssistants as $assistant) {
+                try {
+                    Mail::to($assistant->email)->send(new \App\Mail\LabRequestNotification($labRequest));
+                } catch (\Exception $e) {
+                    // Log email error but don't fail the request
+                    Log::warning('Failed to send email to ' . $assistant->email . ': ' . $e->getMessage());
+                }
+            }
+
             DB::commit();
 
             if ($request->wantsJson()) {
@@ -192,7 +211,7 @@ class TeacherController extends Controller
                 ]);
             }
 
-            return redirect()->route('teacher.requests.list')->with('success', 'Booking submitted successfully.');
+            return redirect()->route('teacher.requests.list')->with('success', 'Booking submitted successfully and lab assistants have been notified.');
         } catch (\Throwable $e) {
             DB::rollBack();
             Log::error('Failed to submit lab request: ' . $e->getMessage());

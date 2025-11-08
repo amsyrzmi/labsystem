@@ -95,6 +95,50 @@ const materialsList = document.getElementById('materialsList');
 const apparatusList = document.getElementById('apparatusList');
 const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
+const classnameGroup = document.getElementById('classnameGroup');
+const classnameValue = document.getElementById('classnameValue');
+let selectedFormLevel = null;
+
+// Class mapping based on form level
+const classMapping = {
+    'form 1': ['1A', '1B', '1C'],
+    'form 2': ['2A', '2B', '2C'],
+    'form 3': ['3A', '3B', '3C'],
+    'form 4': ['4A', '4B', '4C'],
+    'form 5': ['5A', '5B', '5C']
+};
+
+// Function to populate class options based on form level
+function populateClasses(formLevel) {
+    if (!classnameGroup) return;
+    
+    classnameGroup.innerHTML = '';
+    const classes = classMapping[formLevel] || [];
+    
+    if (classes.length > 0) {
+        classes.forEach(className => {
+            const radioDiv = document.createElement('div');
+            radioDiv.className = 'radio-button';
+            radioDiv.innerHTML = `
+                <input type="radio" name="classname_radio" id="class${className}" value="${className}">
+                <label for="class${className}">${className}</label>
+            `;
+            classnameGroup.appendChild(radioDiv);
+        });
+
+        const classRadios = document.querySelectorAll('input[name="classname_radio"]');
+        classRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (classnameValue) {
+                    classnameValue.value = this.value;
+                }
+                validatePage2();
+            });
+        });
+    } else {
+        classnameGroup.innerHTML = '<p style="text-align: center; color: #999;">Please select a form level first.</p>';
+    }
+}
 
 let selectedExperimentId = null;
 
@@ -111,6 +155,8 @@ document.getElementById('preferredDate').setAttribute('max', formattedMaxDate);
 formLevelInputs.forEach(input => {
     input.addEventListener('change', function() {
         const formLevel = this.value;
+        selectedFormLevel = formLevel;        // ← ADD THIS LINE
+        populateClasses(formLevel);           // ← ADD THIS LINE
         fetchSubjects(formLevel);
         topicSection.classList.add('hidden');
         topicGroup.innerHTML = '';
@@ -306,6 +352,10 @@ async function loadExperimentDetails() {
 nextBtn1.addEventListener('click', function() {
     page1.classList.remove('active');
     page2.classList.add('active');
+    // Populate classes if form level is selected
+    if (selectedFormLevel) {
+        populateClasses(selectedFormLevel);
+    }
 });
 
 nextBtn2.addEventListener('click', function() {
@@ -323,7 +373,205 @@ backBtn2.addEventListener('click', function() {
     page3.classList.remove('active');
     page2.classList.add('active');
 });
+// Availability checking
+let availabilityCheckTimeout;
 
+function getSelectedLabNumber() {
+    const selectedLab = document.querySelector('input[name="lab_number"]:checked');
+    return selectedLab ? selectedLab.value : null;
+}
+
+function checkAvailability() {
+    const labValue = getSelectedLabNumber();
+    const preferredDate = document.getElementById('preferredDate');
+    const preferredTime = document.getElementById('preferredTime');
+    const duration = document.getElementById('duration');
+    const nextBtn2 = document.getElementById('nextBtn2');
+
+    if (!preferredDate || !preferredTime || !duration || !nextBtn2) {
+        return;
+    }
+
+    const dateValue = preferredDate.value;
+    const timeValue = preferredTime.value;
+    const durationValue = duration.value;
+
+    if (!labValue || !dateValue || !timeValue || !durationValue) {
+        nextBtn2.disabled = false;
+        return;
+    }
+
+    clearTimeout(availabilityCheckTimeout);
+    showAvailabilityMessage('Checking availability...', 'info');
+    nextBtn2.disabled = true;
+
+    availabilityCheckTimeout = setTimeout(async () => {
+        try {
+            const response = await fetch('/teacher/check-availability', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    lab_number: labValue,
+                    preferred_date: dateValue,
+                    preferred_time: timeValue,
+                    duration: parseInt(durationValue)
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.available) {
+                showAvailabilityMessage('✓ Time slot is available!', 'success');
+                nextBtn2.disabled = false;
+            } else {
+                showAvailabilityMessage('⚠ ' + data.message, 'warning');
+                nextBtn2.disabled = true;
+            }
+        } catch (error) {
+            console.error('Error checking availability:', error);
+            showAvailabilityMessage('Unable to check availability. Please try again.', 'error');
+            nextBtn2.disabled = false;
+        }
+    }, 500);
+}
+
+function showAvailabilityMessage(message, type) {
+    const existingMsg = document.getElementById('availabilityMessage');
+    if (existingMsg) {
+        existingMsg.remove();
+    }
+
+    const msgDiv = document.createElement('div');
+    msgDiv.id = 'availabilityMessage';
+    msgDiv.style.padding = '12px';
+    msgDiv.style.borderRadius = '8px';
+    msgDiv.style.marginTop = '12px';
+    msgDiv.style.fontSize = '14px';
+    msgDiv.style.fontWeight = '600';
+
+    if (type === 'success') {
+        msgDiv.style.background = '#d4edda';
+        msgDiv.style.color = '#155724';
+        msgDiv.style.border = '1px solid #c3e6cb';
+    } else if (type === 'warning') {
+        msgDiv.style.background = '#fff3cd';
+        msgDiv.style.color = '#856404';
+        msgDiv.style.border = '1px solid #ffc107';
+    } else if (type === 'info') {
+        msgDiv.style.background = '#d1ecf1';
+        msgDiv.style.color = '#0c5460';
+        msgDiv.style.border = '1px solid #bee5eb';
+    } else {
+        msgDiv.style.background = '#f8d7da';
+        msgDiv.style.color = '#721c24';
+        msgDiv.style.border = '1px solid #f5c6cb';
+    }
+
+    msgDiv.textContent = message;
+
+    const timeInput = document.getElementById('preferredTime');
+    if (timeInput && timeInput.parentElement) {
+        timeInput.parentElement.appendChild(msgDiv);
+    }
+}
+
+function validatePage2() {
+    const numStudents = document.getElementById('numStudents');
+    const groupSize = document.getElementById('groupSize');
+    const repetition = document.getElementById('repetition');
+    const classname = document.getElementById('classnameValue');
+    const labNumber = document.querySelector('input[name="lab_number"]:checked');
+    const preferredDate = document.getElementById('preferredDate');
+    const duration = document.getElementById('duration');
+    const preferredTime = document.getElementById('preferredTime');
+    const nextBtn2 = document.getElementById('nextBtn2');
+
+    if (!nextBtn2) return;
+
+    const allFilled = numStudents && numStudents.value &&
+                     groupSize && groupSize.value &&
+                     repetition && repetition.value &&
+                     classname && classname.value &&
+                     labNumber &&
+                     preferredDate && preferredDate.value &&
+                     duration && duration.value &&
+                     preferredTime && preferredTime.value;
+
+    const validNumbers = numStudents && parseInt(numStudents.value) >= 1 && parseInt(numStudents.value) <= 100 &&
+                        groupSize && parseInt(groupSize.value) >= 1 && parseInt(groupSize.value) <= 50 &&
+                        repetition && parseInt(repetition.value) >= 1 && parseInt(repetition.value) <= 50;
+
+    if (allFilled && validNumbers) {
+        if (typeof checkAvailability === 'function') {
+            checkAvailability();
+        }
+    } else {
+        nextBtn2.disabled = true;
+    }
+}
+
+function validatePage3() {
+    const submitBtn = document.querySelector('.btn-submit');
+    
+    if (!submitBtn) return;
+
+    const numStudents = document.getElementById('numStudents');
+    const groupSize = document.getElementById('groupSize');
+    const repetition = document.getElementById('repetition');
+    const classname = document.getElementById('classnameValue');
+    const labNumber = document.querySelector('input[name="lab_number"]:checked');
+    const preferredDate = document.getElementById('preferredDate');
+    const duration = document.getElementById('duration');
+    const preferredTime = document.getElementById('preferredTime');
+
+    const allFilled = numStudents && numStudents.value &&
+                     groupSize && groupSize.value &&
+                     repetition && repetition.value &&
+                     classname && classname.value &&
+                     labNumber &&
+                     preferredDate && preferredDate.value &&
+                     duration && duration.value &&
+                     preferredTime && preferredTime.value;
+
+    submitBtn.disabled = !allFilled;
+}
+
+// Event listeners for validation
+if (document.getElementById('numStudents')) {
+    const page2Fields = [
+        document.getElementById('numStudents'),
+        document.getElementById('groupSize'),
+        document.getElementById('repetition'),
+        document.getElementById('preferredDate'),
+        document.getElementById('duration'),
+        document.getElementById('preferredTime')
+    ];
+
+    page2Fields.forEach(field => {
+        if (field) {
+            field.addEventListener('input', validatePage2);
+            field.addEventListener('change', validatePage2);
+        }
+    });
+
+    const labRadios = document.querySelectorAll('input[name="lab_number"]');
+    labRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            validatePage2();
+            checkAvailability();
+        });
+    });
+
+    validatePage2();
+}
 
 
 
