@@ -23,8 +23,70 @@ class LabassistantController extends Controller
 
     public function index()
     {
-        // Show dashboard or redirect to requests list
-        return view('Labassistant.index');
+        // Get statistics
+        $stats = [
+            'pending' => LabRequest::where('status', 'pending')->count(),
+            'approved_today' => LabRequest::where('status', 'approved')
+                ->whereDate('approved_at', today())
+                ->count(),
+            'today_sessions' => LabRequest::where('status', 'approved')
+                ->whereDate('approved_date', today())
+                ->count(),
+            'total_active' => LabRequest::whereIn('status', ['pending', 'approved'])
+                ->where('preferred_date', '>=', now()->subDay())
+                ->count(),
+        ];
+        
+        // Get today's sessions
+        $todaySessions = LabRequest::with(['experiment', 'user'])
+            ->where('status', 'approved')
+            ->whereDate('approved_date', today())
+            ->orderBy('approved_time')
+            ->get();
+        
+        // Get pending requests
+        $pendingRequests = LabRequest::with(['experiment', 'user'])
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get();
+        
+        // Get lab status (sessions per lab today)
+        $labStatus = LabRequest::where('status', 'approved')
+            ->whereDate('approved_date', today())
+            ->selectRaw('lab_number as name, COUNT(*) as sessions')
+            ->groupBy('lab_number')
+            ->orderBy('lab_number')
+            ->get()
+            ->toArray();
+        
+        // Add labs with no sessions
+        $allLabs = ['Lab 1', 'Lab 2', 'Lab 3', 'Lab 4']; // Adjust based on your labs
+        $existingLabs = array_column($labStatus, 'name');
+        foreach ($allLabs as $lab) {
+            if (!in_array($lab, $existingLabs)) {
+                $labStatus[] = ['name' => $lab, 'sessions' => 0];
+            }
+        }
+        
+        // Sort lab status
+        usort($labStatus, function($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
+        
+        // Get recent activity
+        $recentActivity = LabRequest::with(['experiment', 'user'])
+            ->orderBy('updated_at', 'desc')
+            ->take(10)
+            ->get();
+        
+        return view('Labassistant.index', compact(
+            'stats',
+            'todaySessions',
+            'pendingRequests',
+            'labStatus',
+            'recentActivity'
+        ));
     }
 
     /**
