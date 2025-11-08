@@ -12,6 +12,9 @@ use App\Models\LabRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RequestApproved;
+use App\Mail\RequestRejected;
 use Carbon\Carbon;
 
 
@@ -113,7 +116,17 @@ class LabassistantController extends Controller
             'rejection_reason' => $validated['rejection_reason'],
         ]);
 
-        return redirect()->back()->with('success', 'Request rejected.');
+        // Send rejection email
+        try {
+            if ($labRequest->user && $labRequest->user->email) {
+                Mail::to($labRequest->user->email)->send(new RequestRejected($labRequest));
+            }
+        } catch (\Exception $e) {
+            Log::error('Failed to send rejection email: ' . $e->getMessage());
+            // Continue execution even if email fails
+        }
+
+        return redirect()->back()->with('success', 'Request rejected and notification email sent.');
     }
 
     /**
@@ -184,8 +197,18 @@ class LabassistantController extends Controller
             'approved_at' => now(),
         ]);
 
+        // Send approval email
+        try {
+            if ($labRequest->user && $labRequest->user->email) {
+                Mail::to($labRequest->user->email)->send(new RequestApproved($labRequest));
+            }
+        } catch (\Exception $e) {
+            Log::error('Failed to send approval email: ' . $e->getMessage());
+            // Continue execution even if email fails
+        }
+
         return redirect()->route('lab_assistant.requests.list')
-            ->with('success', 'Request approved and scheduled successfully.');
+            ->with('success', 'Request approved, scheduled, and notification email sent.');
     }
     public function timetable(Request $request)
     {
