@@ -76,6 +76,16 @@ Route::middleware('auth')->group(function () {
         
        //? Timetable
         Route::get('/lab-assistant/timetable', [LabassistantController::class, 'timetable'])->name('lab_assistant.timetable');
+
+        //? Print routes
+        Route::get('/lab_assistant/history/print/{id}', [LabassistantController::class, 'printRequest'])
+            ->name('lab_assistant.print.request');
+        
+        Route::get('/lab_assistant/history/batch-print', [LabassistantController::class, 'showBatchPrint'])
+            ->name('lab_assistant.print.batch');
+        
+        Route::post('/lab_assistant/history/batch-print', [LabassistantController::class, 'printBatch'])
+            ->name('lab_assistant.print.batch.process');
     });
 
     
@@ -101,6 +111,16 @@ Route::middleware('auth')->group(function () {
         //? show details (materials & apparatus) for a specific request
         Route::get('/teacher/requests/{id}/details', [TeacherController::class, 'requestDetails'])->name('teacher.requests.details');
         Route::get('/teacher/requests/{id}/history', [TeacherController::class, 'requestDetailsH'])->name('teacher.requests.detailsH');
+
+        //? Print routes
+        Route::get('/teacher/history/print/{id}', [TeacherController::class, 'printRequest'])
+            ->name('teacher.print.request');
+        
+        Route::get('/teacher/history/batch-print', [TeacherController::class, 'showBatchPrint'])
+            ->name('teacher.print.batch');
+        
+        Route::post('/teacher/history/batch-print', [TeacherController::class, 'printBatch'])
+            ->name('teacher.print.batch.process');
     });
     });
 

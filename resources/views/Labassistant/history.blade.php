@@ -6,6 +6,19 @@
     <div class="container no-shadow">
         <div class="page-header">
             <h1 class="page-title">Request History</h1>
+            <div style="display:flex;gap:10px;">
+                <a href="{{ route('lab_assistant.print.batch') }}" class="btn-batch-print" style="
+                    display:inline-block;
+                    padding:10px 16px;
+                    border-radius:10px;
+                    background:var(--accent);
+                    color:white;
+                    font-weight:700;
+                    text-decoration:none;
+                "> 
+                    🖨️ Batch Print
+                </a>
+            </div>
         </div>
 
         <!-- Stats Bar -->
@@ -124,9 +137,15 @@
                             </div>
                         @endif
 
-                        <a href="{{ route('lab_assistant.requests.details', $req->id) }}" class="btn btn-view">
-                            View Full Details
-                        </a>
+
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;">
+                            <a href="{{ route('lab_assistant.requests.details', $req->id) }}" class="btn btn-view">
+                                View Full Details
+                            </a>
+                            <a href="{{ route('lab_assistant.print.request', $req->id) }}" target="_blank" class="btn-print">
+                                🖨️ Print
+                            </a>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -199,4 +218,29 @@
             });
         });
     </script>
+    <style>
+        .btn-print {
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-print:hover {
+            background: var(--accentlight);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(16,185,129,0.3);
+        }
+        .btn-new-request:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 24px rgba(65,90,119,0.15); 
+        }
+        .btn-batch-print:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(16,185,129,0.3);
+            background: var(--accentlight);
+        }
+    </style>
 </x-lab-assistant-layout>
