@@ -146,27 +146,18 @@
 
                                 <!-- NEW: Admin Actions -->
                                 <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                                    @if($r->status === 'approved')
-                                        <form action="{{ route('admin.requests.complete', $r->id) }}" method="POST" style="display:inline;">
+
+                                    @if(in_array($r->status, ['pending']))
+                                        <form action="{{ route('admin.requests.approve', $r->id) }}" method="POST" style="display:inline;">
                                             @csrf
-                                            <button type="submit" onclick="return confirm('Mark as completed?')" style="padding:8px 14px;background:#28a745;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;">
-                                                ✓ Complete
+                                            <button type="submit" onclick="return confirm('Approve this request?')" style="padding:8px 14px;background:#28a745;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;">
+                                                Approve
                                             </button>
                                         </form>
-
-                                        <form action="{{ route('admin.requests.noshow', $r->id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('admin.requests.reject', $r->id) }}" method="POST" style="display:inline;">
                                             @csrf
-                                            <button type="submit" onclick="return confirm('Mark as no-show?')" style="padding:8px 14px;background:#ffc107;color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;">
-                                                No Show
-                                            </button>
-                                        </form>
-                                    @endif
-
-                                    @if(in_array($r->status, ['pending', 'approved']))
-                                        <form action="{{ route('admin.requests.cancel', $r->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" onclick="return confirm('Cancel this request?')" style="padding:8px 14px;background:#dc3545;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;">
-                                                Cancel
+                                            <button type="submit" onclick="return confirm('Reject this request?')" style="padding:8px 14px;background:#dc3545;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;">
+                                                Reject
                                             </button>
                                         </form>
                                     @endif

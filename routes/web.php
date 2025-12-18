@@ -53,7 +53,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/requests/{id}', [AdminController::class, 'requestDetails'])->name('requests.details');
         Route::post('/requests/{id}/complete', [AdminController::class, 'markCompleted'])->name('requests.complete');
         Route::post('/requests/{id}/no-show', [AdminController::class, 'markNoShow'])->name('requests.noshow');
-        Route::post('/requests/{id}/cancel', [AdminController::class, 'cancelRequest'])->name('requests.cancel');
+        Route::post('/requests/{id}/reject', [AdminController::class, 'rejectRequest'])->name('requests.reject');
+        Route::post('/requests/{id}/approve', [AdminController::class, 'approveRequest'])->name('requests.approve');
         Route::delete('/requests/{id}', [AdminController::class, 'deleteRequest'])->name('requests.delete');
         
         // NEW: History

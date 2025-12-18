@@ -311,15 +311,26 @@ class AdminController extends Controller
     /**
      * Cancel request
      */
-    public function cancelRequest($id)
+    public function rejectRequest($id)
     {
         $request = LabRequest::findOrFail($id);
         
         $request->update([
-            'status' => 'cancelled',
+            'status' => 'rejected',
         ]);
 
-        return back()->with('success', 'Request has been cancelled.');
+        return back()->with('success', 'Request has been rejected.');
+    }
+
+        public function approveRequest($id)
+    {
+        $request = LabRequest::findOrFail($id);
+        
+        $request->update([
+            'status' => 'approved',
+        ]);
+
+        return back()->with('success', 'Request has been approved.');
     }
 
     /**
