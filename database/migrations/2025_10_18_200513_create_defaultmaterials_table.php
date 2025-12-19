@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('experiment_id')->constrained()->onDelete('cascade');
             $table->float('quantity', 2);
             $table->string('unit')->nullable();
+            $table->float('concentration')->nullable();
             $table->timestamps();
         });
     }

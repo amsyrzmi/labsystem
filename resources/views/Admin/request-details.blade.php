@@ -77,8 +77,18 @@
                     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
                         @foreach($materials as $m)
                             <li style="background:#f8f9fa;padding:10px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;">
-                                <div style="font-weight:600;color:#243444;">{{ $m->name }}</div>
-                                <div style="font-weight:700;color:#415A77;">{{ $m->quantity }} {{ $m->unit ?? '' }}</div>
+                                <div style="font-weight:600;color:#243444;">
+                                    {{ $m->name }}
+                                </div>
+
+                                <div style="font-weight:700;color:#415A77;">
+                                    @if(!is_null($m->concentration))
+                                        <a style="color:blue; margin-right:4px">{{ $m->concentration }} mol/dm³</a>
+                                    @endif
+
+                                    {{ $m->quantity }}
+                                    {{ $m->unit ?? '' }}
+                                </div>
                             </li>
                         @endforeach
                     </ul>
@@ -116,23 +126,7 @@
                                 ✓ Mark as Completed
                             </button>
                         </form>
-
-                        <form action="{{ route('admin.requests.noshow', $request->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            <button type="submit" onclick="return confirm('Mark as no-show?')" 
-                                    style="padding:12px 24px;background:#ffc107;color:#000;border:none;border-radius:8px;font-weight:600;cursor:pointer;">
-                                No Show
-                            </button>
-                        </form>
                     @endif
-
-                    <form action="{{ route('admin.requests.cancel', $request->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        <button type="submit" onclick="return confirm('Cancel this request?')" 
-                                style="padding:12px 24px;background:#dc3545;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">
-                            Cancel Request
-                        </button>
-                    </form>
 
                     <form action="{{ route('admin.requests.delete', $request->id) }}" method="POST" style="display:inline;">
                         @csrf

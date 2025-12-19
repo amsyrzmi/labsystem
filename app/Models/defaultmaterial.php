@@ -8,7 +8,7 @@ use App\Models\Experiment;
 
 class defaultmaterial extends Model
 {
-    protected $fillable = ['name', 'quantity','unit','experiment_id'];
+    protected $fillable = ['name', 'quantity','unit','experiment_id','concentration'];
 
     public function experiment() : BelongsTo
     {

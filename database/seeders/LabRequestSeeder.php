@@ -23,11 +23,5 @@ class LabRequestSeeder extends Seeder
 
         
         LabRequest::factory()->completed()->count(20)->create();
-
-       
-        LabRequest::factory()->cancelled()->count(20)->create();
-
-        
-        LabRequest::factory()->noShow()->count(20)->create();
     }
 }

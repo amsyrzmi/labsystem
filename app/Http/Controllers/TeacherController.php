@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use App\Mail\LabRequestNotification;
 use Illuminate\Support\Facades\Mail;
 
+
 class TeacherController extends Controller
 {
     public function index()
@@ -77,7 +78,6 @@ class TeacherController extends Controller
         
         $topics = Topic::where('subject_id', $subjectId)
             ->select('id', 'name')
-            ->orderBy('name') // Add ordering
             ->get();
         
         return response()->json($topics);
@@ -89,7 +89,6 @@ class TeacherController extends Controller
         
         $experiments = Experiment::where('topic_id', $topicId)
             ->select('id', 'name')
-            ->orderBy('name') // Add ordering
             ->get();
         
         return response()->json($experiments);

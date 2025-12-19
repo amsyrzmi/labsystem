@@ -262,7 +262,7 @@ class AdminController extends Controller
 
         if ($labRequest->experiment_id) {
             $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
-                ->select('id', 'name', 'quantity', 'unit')
+                ->select('id', 'name', 'quantity', 'unit','concentration')
                 ->orderBy('name')
                 ->get();
 

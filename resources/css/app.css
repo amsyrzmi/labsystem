@@ -157,7 +157,9 @@ gap: 12px;
 #topicGroup {
 grid-template-columns: 1fr;
 }
-
+#experimentGroup {
+grid-template-columns: 1fr;
+}
 .radio-button {
 position: relative;
 }
