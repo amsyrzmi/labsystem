@@ -200,10 +200,14 @@ class LabassistantController extends Controller
 
         $materials = collect();
         $apparatuses = collect();
+        $numStudents = (int) $labRequest->num_students;
+        $groupSize = (int) $labRequest->group_size;
+        $numberOfGroups = intdiv($numStudents, $groupSize);
+        $repetition = (int)$labRequest->repetition;
 
         if ($labRequest->experiment_id) {
             $materials = \App\Models\DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
-                ->select('id', 'name', 'quantity', 'unit')
+                ->select('id', 'name', 'quantity', 'unit', 'concentration')
                 ->orderBy('name')
                 ->get();
 
@@ -217,6 +221,8 @@ class LabassistantController extends Controller
             'request' => $labRequest,
             'materials' => $materials,
             'apparatuses' => $apparatuses,
+            'numberOfGroups' => $numberOfGroups,
+            'repetition' => $repetition,
         ]);
     }
     public function showApproveForm($id)

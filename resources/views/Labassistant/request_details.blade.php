@@ -51,6 +51,10 @@
                 <span class="info-value">{{ $request->group_size }}</span>
             </div>
             <div class="info-row">
+                <span class="info-label">Number of Groups</span>
+                <span class="info-value">{{ $numberOfGroups }}</span>
+            </div>
+            <div class="info-row">
                 <span class="info-label">Class Name</span>
                 <span class="info-value">{{ $request->classname }}</span>
             </div>
@@ -93,7 +97,11 @@
                     @foreach($materials as $material)
                         <li>
                             <span class="item-name">{{ $material->name }}</span>
-                            <span class="item-quantity">{{ $material->quantity }} {{ $material->unit }}</span>
+                            @if(!is_null($material->concentration))
+                                <span class="item-quantity">{{ $material->concentration }} mol/dm³ {{ $material->quantity }} {{ $material->unit }} x {{ $numberOfGroups }} x {{ $repetition }} = {{ $material->quantity * $numberOfGroups * $repetition }} {{ $material->unit }}</span>
+                            @else
+                            <span class="item-quantity">{{ $material->quantity }} {{ $material->unit }} x {{ $numberOfGroups }} x {{ $repetition }} = {{ $material->quantity * $numberOfGroups * $repetition }} {{ $material->unit }}</span>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
@@ -110,7 +118,7 @@
                     @foreach($apparatuses as $apparatus)
                         <li>
                             <span class="item-name">{{ $apparatus->name }}</span>
-                            <span class="item-quantity">{{ $apparatus->quantity }}</span>
+                            <span class="item-quantity">{{ $apparatus->quantity }} x {{ $numberOfGroups }} x {{ $repetition }} = {{ $apparatus->quantity * $numberOfGroups * $repetition }}</span>
                         </li>
                     @endforeach
                 </ul>
