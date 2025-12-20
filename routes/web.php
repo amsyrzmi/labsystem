@@ -87,6 +87,10 @@ Route::middleware('auth')->group(function () {
         
         Route::post('/lab_assistant/history/batch-print', [LabassistantController::class, 'printBatch'])
             ->name('lab_assistant.print.batch.process');
+
+        // Route for calculating reagents (add to your lab assistant routes group)
+        Route::post('/requests/{id}/calculate-reagents', [LabassistantController::class, 'calculateReagents'])
+            ->name('lab_assistant.requests.calculate_reagents');
     });
 
     

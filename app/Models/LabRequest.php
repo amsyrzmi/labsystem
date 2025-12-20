@@ -30,6 +30,7 @@ class LabRequest extends Model
         'status',
         'completed_at',
         'rejection_reason',
+        'reagent_calculations',
     ];
 
     protected $casts = [
@@ -39,7 +40,8 @@ class LabRequest extends Model
         'approved_at' => 'datetime',   
         'duration' => 'integer',           
         'num_students' => 'integer',       
-        'group_size' => 'integer',         
+        'group_size' => 'integer',
+        'reagent_calculations' => 'array',         
     ];
 
     // Relationships

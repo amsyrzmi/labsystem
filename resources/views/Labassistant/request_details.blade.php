@@ -2,8 +2,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     @vite('resources/css/lab-assistant.css')
+    @vite('resources/css/reagent_calculations_styles.css')
 
     <div class="container no-shadow">
         <a href="{{ route('lab_assistant.requests.list') }}" class="back-link">
@@ -11,6 +11,23 @@
         </a>
 
         <h1 class="page-title">Request Details #{{ $request->id }}</h1>
+
+        <!-- Success/Error Messages -->
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-error">
+                <ul style="margin: 0; padding-left: 20px;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <!-- Request Information -->
         <div class="detail-card">
@@ -100,13 +117,151 @@
                             @if(!is_null($material->concentration))
                                 <span class="item-quantity">{{ $material->concentration }} mol/dm³ {{ $material->quantity }} {{ $material->unit }} x {{ $numberOfGroups }} x {{ $repetition }} = {{ $material->quantity * $numberOfGroups * $repetition }} {{ $material->unit }}</span>
                             @else
-                            <span class="item-quantity">{{ $material->quantity }} {{ $material->unit }} x {{ $numberOfGroups }} x {{ $repetition }} = {{ $material->quantity * $numberOfGroups * $repetition }} {{ $material->unit }}</span>
+                                <span class="item-quantity">{{ $material->quantity }} {{ $material->unit }} x {{ $numberOfGroups }} x {{ $repetition }} = {{ $material->quantity * $numberOfGroups * $repetition }} {{ $material->unit }}</span>
                             @endif
                         </li>
                     @endforeach
                 </ul>
             @endif
         </div>
+
+        <!-- Reagent Calculations Card -->
+        @if($materialsWithConcentration->isNotEmpty())
+        <div class="detail-card reagent-calculations-card">
+            <div class="card-title">🧪 Reagent Preparation Calculations</div>
+            
+            @if(!empty($savedCalculations))
+                <!-- Display Saved Calculations -->
+                <div class="saved-calculations">
+                    <div class="calculation-header">
+                        <strong>✓ Saved Calculations</strong>
+                        <button type="button" class="btn-small btn-edit" onclick="toggleEditMode()">
+                            📝 Edit
+                        </button>
+                    </div>
+                    
+                    @foreach($savedCalculations as $calc)
+                        <div class="calculation-result">
+                            <div class="calc-title">{{ $calc['material_name'] }} ({{ $calc['reagent_name'] }})</div>
+                            <div class="calc-output">{{ $calc['output'] }}</div>
+                            
+                            @if($calc['reagent_type'] === 'liquid')
+                                <div class="calc-details">
+                                    <small>
+                                        • Purity: {{ $calc['purity'] }}%<br>
+                                        • Target: {{ $calc['concentration'] }} mol/dm³<br>
+                                        • Volume: {{ $calc['volume'] }} cm³<br>
+                                        • Mass of solution: {{ $calc['details']['mass_of_solution'] }} g<br>
+                                        • Mass of pure reagent: {{ $calc['details']['mass_of_pure_reagent'] }} g<br>
+                                        • Molarity (concentrated): {{ $calc['details']['molarity_concentrated'] }} mol/dm³
+                                    </small>
+                                </div>
+                            @else
+                                <div class="calc-details">
+                                    <small>
+                                        • Target: {{ $calc['concentration'] }} mol/dm³<br>
+                                        • Volume: {{ $calc['volume'] }} cm³
+                                    </small>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <!-- Calculation Form (hidden initially if calculations exist) -->
+            <div id="calculationForm" class="{{ !empty($savedCalculations) ? 'hidden' : '' }}">
+                <form action="{{ route('lab_assistant.requests.calculate_reagents', $request->id) }}" method="POST">
+                    @csrf
+                    
+                    @foreach($materialsWithConcentration as $index => $material)
+                        @php
+                            $reagent = $reagentMatches[$material->id] ?? null;
+                            $totalQuantity = $material->quantity * $numberOfGroups * $repetition;
+                        @endphp
+                        
+                        <div class="reagent-calculation-item">
+                            <div class="material-header">
+                                <strong>{{ $material->name }}</strong>
+                                <span class="concentration-badge">
+                                    Target: {{ $material->concentration }} mol/dm³ | 
+                                    Total Volume: {{ $totalQuantity }} {{ $material->unit }}
+                                </span>
+                            </div>
+                            
+                            @if($reagent)
+                                <input type="hidden" name="calculations[{{ $index }}][material_id]" value="{{ $material->id }}">
+                                <input type="hidden" name="calculations[{{ $index }}][reagent_id]" value="{{ $reagent->id }}">
+                                
+                                <div class="reagent-info">
+                                    <div class="reagent-property">
+                                        <span class="property-label">Reagent:</span>
+                                        <span class="property-value">{{ $reagent->name }} ({{ $reagent->formula }})</span>
+                                    </div>
+                                    <div class="reagent-property">
+                                        <span class="property-label">Type:</span>
+                                        <span class="property-value type-badge type-{{ $reagent->type }}">
+                                            {{ ucfirst($reagent->type) }}
+                                        </span>
+                                    </div>
+                                    <div class="reagent-property">
+                                        <span class="property-label">Molar Mass:</span>
+                                        <span class="property-value">{{ $reagent->molar_mass }} g/mol</span>
+                                    </div>
+                                    @if($reagent->type === 'liquid')
+                                        <div class="reagent-property">
+                                            <span class="property-label">Density:</span>
+                                            <span class="property-value">{{ $reagent->density }} g/cm³</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                
+                                @if($reagent->type === 'liquid')
+                                    <div class="purity-input-group">
+                                        <label for="purity_{{ $index }}" class="purity-label">
+                                            Purity of Concentrated {{ $reagent->name }} (%)
+                                        </label>
+                                        <input 
+                                            type="number" 
+                                            id="purity_{{ $index }}"
+                                            name="calculations[{{ $index }}][purity]" 
+                                            class="purity-input"
+                                            min="0" 
+                                            max="100" 
+                                            step="0.01"
+                                            placeholder="e.g., 69"
+                                            required
+                                        >
+                                        <small class="input-helper">Enter the purity percentage (e.g., 69 for 69%)</small>
+                                    </div>
+                                @endif
+                            @else
+                                <div class="reagent-not-found">
+                                    ⚠️ No matching reagent found in database for "{{ $material->name }}".
+                                    <br><small>Please add this reagent to the database first.</small>
+                                </div>
+                            @endif
+                        </div>
+                        
+                        @if(!$loop->last)
+                            <hr class="divider">
+                        @endif
+                    @endforeach
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-approve">
+                            🧮 Calculate & Save
+                        </button>
+                        @if(!empty($savedCalculations))
+                            <button type="button" class="btn btn-cancel" onclick="toggleEditMode()">
+                                Cancel
+                            </button>
+                        @endif
+                    </div>
+                </form>
+            </div>
+        </div>
+        @endif
 
         <!-- Required Apparatus -->
         <div class="detail-card">
@@ -168,5 +323,234 @@
         function closeRejectModal() {
             document.getElementById('rejectModal').style.display = 'none';
         }
+
+        function toggleEditMode() {
+            const savedCalcs = document.querySelector('.saved-calculations');
+            const calcForm = document.getElementById('calculationForm');
+            
+            if (savedCalcs && calcForm) {
+                savedCalcs.classList.toggle('hidden');
+                calcForm.classList.toggle('hidden');
+            }
+        }
     </script>
+
+    <style>
+        .hidden {
+            display: none !important;
+        }
+
+        .reagent-calculations-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-left: 4px solid var(--accent);
+        }
+
+        .calculation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e6eef6;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        .btn-edit {
+            background: var(--accentlight);
+            color: white;
+        }
+
+        .saved-calculations {
+            margin-bottom: 20px;
+        }
+
+        .calculation-result {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .calc-title {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .calc-output {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accentlight) 100%);
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .calc-details {
+            color: #666;
+            line-height: 1.6;
+            margin-top: 8px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .reagent-calculation-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #e6eef6;
+        }
+
+        .material-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .material-header strong {
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        .concentration-badge {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accentlight) 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .reagent-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .reagent-property {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .property-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .property-value {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .type-solid {
+            background: #e7f3ff;
+            color: #2196F3;
+        }
+
+        .type-liquid {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+
+        .purity-input-group {
+            margin-top: 16px;
+            padding: 16px;
+            background: #fff9e6;
+            border-radius: 8px;
+            border: 2px dashed #ffc107;
+        }
+
+        .purity-label {
+            display: block;
+            font-weight: 600;
+            color: #1b263b;
+            margin-bottom: 8px;
+        }
+
+        .purity-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .purity-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(25, 71, 174, 0.1);
+        }
+
+        .input-helper {
+            display: block;
+            color: #666;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .reagent-not-found {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            color: #856404;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 768px) {
+            .material-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .reagent-info {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </x-lab-assistant-layout>

@@ -9,6 +9,7 @@ use App\Models\Experiment;
 use App\Models\DefaultMaterial;
 use App\Models\DefaultApparatus;
 use App\Models\LabRequest;
+use App\Models\Reagent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -217,14 +218,114 @@ class LabassistantController extends Controller
                 ->get();
         }
 
+        // Get materials with concentration
+        $materialsWithConcentration = $materials->filter(function($material) {
+            return !is_null($material->concentration);
+        });
+
+        // Match materials with reagents
+        $reagentMatches = [];
+        foreach ($materialsWithConcentration as $material) {
+            $reagent = Reagent::where('name', 'LIKE', '%' . $material->name . '%')
+                ->orWhere('name', $material->name)
+                ->first();
+            
+            if ($reagent) {
+                $reagentMatches[$material->id] = $reagent;
+            }
+        }
+
+        // Get saved calculations - FIXED: No need to json_decode since it's already cast as array
+        $savedCalculations = $labRequest->reagent_calculations ?? [];
+
         return view('Labassistant.request_details', [
             'request' => $labRequest,
             'materials' => $materials,
             'apparatuses' => $apparatuses,
             'numberOfGroups' => $numberOfGroups,
             'repetition' => $repetition,
+            'materialsWithConcentration' => $materialsWithConcentration,
+            'reagentMatches' => $reagentMatches,
+            'savedCalculations' => $savedCalculations,
         ]);
     }
+
+    /**
+     * Calculate reagent amounts
+     */
+    public function calculateReagents(Request $request, $id)
+    {
+        $labRequest = LabRequest::findOrFail($id);
+        
+        $validated = $request->validate([
+            'calculations' => 'required|array',
+            'calculations.*.material_id' => 'required|integer',
+            'calculations.*.reagent_id' => 'required|integer',
+            'calculations.*.purity' => 'nullable|numeric|min:0|max:100',
+        ]);
+
+        $calculations = [];
+        $numStudents = (int) $labRequest->num_students;
+        $groupSize = (int) $labRequest->group_size;
+        $numberOfGroups = intdiv($numStudents, $groupSize);
+        $repetition = (int) $labRequest->repetition;
+
+        foreach ($validated['calculations'] as $calc) {
+            $material = DefaultMaterial::findOrFail($calc['material_id']);
+            $reagent = Reagent::findOrFail($calc['reagent_id']);
+            
+            $totalQuantity = $material->quantity * $numberOfGroups * $repetition;
+            $concentration = $material->concentration;
+
+            $result = [];
+            
+            if ($reagent->type === 'liquid') {
+                $purity = $calc['purity'] ?? 100;
+                $calcResult = $reagent->calculateLiquid($concentration, $totalQuantity, $purity);
+                
+                $result = [
+                    'material_id' => $material->id,
+                    'material_name' => $material->name,
+                    'reagent_id' => $reagent->id,
+                    'reagent_name' => $reagent->name,
+                    'reagent_type' => 'liquid',
+                    'concentration' => $concentration,
+                    'volume' => $totalQuantity,
+                    'purity' => $purity,
+                    'volume_needed' => $calcResult['volume'],
+                    'unit' => 'cm³',
+                    'details' => $calcResult['details'],
+                    'output' => "{$calcResult['volume']} cm³ of concentrated {$reagent->name} is needed for {$concentration} mol/dm³ of {$totalQuantity} cm³ solution."
+                ];
+            } else {
+                $mass = $reagent->calculateSolid($concentration, $totalQuantity);
+                
+                $result = [
+                    'material_id' => $material->id,
+                    'material_name' => $material->name,
+                    'reagent_id' => $reagent->id,
+                    'reagent_name' => $reagent->name,
+                    'reagent_type' => 'solid',
+                    'concentration' => $concentration,
+                    'volume' => $totalQuantity,
+                    'mass_needed' => round($mass, 2),
+                    'unit' => 'g',
+                    'output' => round($mass, 2) . " g of {$reagent->name} is needed for the solution."
+                ];
+            }
+            
+            $calculations[] = $result;
+        }
+
+        // Save calculations to the lab request
+        // No need to json_encode - Laravel will handle it automatically due to the cast
+        $labRequest->update([
+            'reagent_calculations' => $calculations
+        ]);
+
+        return redirect()->back()->with('success', 'Reagent calculations saved successfully.');
+    }
+
     public function showApproveForm($id)
     {
         $request = LabRequest::with(['subject', 'topic', 'experiment', 'user'])->findOrFail($id);
@@ -278,6 +379,7 @@ class LabassistantController extends Controller
         return redirect()->route('lab_assistant.requests.list')
             ->with('success', 'Request approved, scheduled, and notification email sent.');
     }
+
     public function timetable(Request $request)
     {
         // Get week parameter (current, next, next2)
@@ -367,6 +469,7 @@ class LabassistantController extends Controller
             'currentWeek' => $weekParam,
         ]);
     }
+
     public function printRequest($id)
     {
         $labRequest = LabRequest::with(['subject', 'topic', 'experiment', 'user'])
