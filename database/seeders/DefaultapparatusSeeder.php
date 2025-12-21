@@ -14,6 +14,7 @@ class DefaultApparatusSeeder extends Seeder
     public function run(): void
     {
         $apparatus = [
+            //?Chemistry Form 4 Experiment 1.1
             ['name' => '150 cm³ Beaker', 'quantity' => '1','experiment_id' => 1],
             ['name' => '100 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 1],
             ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 1],
@@ -24,8 +25,8 @@ class DefaultApparatusSeeder extends Seeder
             ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 1],
             ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 1],
 
-
-            ['name' => 'Forceps', 'quantity' => '1','experiment_id' => 2],
+            //?Chemistry Form 4 Experiment 4.1
+            ['name' => 'Forcep', 'quantity' => '1','experiment_id' => 2],
             ['name' => '10 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 2],
             ['name' => 'White Tile', 'quantity' => '1','experiment_id' => 2],
             ['name' => 'Basin', 'quantity' => '1','experiment_id' => 2],
@@ -34,7 +35,7 @@ class DefaultApparatusSeeder extends Seeder
             ['name' => 'Gas Jar with Lid', 'quantity' => '1','experiment_id' => 2],
             ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 2],
 
-
+            //?Chemistry Form 4 Experiment 4.2
             ['name' => '10 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 3],
             ['name' => 'Test Tube', 'quantity' => '14','experiment_id' => 3],
             ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 3],
@@ -43,6 +44,143 @@ class DefaultApparatusSeeder extends Seeder
             ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 3],
             ['name' => 'Glass rod', 'quantity' => '1','experiment_id' => 3],
             ['name' => 'Spatula', 'quantity' => '1','experiment_id' => 3],
+
+            //?Chemistry Form 4 Experiment 5.1
+            ['name' => 'Test Tube', 'quantity' => '6','experiment_id' => 4],
+            ['name' => 'Spatula', 'quantity' => '1','experiment_id' => 4],
+            ['name' => 'Evaporating Dish', 'quantity' => '2','experiment_id' => 4],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 4],
+            ['name' => 'Evaporating Dish', 'quantity' => '1','experiment_id' => 4],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 4],
+            ['name' => 'Pipeclay Triangle', 'quantity' => '1','experiment_id' => 4],
+            ['name' => 'Beaker', 'quantity' => '1','experiment_id' => 4],
+            ['name' => '10 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 4],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 4],
+            ['name' => 'Battery', 'quantity' => '2','experiment_id' => 4],
+            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 4],
+            ['name' => 'Light Bulb', 'quantity' => '1','experiment_id' => 4],
+            ['name' => 'Carbon Electrode', 'quantity' => '2','experiment_id' => 4],
+            
+            //?Chemistry Form 4 Experiment 6.1
+            ['name' => 'Test Tube', 'quantity' => '6','experiment_id' => 5],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 5],
+
+            //?Chemistry Form 4 Experiment 6.2
+            ['name' => 'Test Tube', 'quantity' => '2','experiment_id' => 6],
+            ['name' => 'Stirring Rod', 'quantity' => '1','experiment_id' => 6],
+
+            //?Chemistry Form 4 Experiment 6.3
+            ['name' => '100 cm³ Beaker', 'quantity' => '3','experiment_id' => 7],
+            ['name' => 'pH Meter', 'quantity' => '1','experiment_id' => 7],
+
+            //?Chemistry Form 4 Experiment 6.4
+            ['name' => '100 cm³ Beaker', 'quantity' => '3','experiment_id' => 8],
+            ['name' => 'pH Meter', 'quantity' => '1','experiment_id' => 8],
+
+            //?Chemistry Form 4 Experiment 6.5
+            ['name' => 'Stirring Rod', 'quantity' => '1','experiment_id' => 9],
+            ['name' => 'Electronic Balance', 'quantity' => '1','experiment_id' => 9],
+            ['name' => '100 cm³ Beaker', 'quantity' => '5','experiment_id' => 9],
+
+            //?Chemistry Form 4 Experiment 6.6
+            ['name' => 'Test Tube', 'quantity' => '6','experiment_id' => 10],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 10],
+            ['name' => 'Stirring Rod', 'quantity' => '1','experiment_id' => 10],
+            ['name' => 'Burette', 'quantity' => '2','experiment_id' => 10],
+            ['name' => 'Retort Stand with Clamp', 'quantity' => '2','experiment_id' => 10],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 10],
+
+            //?Chemistry Form 4 Experiment 6.7
+            ['name' => 'Test Tube', 'quantity' => '5','experiment_id' => 11],
+            ['name' => 'Boiling Tube', 'quantity' => '5','experiment_id' => 11],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 11],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 11],
+            ['name' => 'Rubber Stopper', 'quantity' => '5','experiment_id' => 11],
+            ['name' => 'Delivery Tube', 'quantity' => '5','experiment_id' => 11],
+
+            //?Chemistry Form 4 Experiment 6.8
+            ['name' => 'Test Tube', 'quantity' => '5','experiment_id' => 12],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 12],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 12],
+            ['name' => 'Spatula', 'quantity' => '1','experiment_id' => 12],
+
+            //?Chemistry Form 4 Experiment 6.9
+            ['name' => 'Test Tube', 'quantity' => '16','experiment_id' => 13],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 13],
+            ['name' => 'Stirring Rod', 'quantity' => '1','experiment_id' => 13],
+            ['name' => 'Dropper', 'quantity' => '4','experiment_id' => 13],
+            ['name' => 'Rubber Stopper', 'quantity' => '4','experiment_id' => 13],
+            ['name' => 'Delivery Tube', 'quantity' => '4','experiment_id' => 13],
+            ['name' => 'Spatula', 'quantity' => '1','experiment_id' => 13],
+            ['name' => '100 cm³ Beaker', 'quantity' => '1','experiment_id' => 13],
+            ['name' => '10 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 13],
+
+            //?Chemistry Form 4 Experiment 6.10
+            ['name' => 'Test Tube', 'quantity' => '8','experiment_id' => 14],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 14],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 14],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 14],
+            ['name' => '100 cm³ Beaker', 'quantity' => '1','experiment_id' => 14],
+            ['name' => '10 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 14],
+            ['name' => 'Red Litmus Paper', 'quantity' => '1','experiment_id' => 14],
+
+            //?Chemistry Form 4 Experiment 6.11
+            ['name' => 'Test Tube', 'quantity' => '4','experiment_id' => 15],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 15],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 15],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 15],
+            ['name' => '100 cm³ Beaker', 'quantity' => '1','experiment_id' => 15],
+            ['name' => '10 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 15],
+
+
+            //?Chemistry Form 4 Experiment 7.1
+            ['name' => '250 cm³ Conical Flask', 'quantity' => '2','experiment_id' => 16],
+            ['name' => 'Retort Stand with Clamp ', 'quantity' => '2','experiment_id' => 16],
+            ['name' => 'Burrete', 'quantity' => '2','experiment_id' => 16],
+            ['name' => 'Basin', 'quantity' => '2','experiment_id' => 16],
+            ['name' => '100 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 16],
+            ['name' => 'Rubber Stopper', 'quantity' => '2','experiment_id' => 16],
+            ['name' => 'Delivery Tube', 'quantity' => '2','experiment_id' => 16],
+            ['name' => 'Electronic Balance', 'quantity' => '1','experiment_id' => 16],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 16],
+
+
+            //?Chemistry Form 4 Experiment 7.2
+            ['name' => '150 cm³ Conical Flask', 'quantity' => '2','experiment_id' => 17],
+            ['name' => '10 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 17],
+            ['name' => '50 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 17],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 17],
+
+            //?Chemistry Form 4 Experiment 7.3
+            ['name' => '150 cm³ Conical Flask', 'quantity' => '2','experiment_id' => 18],
+            ['name' => '10 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 18],
+            ['name' => '50 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 18],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 18],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 18],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 18],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 18],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 18],
+
+            //?Chemistry Form 4 Experiment 7.4
+            ['name' => '150 cm³ Beaker', 'quantity' => '2','experiment_id' => 19],
+            ['name' => '10 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 19],
+            ['name' => 'Test Tube', 'quantity' => '2','experiment_id' => 19],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 19],
+            ['name' => 'Wooden Splinter', 'quantity' => '2','experiment_id' => 19],
+            ['name' => 'Filter Funnel', 'quantity' => '2','experiment_id' => 19],
+            ['name' => 'Filter Paper', 'quantity' => '2','experiment_id' => 19],
+            ['name' => 'Electronic Balance', 'quantity' => '1','experiment_id' => 19],
+            ['name' => 'Spatula', 'quantity' => '1','experiment_id' => 19],
+
+            //?Chemistry Form 4 Experiment 8.1
+            ['name' => '100 cm³ Beaker', 'quantity' => '2','experiment_id' => 20],
+            ['name' => '100 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 20],
+            ['name' => 'Sandpaper', 'quantity' => '2','experiment_id' => 20],
+            ['name' => 'Steel Ball Bearing', 'quantity' => '1','experiment_id' => 20],
+            ['name' => '1 Kg Weight', 'quantity' => '1','experiment_id' => 20],
+            ['name' => 'Retort Stand with Clamp', 'quantity' => '1','experiment_id' => 20],
+            ['name' => 'Meter Ruler', 'quantity' => '1','experiment_id' => 20],
+            ['name' => 'Cellophane Tape', 'quantity' => '1','experiment_id' => 20],
 
 
         ];
