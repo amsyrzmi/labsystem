@@ -87,7 +87,8 @@ class DefaultApparatusSeeder extends Seeder
             ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 10],
             ['name' => 'Stirring Rod', 'quantity' => '1','experiment_id' => 10],
             ['name' => 'Burette', 'quantity' => '2','experiment_id' => 10],
-            ['name' => 'Retort Stand with Clamp', 'quantity' => '2','experiment_id' => 10],
+            ['name' => 'Retort Stand', 'quantity' => '2','experiment_id' => 10],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 10],
             ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 10],
 
             //?Chemistry Form 4 Experiment 6.7
@@ -135,7 +136,8 @@ class DefaultApparatusSeeder extends Seeder
 
             //?Chemistry Form 4 Experiment 7.1
             ['name' => '250 cm³ Conical Flask', 'quantity' => '2','experiment_id' => 16],
-            ['name' => 'Retort Stand with Clamp ', 'quantity' => '2','experiment_id' => 16],
+            ['name' => 'Retort Stand', 'quantity' => '2','experiment_id' => 16],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 16],
             ['name' => 'Burrete', 'quantity' => '2','experiment_id' => 16],
             ['name' => 'Basin', 'quantity' => '2','experiment_id' => 16],
             ['name' => '100 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 16],
@@ -178,9 +180,100 @@ class DefaultApparatusSeeder extends Seeder
             ['name' => 'Sandpaper', 'quantity' => '2','experiment_id' => 20],
             ['name' => 'Steel Ball Bearing', 'quantity' => '1','experiment_id' => 20],
             ['name' => '1 Kg Weight', 'quantity' => '1','experiment_id' => 20],
-            ['name' => 'Retort Stand with Clamp', 'quantity' => '1','experiment_id' => 20],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 20],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 20],
             ['name' => 'Meter Ruler', 'quantity' => '1','experiment_id' => 20],
             ['name' => 'Cellophane Tape', 'quantity' => '1','experiment_id' => 20],
+
+            //!Physics Form 4 Experiment 1.1
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 21],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 21],
+            ['name' => 'Pendulum Bob', 'quantity' => '1','experiment_id' => 21],
+            ['name' => 'String', 'quantity' => '1','experiment_id' => 21],
+            ['name' => 'Protractor', 'quantity' => '1','experiment_id' => 21],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 21],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 21],
+
+            //!Physics Form 4 Experiment 2.1
+            ['name' => 'Photogate System', 'quantity' => '1','experiment_id' => 22],
+            ['name' => 'Electronic Timer', 'quantity' => '1','experiment_id' => 22],
+            ['name' => 'Electromagnetic Release', 'quantity' => '1','experiment_id' => 22],
+            ['name' => 'Steel Ball', 'quantity' => '1','experiment_id' => 22],
+            ['name' => 'Container', 'quantity' => '1','experiment_id' => 22],
+
+            //!Physics Form 4 Experiment 2.2
+            ['name' => 'G-Clamp', 'quantity' => '1','experiment_id' => 23],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 23],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 23],
+            ['name' => 'Jigsaw Blade', 'quantity' => '1','experiment_id' => 23],
+
+            //!Physics Form 4 Experiment 4.1
+            ['name' => 'Power Supply', 'quantity' => '1','experiment_id' => 24],
+            ['name' => 'Immersion Heater', 'quantity' => '1','experiment_id' => 24],
+            ['name' => 'Beaker', 'quantity' => '1','experiment_id' => 24],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 24],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 24],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 24],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 24],
+            ['name' => 'Electronic Balance', 'quantity' => '1','experiment_id' => 24],
+
+            //!Physics Form 4 Experiment 4.2
+            ['name' => 'Power Supply', 'quantity' => '1','experiment_id' => 25],
+            ['name' => 'Immersion Heater', 'quantity' => '1','experiment_id' => 25],
+            ['name' => '1 Kg Aluminium Block', 'quantity' => '1','experiment_id' => 25],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 25],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 25],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 25],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 25],
+
+            //!Physics Form 4 Experiment 4.3
+            ['name' => 'Power Supply', 'quantity' => '1','experiment_id' => 26],
+            ['name' => 'Immersion Heater', 'quantity' => '1','experiment_id' => 26],
+            ['name' => 'Beaker', 'quantity' => '1','experiment_id' => 26],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 26],
+            ['name' => 'Filter Funnel', 'quantity' => '1','experiment_id' => 26],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 26],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 26],
+            ['name' => 'Electronic Balance', 'quantity' => '1','experiment_id' => 26],
+
+            //!Physics Form 4 Experiment 4.4
+            ['name' => '100 mL Syringe', 'quantity' => '1','experiment_id' => 27],
+            ['name' => 'Rubber Tube', 'quantity' => '1','experiment_id' => 27],
+            ['name' => 'Pressure Gauge', 'quantity' => '1','experiment_id' => 27],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 27],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 27],
+
+            //!Physics Form 4 Experiment 4.5
+            ['name' => 'Capillary Tube(Air Trapped with Concentrated Sulphuric Acid)', 'quantity' => '1','experiment_id' => 28],
+            ['name' => '500 cm³ Beaker', 'quantity' => '1','experiment_id' => 28],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 28],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 28],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 28],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 28],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 28],
+            ['name' => 'Stirring Rod', 'quantity' => '1','experiment_id' => 28],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 28],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 28],
+
+            //!Physics Form 4 Experiment 4.6
+            ['name' => 'Sealed Syringe', 'quantity' => '1','experiment_id' => 29],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 29],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 29],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 29],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 29],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 29],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 29],
+
+            //!Physics Form 4 Experiment 6.1
+            ['name' => 'Ray Box with Single Slit', 'quantity' => '1','experiment_id' => 30],
+            ['name' => 'Protractor', 'quantity' => '1','experiment_id' => 30],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 30],
+
+            //!Physics Form 4 Experiment 6.2
+            ['name' => '1000 cm³ Beaker', 'quantity' => '1','experiment_id' => 31],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 31],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 31],
+            ['name' => 'Clamp', 'quantity' => '2','experiment_id' => 31],
 
 
         ];

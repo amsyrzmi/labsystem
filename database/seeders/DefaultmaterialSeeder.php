@@ -164,8 +164,54 @@ class DefaultmaterialSeeder extends Seeder
             ['name' => 'Copper Block', 'quantity' => '1', 'unit' => 'set','experiment_id' => 20],
             ['name' => 'Distilled Water', 'quantity' => '160', 'unit' => 'cm³','experiment_id' => 20],
             
+            //!Physics Form 4 Experiment 1.1
+            ['name' => '100 cm Thread', 'quantity' => '1', 'unit' => 'set','experiment_id' => 21],
+            ['name' => 'Small Piece of Plywood', 'quantity' => '1', 'unit' => 'set','experiment_id' => 21],
 
+            //!Physics Form 4 Experiment 2.1
+            //!None
 
+            //!Physics Form 4 Experiment 2.2
+            ['name' => 'Plasticine', 'quantity' => '20', 'unit' => 'g','experiment_id' => 23],
+            ['name' => 'Plasticine', 'quantity' => '30', 'unit' => 'g','experiment_id' => 23],
+            ['name' => 'Plasticine', 'quantity' => '40', 'unit' => 'g','experiment_id' => 23],
+            ['name' => 'Plasticine', 'quantity' => '50', 'unit' => 'g','experiment_id' => 23],
+            ['name' => 'Plasticine', 'quantity' => '60', 'unit' => 'g','experiment_id' => 23],
+
+            //!Physics Form 4 Experiment 4.1
+            ['name' => 'Plasticine', 'quantity' => '1', 'unit' => 'set','experiment_id' => 24],
+            ['name' => 'Tissue', 'quantity' => '1', 'unit' => 'set','experiment_id' => 24],
+
+            //!Physics Form 4 Experiment 4.2
+            ['name' => 'Tissue', 'quantity' => '1', 'unit' => 'set','experiment_id' => 25],
+
+            //!Physics Form 4 Experiment 4.3
+            ['name' => 'Crushed Ice', 'quantity' => '1', 'unit' => 'set','experiment_id' => 26],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 26],
+            ['name' => 'Tissue', 'quantity' => '1', 'unit' => 'set','experiment_id' => 26],
+
+            //!Physics Form 4 Experiment 4.4
+            //!None
+
+            //!Physics Form 4 Experiment 4.5
+            ['name' => 'Distilled Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 28],
+            ['name' => 'Ice', 'quantity' => '1', 'unit' => 'set','experiment_id' => 28],
+            ['name' => 'Rubber Band', 'quantity' => '1', 'unit' => 'set','experiment_id' => 28],
+
+            //!Physics Form 4 Experiment 4.6
+            ['name' => 'Distilled Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 29],
+            ['name' => 'Ice', 'quantity' => '1', 'unit' => 'set','experiment_id' => 29],
+
+            //!Physics Form 4 Experiment 6.1
+            ['name' => 'Glass Block', 'quantity' => '1', 'unit' => 'set','experiment_id' => 30],
+            ['name' => 'White Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 30],
+            ['name' => 'Pencil', 'quantity' => '1', 'unit' => 'set','experiment_id' => 30],
+
+            //!Physics Form 4 Experiment 6.2
+            ['name' => 'Cork', 'quantity' => '1', 'unit' => 'set','experiment_id' => 31],
+            ['name' => 'Pin', 'quantity' => '2', 'unit' => 'set','experiment_id' => 31],
+            ['name' => 'Cellophane Tape', 'quantity' => '1', 'unit' => 'set','experiment_id' => 31],
+            ['name' => 'Distilled Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 31],
         ];
         foreach ($materials as $item) {
             Defaultmaterial::create($item);
