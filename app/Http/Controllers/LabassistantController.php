@@ -223,19 +223,27 @@ class LabassistantController extends Controller
             return !is_null($material->concentration);
         });
 
-        // Match materials with reagents
+        // Match materials with reagents (now includes finding first variant)
         $reagentMatches = [];
         foreach ($materialsWithConcentration as $material) {
-            $reagent = Reagent::where('name', 'LIKE', '%' . $material->name . '%')
-                ->orWhere('name', $material->name)
+            // Try exact match first
+            $reagent = Reagent::where('name', $material->name)
+                ->orderBy('variant')
                 ->first();
+            
+            // If no exact match, try fuzzy match
+            if (!$reagent) {
+                $reagent = Reagent::where('name', 'LIKE', '%' . $material->name . '%')
+                    ->orderBy('variant')
+                    ->first();
+            }
             
             if ($reagent) {
                 $reagentMatches[$material->id] = $reagent;
             }
         }
 
-        // Get saved calculations - FIXED: No need to json_decode since it's already cast as array
+        // Get saved calculations - already cast as array by model
         $savedCalculations = $labRequest->reagent_calculations ?? [];
 
         return view('Labassistant.request_details', [
@@ -251,8 +259,10 @@ class LabassistantController extends Controller
     }
 
     /**
-     * Calculate reagent amounts
+     * UPDATED calculateReagents METHOD with variant support
+     * Replace the existing method in your LabassistantController
      */
+
     public function calculateReagents(Request $request, $id)
     {
         $labRequest = LabRequest::findOrFail($id);
@@ -288,6 +298,10 @@ class LabassistantController extends Controller
                     'material_name' => $material->name,
                     'reagent_id' => $reagent->id,
                     'reagent_name' => $reagent->name,
+                    'variant' => $reagent->variant,
+                    'display_name' => $reagent->display_name,
+                    'formula' => $reagent->formula,
+                    'molar_mass' => $reagent->molar_mass,
                     'reagent_type' => 'liquid',
                     'concentration' => $concentration,
                     'volume' => $totalQuantity,
@@ -295,7 +309,7 @@ class LabassistantController extends Controller
                     'volume_needed' => $calcResult['volume'],
                     'unit' => 'cm³',
                     'details' => $calcResult['details'],
-                    'output' => "{$calcResult['volume']} cm³ of concentrated {$reagent->name} is needed for {$concentration} mol/dm³ of {$totalQuantity} cm³ solution."
+                    'output' => "{$calcResult['volume']} cm³ of concentrated {$reagent->display_name} is needed for {$concentration} mol/dm³ of {$totalQuantity} cm³ solution."
                 ];
             } else {
                 $mass = $reagent->calculateSolid($concentration, $totalQuantity);
@@ -305,26 +319,30 @@ class LabassistantController extends Controller
                     'material_name' => $material->name,
                     'reagent_id' => $reagent->id,
                     'reagent_name' => $reagent->name,
+                    'variant' => $reagent->variant,
+                    'display_name' => $reagent->display_name,
+                    'formula' => $reagent->formula,
+                    'molar_mass' => $reagent->molar_mass,
                     'reagent_type' => 'solid',
                     'concentration' => $concentration,
                     'volume' => $totalQuantity,
                     'mass_needed' => round($mass, 2),
                     'unit' => 'g',
-                    'output' => round($mass, 2) . " g of {$reagent->name} is needed for the solution."
+                    'output' => round($mass, 2) . " g of {$reagent->display_name} is needed for the solution."
                 ];
             }
             
             $calculations[] = $result;
         }
 
-        // Save calculations to the lab request
-        // No need to json_encode - Laravel will handle it automatically due to the cast
+        // Save calculations - Laravel will handle encoding due to array cast
         $labRequest->update([
             'reagent_calculations' => $calculations
         ]);
 
         return redirect()->back()->with('success', 'Reagent calculations saved successfully.');
     }
+
 
     public function showApproveForm($id)
     {

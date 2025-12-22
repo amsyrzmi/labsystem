@@ -11,11 +11,30 @@ class Reagent extends Model
 
     protected $fillable = [
         'name',
+        'variant',
+        'full_name',
         'type',
         'molar_mass',
         'density',
         'formula',
     ];
+
+    /**
+     * Get the display name for the reagent
+     * Uses full_name if available, otherwise combines name and variant
+     */
+    public function getDisplayNameAttribute()
+    {
+        if ($this->full_name) {
+            return $this->full_name;
+        }
+        
+        if ($this->variant) {
+            return "{$this->name} ({$this->variant})";
+        }
+        
+        return $this->name;
+    }
 
     /**
      * Calculate amount needed for solid reagent
@@ -56,5 +75,21 @@ class Reagent extends Model
                 'molarity_concentrated' => round($moleconverted, 2),
             ]
         ];
+    }
+
+    /**
+     * Scope to search reagents by base name (ignoring variant)
+     */
+    public function scopeByBaseName($query, $name)
+    {
+        return $query->where('name', 'LIKE', "%{$name}%");
+    }
+
+    /**
+     * Scope to get all variants of a reagent
+     */
+    public function scopeVariantsOf($query, $baseName)
+    {
+        return $query->where('name', $baseName);
     }
 }

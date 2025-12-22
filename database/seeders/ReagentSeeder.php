@@ -18,6 +18,8 @@ class ReagentSeeder extends Seeder
         // Acids
         [
             'name' => 'Nitric Acid',
+            'variant' => null,
+            'full_name' => 'Nitric Acid',
             'type' => 'liquid',
             'molar_mass' => 63.01,
             'density' => 1.42,
@@ -25,6 +27,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sulphuric Acid',
+            'variant' => null,
+            'full_name' => 'Sulphuric Acid',
             'type' => 'liquid',
             'molar_mass' => 98.08,
             'density' => 1.84,
@@ -32,6 +36,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Hydrochloric Acid',
+            'variant' => null,
+            'full_name' => 'Hydrochloric Acid',
             'type' => 'liquid',
             'molar_mass' => 36.46,
             'density' => 1.18,
@@ -39,6 +45,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Acetic Acid',
+            'variant' => null,
+            'full_name' => 'Acetic Acid',
             'type' => 'liquid',
             'molar_mass' => 60.05,
             'density' => 1.05,
@@ -48,6 +56,8 @@ class ReagentSeeder extends Seeder
         // Bases
         [
             'name' => 'Ammonia',
+            'variant' => null,
+            'full_name' => 'Ammonia',
             'type' => 'liquid',
             'molar_mass' => 17.03,
             'density' => 0.91,
@@ -55,6 +65,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Hydroxide',
+            'variant' => null,
+            'full_name' => 'Sodium Hydroxide',
             'type' => 'solid',
             'molar_mass' => 40.00,
             'density' => null,
@@ -62,6 +74,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Hydroxide',
+            'variant' => null,
+            'full_name' => 'Potassium Hydroxide',
             'type' => 'solid',
             'molar_mass' => 56.11,
             'density' => null,
@@ -69,6 +83,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Barium Hydroxide',
+            'variant' => null,
+            'full_name' => 'Barium Hydroxide',
             'type' => 'solid',
             'molar_mass' => 171.34,
             'density' => null,
@@ -76,6 +92,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Calcium Hydroxide',
+            'variant' => null,
+            'full_name' => 'Calcium Hydroxide',
             'type' => 'solid',
             'molar_mass' => 74.09,
             'density' => null,
@@ -85,6 +103,8 @@ class ReagentSeeder extends Seeder
         // Ammonium salts
         [
             'name' => 'Ammonium Chloride',
+            'variant' => null,
+            'full_name' => 'Ammonium Chloride',
             'type' => 'solid',
             'molar_mass' => 53.49,
             'density' => null,
@@ -92,6 +112,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Ammonium Acetate',
+            'variant' => null,
+            'full_name' => 'Ammonium Acetate',
             'type' => 'solid',
             'molar_mass' => 77.08,
             'density' => null,
@@ -99,6 +121,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Ammonium Nitrate',
+            'variant' => null,
+            'full_name' => 'Ammonium Nitrate',
             'type' => 'solid',
             'molar_mass' => 80.04,
             'density' => null,
@@ -106,6 +130,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Ammonium Sulphate',
+            'variant' => null,
+            'full_name' => 'Ammonium Sulphate',
             'type' => 'solid',
             'molar_mass' => 132.14,
             'density' => null,
@@ -113,22 +139,37 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Ammonium Thiocyanate',
+            'variant' => null,
+            'full_name' => 'Ammonium Thiocyanate',
             'type' => 'solid',
             'molar_mass' => 76.12,
             'density' => null,
             'formula' => 'NH₄SCN',
         ],
 
-        // Aluminium
+        // Aluminium - WITH VARIANTS
         [
             'name' => 'Aluminium Nitrate',
+            'variant' => 'anhydrous',
+            'full_name' => 'Aluminium Nitrate (Anhydrous)',
             'type' => 'solid',
-            'molar_mass' => 212.99,
+            'molar_mass' => 213.00,
             'density' => null,
             'formula' => 'Al(NO₃)₃',
         ],
         [
+            'name' => 'Aluminium Nitrate',
+            'variant' => 'nonahydrate',
+            'full_name' => 'Aluminium Nitrate Nonahydrate',
+            'type' => 'solid',
+            'molar_mass' => 375.13,
+            'density' => null,
+            'formula' => 'Al(NO₃)₃·9H₂O',
+        ],
+        [
             'name' => 'Aluminium Sulphate',
+            'variant' => null,
+            'full_name' => 'Aluminium Sulphate',
             'type' => 'solid',
             'molar_mass' => 342.15,
             'density' => null,
@@ -138,6 +179,8 @@ class ReagentSeeder extends Seeder
         // Barium
         [
             'name' => 'Barium Chloride',
+            'variant' => null,
+            'full_name' => 'Barium Chloride',
             'type' => 'solid',
             'molar_mass' => 208.23,
             'density' => null,
@@ -145,22 +188,46 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Barium Nitrate',
+            'variant' => null,
+            'full_name' => 'Barium Nitrate',
             'type' => 'solid',
             'molar_mass' => 261.34,
             'density' => null,
             'formula' => 'Ba(NO₃)₂',
         ],
 
-        // Calcium
+        // Calcium - WITH VARIANTS
         [
             'name' => 'Calcium Chloride',
+            'variant' => 'anhydrous',
+            'full_name' => 'Calcium Chloride (Anhydrous)',
             'type' => 'solid',
-            'molar_mass' => 110.98,
+            'molar_mass' => 110.99,
             'density' => null,
             'formula' => 'CaCl₂',
         ],
         [
+            'name' => 'Calcium Chloride',
+            'variant' => 'dihydrate',
+            'full_name' => 'Calcium Chloride Dihydrate',
+            'type' => 'solid',
+            'molar_mass' => 147.02,
+            'density' => null,
+            'formula' => 'CaCl₂·2H₂O',
+        ],
+        [
+            'name' => 'Calcium Chloride',
+            'variant' => 'hexahydrate',
+            'full_name' => 'Calcium Chloride Hexahydrate',
+            'type' => 'solid',
+            'molar_mass' => 219.00,
+            'density' => null,
+            'formula' => 'CaCl₂·6H₂O',
+        ],
+        [
             'name' => 'Calcium Nitrate',
+            'variant' => null,
+            'full_name' => 'Calcium Nitrate',
             'type' => 'solid',
             'molar_mass' => 164.10,
             'density' => null,
@@ -170,6 +237,8 @@ class ReagentSeeder extends Seeder
         // Transition metals
         [
             'name' => 'Cobalt(II) Chloride',
+            'variant' => null,
+            'full_name' => 'Cobalt(II) Chloride',
             'type' => 'solid',
             'molar_mass' => 129.84,
             'density' => null,
@@ -177,6 +246,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Cobalt(II) Nitrate',
+            'variant' => null,
+            'full_name' => 'Cobalt(II) Nitrate',
             'type' => 'solid',
             'molar_mass' => 182.94,
             'density' => null,
@@ -184,6 +255,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Copper(II) Sulphate',
+            'variant' => null,
+            'full_name' => 'Copper(II) Sulphate',
             'type' => 'solid',
             'molar_mass' => 159.61,
             'density' => null,
@@ -191,6 +264,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Copper(II) Nitrate',
+            'variant' => null,
+            'full_name' => 'Copper(II) Nitrate',
             'type' => 'solid',
             'molar_mass' => 187.56,
             'density' => null,
@@ -198,6 +273,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Copper(II) Chloride',
+            'variant' => null,
+            'full_name' => 'Copper(II) Chloride',
             'type' => 'solid',
             'molar_mass' => 134.45,
             'density' => null,
@@ -205,6 +282,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Iron(III) Chloride',
+            'variant' => null,
+            'full_name' => 'Iron(III) Chloride',
             'type' => 'solid',
             'molar_mass' => 162.20,
             'density' => null,
@@ -212,6 +291,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Iron(II) Sulphate',
+            'variant' => null,
+            'full_name' => 'Iron(II) Sulphate',
             'type' => 'solid',
             'molar_mass' => 151.91,
             'density' => null,
@@ -221,6 +302,8 @@ class ReagentSeeder extends Seeder
         // Lead
         [
             'name' => 'Lead Acetate',
+            'variant' => null,
+            'full_name' => 'Lead Acetate',
             'type' => 'solid',
             'molar_mass' => 325.29,
             'density' => null,
@@ -228,6 +311,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Lead(II) Nitrate',
+            'variant' => null,
+            'full_name' => 'Lead(II) Nitrate',
             'type' => 'solid',
             'molar_mass' => 331.21,
             'density' => null,
@@ -237,6 +322,8 @@ class ReagentSeeder extends Seeder
         // Magnesium
         [
             'name' => 'Magnesium Bromide',
+            'variant' => null,
+            'full_name' => 'Magnesium Bromide',
             'type' => 'solid',
             'molar_mass' => 184.11,
             'density' => null,
@@ -244,6 +331,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Magnesium Chloride',
+            'variant' => null,
+            'full_name' => 'Magnesium Chloride',
             'type' => 'solid',
             'molar_mass' => 95.21,
             'density' => null,
@@ -251,6 +340,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Magnesium Nitrate',
+            'variant' => null,
+            'full_name' => 'Magnesium Nitrate',
             'type' => 'solid',
             'molar_mass' => 148.31,
             'density' => null,
@@ -258,22 +349,37 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Magnesium Sulphate',
+            'variant' => null,
+            'full_name' => 'Magnesium Sulphate',
             'type' => 'solid',
             'molar_mass' => 120.37,
             'density' => null,
             'formula' => 'MgSO₄',
         ],
 
-        // Manganese / Mercury / Nickel / Zinc
+        // Manganese - WITH VARIANTS
         [
             'name' => 'Manganese(II) Chloride',
+            'variant' => 'anhydrous',
+            'full_name' => 'Manganese(II) Chloride (Anhydrous)',
             'type' => 'solid',
             'molar_mass' => 125.84,
             'density' => null,
             'formula' => 'MnCl₂',
         ],
         [
+            'name' => 'Manganese(II) Chloride',
+            'variant' => 'tetrahydrate',
+            'full_name' => 'Manganese(II) Chloride Tetrahydrate',
+            'type' => 'solid',
+            'molar_mass' => 198.00,
+            'density' => null,
+            'formula' => 'MnCl₂·4H₂O',
+        ],
+        [
             'name' => 'Manganese(II) Sulphate',
+            'variant' => null,
+            'full_name' => 'Manganese(II) Sulphate',
             'type' => 'solid',
             'molar_mass' => 151.00,
             'density' => null,
@@ -281,6 +387,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Mercury(II) Chloride',
+            'variant' => null,
+            'full_name' => 'Mercury(II) Chloride',
             'type' => 'solid',
             'molar_mass' => 271.50,
             'density' => null,
@@ -288,6 +396,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Nickel Chloride',
+            'variant' => null,
+            'full_name' => 'Nickel Chloride',
             'type' => 'solid',
             'molar_mass' => 129.60,
             'density' => null,
@@ -295,6 +405,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Nickel Nitrate',
+            'variant' => null,
+            'full_name' => 'Nickel Nitrate',
             'type' => 'solid',
             'molar_mass' => 182.70,
             'density' => null,
@@ -302,6 +414,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Nickel Sulphate',
+            'variant' => null,
+            'full_name' => 'Nickel Sulphate',
             'type' => 'solid',
             'molar_mass' => 154.75,
             'density' => null,
@@ -309,6 +423,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Zinc Nitrate',
+            'variant' => null,
+            'full_name' => 'Zinc Nitrate',
             'type' => 'solid',
             'molar_mass' => 189.40,
             'density' => null,
@@ -316,6 +432,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Zinc Sulphate',
+            'variant' => null,
+            'full_name' => 'Zinc Sulphate',
             'type' => 'solid',
             'molar_mass' => 161.47,
             'density' => null,
@@ -325,6 +443,8 @@ class ReagentSeeder extends Seeder
         // Alkali metal salts
         [
             'name' => 'Potassium Chloride',
+            'variant' => null,
+            'full_name' => 'Potassium Chloride',
             'type' => 'solid',
             'molar_mass' => 74.55,
             'density' => null,
@@ -332,6 +452,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Bromide',
+            'variant' => null,
+            'full_name' => 'Potassium Bromide',
             'type' => 'solid',
             'molar_mass' => 119.00,
             'density' => null,
@@ -339,6 +461,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Iodide',
+            'variant' => null,
+            'full_name' => 'Potassium Iodide',
             'type' => 'solid',
             'molar_mass' => 166.00,
             'density' => null,
@@ -346,6 +470,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Nitrate',
+            'variant' => null,
+            'full_name' => 'Potassium Nitrate',
             'type' => 'solid',
             'molar_mass' => 101.10,
             'density' => null,
@@ -353,6 +479,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Carbonate',
+            'variant' => null,
+            'full_name' => 'Potassium Carbonate',
             'type' => 'solid',
             'molar_mass' => 138.21,
             'density' => null,
@@ -360,6 +488,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Hydrogen Carbonate',
+            'variant' => null,
+            'full_name' => 'Potassium Hydrogen Carbonate',
             'type' => 'solid',
             'molar_mass' => 100.12,
             'density' => null,
@@ -367,6 +497,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Sulphate',
+            'variant' => null,
+            'full_name' => 'Potassium Sulphate',
             'type' => 'solid',
             'molar_mass' => 174.26,
             'density' => null,
@@ -374,6 +506,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Thiocyanate',
+            'variant' => null,
+            'full_name' => 'Potassium Thiocyanate',
             'type' => 'solid',
             'molar_mass' => 97.18,
             'density' => null,
@@ -381,6 +515,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Chromate',
+            'variant' => null,
+            'full_name' => 'Potassium Chromate',
             'type' => 'solid',
             'molar_mass' => 194.19,
             'density' => null,
@@ -388,6 +524,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Dichromate',
+            'variant' => null,
+            'full_name' => 'Potassium Dichromate',
             'type' => 'solid',
             'molar_mass' => 294.18,
             'density' => null,
@@ -395,6 +533,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Hexacyanoferrate(II)',
+            'variant' => null,
+            'full_name' => 'Potassium Hexacyanoferrate(II)',
             'type' => 'solid',
             'molar_mass' => 368.35,
             'density' => null,
@@ -402,15 +542,19 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Potassium Hexacyanoferrate(III)',
+            'variant' => null,
+            'full_name' => 'Potassium Hexacyanoferrate(III)',
             'type' => 'solid',
             'molar_mass' => 329.24,
             'density' => null,
             'formula' => 'K₃[Fe(CN)₆]',
         ],
 
-        // Sodium salts
+        // Sodium salts - WITH VARIANTS FOR SODIUM SULFATE
         [
             'name' => 'Sodium Chloride',
+            'variant' => null,
+            'full_name' => 'Sodium Chloride',
             'type' => 'solid',
             'molar_mass' => 58.44,
             'density' => null,
@@ -418,6 +562,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Acetate',
+            'variant' => null,
+            'full_name' => 'Sodium Acetate',
             'type' => 'solid',
             'molar_mass' => 82.03,
             'density' => null,
@@ -425,6 +571,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Bicarbonate',
+            'variant' => null,
+            'full_name' => 'Sodium Bicarbonate',
             'type' => 'solid',
             'molar_mass' => 84.01,
             'density' => null,
@@ -432,6 +580,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Carbonate',
+            'variant' => null,
+            'full_name' => 'Sodium Carbonate',
             'type' => 'solid',
             'molar_mass' => 105.99,
             'density' => null,
@@ -439,6 +589,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Nitrate',
+            'variant' => null,
+            'full_name' => 'Sodium Nitrate',
             'type' => 'solid',
             'molar_mass' => 85.00,
             'density' => null,
@@ -446,13 +598,26 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Sulphate',
+            'variant' => 'anhydrous',
+            'full_name' => 'Sodium Sulphate (Anhydrous)',
             'type' => 'solid',
             'molar_mass' => 142.04,
             'density' => null,
             'formula' => 'Na₂SO₄',
         ],
         [
+            'name' => 'Sodium Sulphate',
+            'variant' => 'decahydrate',
+            'full_name' => 'Sodium Sulphate Decahydrate',
+            'type' => 'solid',
+            'molar_mass' => 322.19,
+            'density' => null,
+            'formula' => 'Na₂SO₄·10H₂O',
+        ],
+        [
             'name' => 'Sodium Thiosulfate',
+            'variant' => null,
+            'full_name' => 'Sodium Thiosulfate',
             'type' => 'solid',
             'molar_mass' => 158.11,
             'density' => null,
@@ -460,6 +625,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Oxalate',
+            'variant' => null,
+            'full_name' => 'Sodium Oxalate',
             'type' => 'solid',
             'molar_mass' => 134.00,
             'density' => null,
@@ -467,6 +634,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Silicate',
+            'variant' => null,
+            'full_name' => 'Sodium Silicate',
             'type' => 'solid',
             'molar_mass' => 122.06,
             'density' => null,
@@ -474,6 +643,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Dichromate',
+            'variant' => null,
+            'full_name' => 'Sodium Dichromate',
             'type' => 'solid',
             'molar_mass' => 261.97,
             'density' => null,
@@ -481,6 +652,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Fluoride',
+            'variant' => null,
+            'full_name' => 'Sodium Fluoride',
             'type' => 'solid',
             'molar_mass' => 41.99,
             'density' => null,
@@ -488,6 +661,8 @@ class ReagentSeeder extends Seeder
         ],
         [
             'name' => 'Sodium Peroxide',
+            'variant' => null,
+            'full_name' => 'Sodium Peroxide',
             'type' => 'solid',
             'molar_mass' => 77.98,
             'density' => null,
@@ -497,6 +672,8 @@ class ReagentSeeder extends Seeder
         // Silver
         [
             'name' => 'Silver Nitrate',
+            'variant' => null,
+            'full_name' => 'Silver Nitrate',
             'type' => 'solid',
             'molar_mass' => 169.87,
             'density' => null,
@@ -506,7 +683,10 @@ class ReagentSeeder extends Seeder
         ];
 
         foreach ($reagents as $reagent) {
-            Reagent::create($reagent);
+            Reagent::updateOrCreate(
+                ['name' => $reagent['name'], 'variant' => $reagent['variant']],
+                $reagent
+            );
         }
     }
 }

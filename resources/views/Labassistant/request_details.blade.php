@@ -142,7 +142,17 @@
                     
                     @foreach($savedCalculations as $calc)
                         <div class="calculation-result">
-                            <div class="calc-title">{{ $calc['material_name'] }} ({{ $calc['reagent_name'] }})</div>
+                            <div class="calc-title">
+                                {{ $calc['material_name'] }} 
+                                @if(isset($calc['display_name']))
+                                    ({{ $calc['display_name'] }})
+                                @elseif(isset($calc['reagent_name']))
+                                    ({{ $calc['reagent_name'] }})
+                                @endif
+                                @if(isset($calc['variant']) && $calc['variant'])
+                                    <span class="variant-badge">{{ $calc['variant'] }}</span>
+                                @endif
+                            </div>
                             <div class="calc-output">{{ $calc['output'] }}</div>
                             
                             @if($calc['reagent_type'] === 'liquid')
@@ -151,6 +161,12 @@
                                         • Purity: {{ $calc['purity'] }}%<br>
                                         • Target: {{ $calc['concentration'] }} mol/dm³<br>
                                         • Volume: {{ $calc['volume'] }} cm³<br>
+                                        @if(isset($calc['molar_mass']))
+                                            • Molar Mass: {{ $calc['molar_mass'] }} g/mol<br>
+                                        @endif
+                                        @if(isset($calc['formula']))
+                                            • Formula: {{ $calc['formula'] }}<br>
+                                        @endif
                                         • Mass of solution: {{ $calc['details']['mass_of_solution'] }} g<br>
                                         • Mass of pure reagent: {{ $calc['details']['mass_of_pure_reagent'] }} g<br>
                                         • Molarity (concentrated): {{ $calc['details']['molarity_concentrated'] }} mol/dm³
@@ -160,7 +176,13 @@
                                 <div class="calc-details">
                                     <small>
                                         • Target: {{ $calc['concentration'] }} mol/dm³<br>
-                                        • Volume: {{ $calc['volume'] }} cm³
+                                        • Volume: {{ $calc['volume'] }} cm³<br>
+                                        @if(isset($calc['molar_mass']))
+                                            • Molar Mass: {{ $calc['molar_mass'] }} g/mol<br>
+                                        @endif
+                                        @if(isset($calc['formula']))
+                                            • Formula: {{ $calc['formula'] }}
+                                        @endif
                                     </small>
                                 </div>
                             @endif
@@ -176,8 +198,20 @@
                     
                     @foreach($materialsWithConcentration as $index => $material)
                         @php
-                            $reagent = $reagentMatches[$material->id] ?? null;
                             $totalQuantity = $material->quantity * $numberOfGroups * $repetition;
+                            // Get all matching reagents (could be multiple variants)
+                            $matchingReagents = isset($reagentMatches[$material->id]) 
+                                ? collect([$reagentMatches[$material->id]]) 
+                                : collect();
+                            
+                            // Try to find more variants
+                            if ($matchingReagents->isNotEmpty()) {
+                                $baseName = $matchingReagents->first()->name;
+                                $allVariants = \App\Models\Reagent::where('name', $baseName)->get();
+                                if ($allVariants->count() > 1) {
+                                    $matchingReagents = $allVariants;
+                                }
+                            }
                         @endphp
                         
                         <div class="reagent-calculation-item">
@@ -189,52 +223,95 @@
                                 </span>
                             </div>
                             
-                            @if($reagent)
+                            @if($matchingReagents->isNotEmpty())
                                 <input type="hidden" name="calculations[{{ $index }}][material_id]" value="{{ $material->id }}">
-                                <input type="hidden" name="calculations[{{ $index }}][reagent_id]" value="{{ $reagent->id }}">
                                 
-                                <div class="reagent-info">
-                                    <div class="reagent-property">
-                                        <span class="property-label">Reagent:</span>
-                                        <span class="property-value">{{ $reagent->name }} ({{ $reagent->formula }})</span>
+                                <!-- Variant Selector (if multiple variants exist) -->
+                                @if($matchingReagents->count() > 1)
+                                    <div class="variant-selector-group">
+                                        <label for="reagent_{{ $index }}" class="variant-label">
+                                            🔬 Select Reagent Form:
+                                        </label>
+                                        <select 
+                                            id="reagent_{{ $index }}"
+                                            name="calculations[{{ $index }}][reagent_id]" 
+                                            class="variant-select"
+                                            required
+                                            onchange="updateReagentInfo({{ $index }})"
+                                        >
+                                            <option value="">-- Select Form --</option>
+                                            @foreach($matchingReagents as $reagent)
+                                                <option 
+                                                    value="{{ $reagent->id }}"
+                                                    data-type="{{ $reagent->type }}"
+                                                    data-molar-mass="{{ $reagent->molar_mass }}"
+                                                    data-density="{{ $reagent->density }}"
+                                                    data-formula="{{ $reagent->formula }}"
+                                                    data-variant="{{ $reagent->variant }}"
+                                                    data-display-name="{{ $reagent->display_name }}"
+                                                >
+                                                    {{ $reagent->display_name }} - {{ $reagent->molar_mass }} g/mol
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <small class="input-helper">Different forms have different molar masses</small>
                                     </div>
-                                    <div class="reagent-property">
-                                        <span class="property-label">Type:</span>
-                                        <span class="property-value type-badge type-{{ $reagent->type }}">
-                                            {{ ucfirst($reagent->type) }}
-                                        </span>
-                                    </div>
-                                    <div class="reagent-property">
-                                        <span class="property-label">Molar Mass:</span>
-                                        <span class="property-value">{{ $reagent->molar_mass }} g/mol</span>
-                                    </div>
-                                    @if($reagent->type === 'liquid')
+                                @else
+                                    <input type="hidden" name="calculations[{{ $index }}][reagent_id]" value="{{ $matchingReagents->first()->id }}">
+                                @endif
+                                
+                                <!-- Reagent Info Display -->
+                                <div class="reagent-info" id="reagent_info_{{ $index }}">
+                                    @if($matchingReagents->count() === 1)
+                                        @php $reagent = $matchingReagents->first(); @endphp
                                         <div class="reagent-property">
-                                            <span class="property-label">Density:</span>
-                                            <span class="property-value">{{ $reagent->density }} g/cm³</span>
+                                            <span class="property-label">Reagent:</span>
+                                            <span class="property-value">{{ $reagent->display_name }}</span>
+                                        </div>
+                                        <div class="reagent-property">
+                                            <span class="property-label">Formula:</span>
+                                            <span class="property-value">{{ $reagent->formula }}</span>
+                                        </div>
+                                        <div class="reagent-property">
+                                            <span class="property-label">Type:</span>
+                                            <span class="property-value type-badge type-{{ $reagent->type }}">
+                                                {{ ucfirst($reagent->type) }}
+                                            </span>
+                                        </div>
+                                        <div class="reagent-property">
+                                            <span class="property-label">Molar Mass:</span>
+                                            <span class="property-value">{{ $reagent->molar_mass }} g/mol</span>
+                                        </div>
+                                        @if($reagent->type === 'liquid')
+                                            <div class="reagent-property">
+                                                <span class="property-label">Density:</span>
+                                                <span class="property-value">{{ $reagent->density }} g/cm³</span>
+                                            </div>
+                                        @endif
+                                    @else
+                                        <div class="reagent-property-placeholder">
+                                            <em>Select a form above to see reagent properties</em>
                                         </div>
                                     @endif
                                 </div>
                                 
-                                @if($reagent->type === 'liquid')
-                                    <div class="purity-input-group">
-                                        <label for="purity_{{ $index }}" class="purity-label">
-                                            Purity of Concentrated {{ $reagent->name }} (%)
-                                        </label>
-                                        <input 
-                                            type="number" 
-                                            id="purity_{{ $index }}"
-                                            name="calculations[{{ $index }}][purity]" 
-                                            class="purity-input"
-                                            min="0" 
-                                            max="100" 
-                                            step="0.01"
-                                            placeholder="e.g., 69"
-                                            required
-                                        >
-                                        <small class="input-helper">Enter the purity percentage (e.g., 69 for 69%)</small>
-                                    </div>
-                                @endif
+                                <!-- Purity Input (for liquids) - shown/hidden dynamically -->
+                                <div class="purity-input-group" id="purity_group_{{ $index }}" style="{{ ($matchingReagents->count() === 1 && $matchingReagents->first()->type === 'liquid') ? '' : 'display: none;' }}">
+                                    <label for="purity_{{ $index }}" class="purity-label">
+                                        Purity of Concentrated Reagent (%)
+                                    </label>
+                                    <input 
+                                        type="number" 
+                                        id="purity_{{ $index }}"
+                                        name="calculations[{{ $index }}][purity]" 
+                                        class="purity-input"
+                                        min="0" 
+                                        max="100" 
+                                        step="0.01"
+                                        placeholder="e.g., 69"
+                                    >
+                                    <small class="input-helper">Enter the purity percentage (e.g., 69 for 69%)</small>
+                                </div>
                             @else
                                 <div class="reagent-not-found">
                                     ⚠️ No matching reagent found in database for "{{ $material->name }}".
@@ -333,6 +410,70 @@
                 calcForm.classList.toggle('hidden');
             }
         }
+
+        function updateReagentInfo(index) {
+            const select = document.getElementById('reagent_' + index);
+            const selectedOption = select.options[select.selectedIndex];
+            const infoDiv = document.getElementById('reagent_info_' + index);
+            const purityGroup = document.getElementById('purity_group_' + index);
+            const purityInput = document.getElementById('purity_' + index);
+            
+            if (!selectedOption.value) {
+                infoDiv.innerHTML = '<div class="reagent-property-placeholder"><em>Select a form above to see reagent properties</em></div>';
+                purityGroup.style.display = 'none';
+                return;
+            }
+            
+            const type = selectedOption.dataset.type;
+            const molarMass = selectedOption.dataset.molarMass;
+            const density = selectedOption.dataset.density;
+            const formula = selectedOption.dataset.formula;
+            const variant = selectedOption.dataset.variant;
+            const displayName = selectedOption.dataset.displayName;
+            
+            // Update info display
+            let html = `
+                <div class="reagent-property">
+                    <span class="property-label">Reagent:</span>
+                    <span class="property-value">${displayName}</span>
+                </div>
+                <div class="reagent-property">
+                    <span class="property-label">Formula:</span>
+                    <span class="property-value">${formula}</span>
+                </div>
+                <div class="reagent-property">
+                    <span class="property-label">Type:</span>
+                    <span class="property-value type-badge type-${type}">
+                        ${type.charAt(0).toUpperCase() + type.slice(1)}
+                    </span>
+                </div>
+                <div class="reagent-property">
+                    <span class="property-label">Molar Mass:</span>
+                    <span class="property-value">${molarMass} g/mol</span>
+                </div>
+            `;
+            
+            if (type === 'liquid' && density) {
+                html += `
+                    <div class="reagent-property">
+                        <span class="property-label">Density:</span>
+                        <span class="property-value">${density} g/cm³</span>
+                    </div>
+                `;
+            }
+            
+            infoDiv.innerHTML = html;
+            
+            // Show/hide purity input based on type
+            if (type === 'liquid') {
+                purityGroup.style.display = 'block';
+                purityInput.required = true;
+            } else {
+                purityGroup.style.display = 'none';
+                purityInput.required = false;
+                purityInput.value = '';
+            }
+        }
     </script>
 
     <style>
@@ -357,11 +498,21 @@
         .btn-small {
             padding: 6px 12px;
             font-size: 13px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
         }
 
         .btn-edit {
             background: var(--accentlight);
             color: white;
+        }
+
+        .btn-edit:hover {
+            background: var(--accent);
+            transform: translateY(-1px);
         }
 
         .saved-calculations {
@@ -382,6 +533,18 @@
             color: var(--accent);
             font-size: 16px;
             margin-bottom: 8px;
+        }
+
+        .variant-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 8px;
         }
 
         .calc-output {
@@ -433,6 +596,45 @@
             font-weight: 600;
         }
 
+        .variant-selector-group {
+            margin: 16px 0;
+            padding: 16px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+            border-radius: 8px;
+            border: 2px solid #2196F3;
+        }
+
+        .variant-label {
+            display: block;
+            font-weight: 600;
+            color: #1b263b;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .variant-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #1b263b;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .variant-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(25, 71, 174, 0.1);
+        }
+
+        .variant-select:hover {
+            border-color: var(--accentlight);
+            background-color: #f8f9fa;
+        }
+
         .reagent-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -447,6 +649,13 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+        }
+
+        .reagent-property-placeholder {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-style: italic;
         }
 
         .property-label {
@@ -550,6 +759,15 @@
 
             .form-actions .btn {
                 width: 100%;
+            }
+
+            .variant-selector-group {
+                padding: 12px;
+            }
+            
+            .variant-select {
+                font-size: 14px;
+                padding: 10px 12px;
             }
         }
     </style>
