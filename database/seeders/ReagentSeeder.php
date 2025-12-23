@@ -451,6 +451,15 @@ class ReagentSeeder extends Seeder
             'formula' => 'KCl',
         ],
         [
+            'name' => 'Potassium Manganate',
+            'variant' => null,
+            'full_name' => 'Potassium Manganate',
+            'type' => 'solid',
+            'molar_mass' => 158.04,
+            'density' => null,
+            'formula' => 'KMnO₄',
+        ],
+        [
             'name' => 'Potassium Bromide',
             'variant' => null,
             'full_name' => 'Potassium Bromide',
