@@ -354,96 +354,7 @@ class DefaultApparatusSeeder extends Seeder
             ['name' => 'Stirring Rod', 'quantity' => '1','experiment_id' => 42],
             ['name' => 'Electronic Balance', 'quantity' => '1','experiment_id' => 42],
 
-            //!Physics Form 5 Experiment 1.1
-            ['name' => 'Retort Stand', 'quantity' => '2','experiment_id' => 94],
-            ['name' => 'Clamp', 'quantity' => '2','experiment_id' => 94],
-            ['name' => '10 cm Spring', 'quantity' => '1','experiment_id' => 94],
-            ['name' => '10 g Weight', 'quantity' => '5','experiment_id' => 94],
-            ['name' => '20 g Weight', 'quantity' => '5','experiment_id' => 94],
-            ['name' => '50 g Weight', 'quantity' => '5','experiment_id' => 94],
-            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 94],
 
-            //!Physics Form 5 Experiment 2.1
-            ['name' => '500 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 95],
-            ['name' => 'Silicone Tube', 'quantity' => '1','experiment_id' => 95],
-            ['name' => 'Thistle Funnel', 'quantity' => '1','experiment_id' => 95],
-            ['name' => 'Thin Sheet of Rubber', 'quantity' => '1','experiment_id' => 95],
-            ['name' => 'U-Tube', 'quantity' => '1','experiment_id' => 95],
-            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 95],
-            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 95],
-            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 95],
-
-            //!Physics Form 5 Experiment 2.2
-            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 96],
-            ['name' => '600 cm³ Beaker', 'quantity' => '3','experiment_id' => 96],
-            ['name' => 'U-Tube', 'quantity' => '1','experiment_id' => 96],
-            ['name' => 'Silicone Tube', 'quantity' => '1','experiment_id' => 96],
-            ['name' => 'Thistle Funnel', 'quantity' => '1','experiment_id' => 96],
-            ['name' => 'Thin Sheet of Rubber', 'quantity' => '6','experiment_id' => 96],
-            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 96],
-            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 96],
-
-            //!Physics Form 5 Experiment 2.3
-            ['name' => 'Weight', 'quantity' => '1','experiment_id' => 97],
-            ['name' => 'Eureka Can', 'quantity' => '1','experiment_id' => 97],
-            ['name' => '100 cm³ Beaker', 'quantity' => '3','experiment_id' => 97],
-            ['name' => 'Spring Balance', 'quantity' => '1','experiment_id' => 97],
-            ['name' => 'Electronic Balance', 'quantity' => '1','experiment_id' => 97],
-            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 97],
-            ['name' => 'Wooden Block', 'quantity' => '6','experiment_id' => 97],
-            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 97],
-
-            //!Physics Form 5 Experiment 3.1
-            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 98],
-            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 98],
-            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 98],
-            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 98],
-            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 98],
-            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 98],
-            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 98],
-            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 98],
-            ['name' => 'Fillament Bulb', 'quantity' => '1','experiment_id' => 98],
-
-            //!Physics Form 5 Experiment 3.2
-            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 99],
-            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 99],
-            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 99],
-            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 99],
-            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 99],
-            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 99],
-            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 99],
-            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 99],
-
-            //!Physics Form 5 Experiment 3.3
-            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 100],
-            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 100],
-            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 100],
-            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 100],
-            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 100],
-            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 100],
-            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 100],
-            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 100],
-
-            //!Physics Form 5 Experiment 3.4
-            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 101],
-            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 101],
-            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 101],
-            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 101],
-            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 101],
-            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 101],
-            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 101],
-            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 101],
-            ['name' => 'Crocodile Clip', 'quantity' => '2','experiment_id' => 101],
-
-            //!Physics Form 5 Experiment 3.5
-            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 102],
-            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 102],
-            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 102],
-            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 102],
-            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 102],
-            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 102],
-            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 102],
-            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 102],
 
             //*Science Form 4 Experiment 3.1
             //*None
@@ -619,6 +530,97 @@ class DefaultApparatusSeeder extends Seeder
             ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 61],
             ['name' => 'Electrolytic Cell', 'quantity' => '1','experiment_id' => 61],
 
+
+            //*Science Form 1 Experiment 1.1
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 62],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 62],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 62],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 62],
+
+            //*Science Form 1 Experiment 2.1
+            ['name' => 'Boiling Tube', 'quantity' => '1','experiment_id' => 63],
+            ['name' => 'White Tile', 'quantity' => '1','experiment_id' => 63],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 63],
+            ['name' => 'Forcep', 'quantity' => '1','experiment_id' => 63],
+            ['name' => '100 cm³ Beaker', 'quantity' => '1','experiment_id' => 63],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 63],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 63],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 63],
+
+            //*Science Form 1 Experiment 2.2
+            ['name' => 'Boiling Tube', 'quantity' => '1','experiment_id' => 64],
+            ['name' => 'White Tile', 'quantity' => '1','experiment_id' => 64],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 64],
+            ['name' => 'Forcep', 'quantity' => '1','experiment_id' => 64],
+            ['name' => '100 cm³ Beaker', 'quantity' => '1','experiment_id' => 64],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 64],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 64],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 64],
+
+            //*Science Form 1 Experiment 2.3
+            ['name' => 'Bell Jar', 'quantity' => '2','experiment_id' => 65],
+            ['name' => 'Boiling Tube', 'quantity' => '1','experiment_id' => 65],
+            ['name' => 'White Tile', 'quantity' => '1','experiment_id' => 65],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 65],
+            ['name' => 'Forcep', 'quantity' => '1','experiment_id' => 65],
+            ['name' => '100 cm³ Beaker', 'quantity' => '1','experiment_id' => 65],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 65],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 65],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 65],
+            ['name' => 'Glass Plate', 'quantity' => '1','experiment_id' => 65],
+
+            //*Science Form 1 Experiment 2.4
+            ['name' => 'Boiling Tube', 'quantity' => '1','experiment_id' => 66],
+            ['name' => 'White Tile', 'quantity' => '1','experiment_id' => 66],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 66],
+            ['name' => 'Forcep', 'quantity' => '1','experiment_id' => 66],
+            ['name' => '100 cm³ Beaker', 'quantity' => '1','experiment_id' => 66],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 66],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 66],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 66],
+
+            //*Science Form 1 Experiment 3.1
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 67],
+
+            //*Science Form 1 Experiment 3.2
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 68],
+
+            //*Science Form 1 Experiment 4.1
+            ['name' => 'Boiling Tube', 'quantity' => '2','experiment_id' => 69],
+
+            //*Science Form 1 Experiment 5.1
+            ['name' => 'Test Tube', 'quantity' => '2','experiment_id' => 70],
+            ['name' => 'Rubber Stopper', 'quantity' => '2','experiment_id' => 70],
+            ['name' => '100 cm³ Measuring Cylinder', 'quantity' => '2','experiment_id' => 70],
+            ['name' => 'Stopwatch', 'quantity' => '2','experiment_id' => 70],
+            
+
+            //*Science Form 1 Experiment 6.2
+            ['name' => 'Sandpaper', 'quantity' => '1','experiment_id' => 71],
+            ['name' => 'Dry Cell', 'quantity' => '1','experiment_id' => 71],
+            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 71],
+            ['name' => 'Crocodile Clip', 'quantity' => '2','experiment_id' => 71],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 71],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 71],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 71],
+            ['name' => 'Thermometer', 'quantity' => '2','experiment_id' => 71],
+            ['name' => 'Crucible', 'quantity' => '2','experiment_id' => 71],
+            ['name' => 'Bunsen Burner', 'quantity' => '2','experiment_id' => 71],
+            ['name' => 'Pipeclay Triangle', 'quantity' => '2','experiment_id' => 71],
+
+            //*Science Form 1 Experiment 8.1
+            ['name' => 'Power Supply', 'quantity' => '1','experiment_id' => 72],
+            ['name' => 'Protractor', 'quantity' => '1','experiment_id' => 72],
+            ['name' => 'Ray Box', 'quantity' => '1','experiment_id' => 72],
+
+            //*Science Form 1 Experiment 8.2
+            ['name' => 'Power Supply', 'quantity' => '1','experiment_id' => 73],
+            ['name' => 'Protractor', 'quantity' => '1','experiment_id' => 73],
+            ['name' => 'Ray Box', 'quantity' => '1','experiment_id' => 73],
+            ['name' => 'Single Slit Plate', 'quantity' => '1','experiment_id' => 73],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 73],
+
+
             //*Science Form 2 Experiment 2.1
             ['name' => 'Petri Dish with Partition', 'quantity' => '2','experiment_id' => 74],
             ['name' => 'Petri Dish Lid', 'quantity' => '2','experiment_id' => 74],
@@ -644,12 +646,12 @@ class DefaultApparatusSeeder extends Seeder
             ['name' => 'White Tile', 'quantity' => '1','experiment_id' => 76],
             ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 76],
             ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 76],
-            ['name' => 'Microscope Slide', 'quantity' => 'w','experiment_id' => 76],
+            ['name' => 'Microscope Slide', 'quantity' => '1','experiment_id' => 76],
             ['name' => 'Fan', 'quantity' => '1','experiment_id' => 76],
             ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 76],
 
             //*Science Form 2 Experiment 5.2
-            ['name' => '100 cm³ Measuring Cylinder', 'quantity' => '','experiment_id' => 77],
+            ['name' => '100 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 77],
             ['name' => '100 cm³ Beaker', 'quantity' => '5','experiment_id' => 77],
             ['name' => 'Stirring Rod', 'quantity' => '4','experiment_id' => 77],
             ['name' => 'Gas Jar Stand', 'quantity' => '1','experiment_id' => 77],
@@ -770,12 +772,377 @@ class DefaultApparatusSeeder extends Seeder
             ['name' => 'Power Supply', 'quantity' => '1','experiment_id' => 93],
             ['name' => 'Laminated C-Shaped Soft Core', 'quantity' => '1','experiment_id' => 93],
 
+            //!Physics Form 5 Experiment 1.1
+            ['name' => 'Retort Stand', 'quantity' => '2','experiment_id' => 94],
+            ['name' => 'Clamp', 'quantity' => '2','experiment_id' => 94],
+            ['name' => '10 cm Spring', 'quantity' => '1','experiment_id' => 94],
+            ['name' => '10 g Weight', 'quantity' => '5','experiment_id' => 94],
+            ['name' => '20 g Weight', 'quantity' => '5','experiment_id' => 94],
+            ['name' => '50 g Weight', 'quantity' => '5','experiment_id' => 94],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 94],
 
+            //!Physics Form 5 Experiment 2.1
+            ['name' => '500 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 95],
+            ['name' => 'Silicone Tube', 'quantity' => '1','experiment_id' => 95],
+            ['name' => 'Thistle Funnel', 'quantity' => '1','experiment_id' => 95],
+            ['name' => 'Thin Sheet of Rubber', 'quantity' => '1','experiment_id' => 95],
+            ['name' => 'U-Tube', 'quantity' => '1','experiment_id' => 95],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 95],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 95],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 95],
 
+            //!Physics Form 5 Experiment 2.2
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 96],
+            ['name' => '600 cm³ Beaker', 'quantity' => '3','experiment_id' => 96],
+            ['name' => 'U-Tube', 'quantity' => '1','experiment_id' => 96],
+            ['name' => 'Silicone Tube', 'quantity' => '1','experiment_id' => 96],
+            ['name' => 'Thistle Funnel', 'quantity' => '1','experiment_id' => 96],
+            ['name' => 'Thin Sheet of Rubber', 'quantity' => '6','experiment_id' => 96],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 96],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 96],
 
+            //!Physics Form 5 Experiment 2.3
+            ['name' => 'Weight', 'quantity' => '1','experiment_id' => 97],
+            ['name' => 'Eureka Can', 'quantity' => '1','experiment_id' => 97],
+            ['name' => '100 cm³ Beaker', 'quantity' => '3','experiment_id' => 97],
+            ['name' => 'Spring Balance', 'quantity' => '1','experiment_id' => 97],
+            ['name' => 'Electronic Balance', 'quantity' => '1','experiment_id' => 97],
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 97],
+            ['name' => 'Wooden Block', 'quantity' => '6','experiment_id' => 97],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 97],
 
+            //!Physics Form 5 Experiment 3.1
+            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 98],
+            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 98],
+            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 98],
+            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 98],
+            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 98],
+            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 98],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 98],
+            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 98],
+            ['name' => 'Fillament Bulb', 'quantity' => '1','experiment_id' => 98],
 
+            //!Physics Form 5 Experiment 3.2
+            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 99],
+            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 99],
+            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 99],
+            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 99],
+            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 99],
+            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 99],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 99],
+            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 99],
+
+            //!Physics Form 5 Experiment 3.3
+            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 100],
+            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 100],
+            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 100],
+            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 100],
+            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 100],
+            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 100],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 100],
+            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 100],
+
+            //!Physics Form 5 Experiment 3.4
+            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 101],
+            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 101],
+            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 101],
+            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 101],
+            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 101],
+            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 101],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 101],
+            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 101],
+            ['name' => 'Crocodile Clip', 'quantity' => '2','experiment_id' => 101],
+
+            //!Physics Form 5 Experiment 3.5
+            ['name' => '1.5 V Dry Cell', 'quantity' => '1','experiment_id' => 102],
+            ['name' => 'Cell Holder', 'quantity' => '1','experiment_id' => 102],
+            ['name' => 'Switch', 'quantity' => '1','experiment_id' => 102],
+            ['name' => 'Connecting Wire', 'quantity' => '1','experiment_id' => 102],
+            ['name' => 'Ammeter', 'quantity' => '1','experiment_id' => 102],
+            ['name' => 'Voltmeter', 'quantity' => '1','experiment_id' => 102],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 102],
+            ['name' => 'Rheostat', 'quantity' => '1','experiment_id' => 102],
+
+             //*Biology Form 4 Activity 1.1
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 103],
+
+            //*Biology Form 4 Activity 2.1
+            ['name' => 'Glass Slide', 'quantity' => '1','experiment_id' => 104],
+            ['name' => 'Cover Slip', 'quantity' => '1','experiment_id' => 104],
+            ['name' => 'Light Microscope', 'quantity' => '1','experiment_id' => 104],
+            ['name' => 'Scalpel', 'quantity' => '1','experiment_id' => 104],
+            ['name' => 'Forcep', 'quantity' => '1','experiment_id' => 104],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 104],
+            ['name' => 'Mounting Needle', 'quantity' => '1','experiment_id' => 104],
+
+            //*Biology Form 4 Activity 2.2
+            ['name' => 'Glass Slide', 'quantity' => '1','experiment_id' => 105],
+            ['name' => 'Cover Slip', 'quantity' => '1','experiment_id' => 105],
+            ['name' => 'Light Microscope', 'quantity' => '1','experiment_id' => 105],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 105],
+            ['name' => 'Mounting Needle', 'quantity' => '1','experiment_id' => 105],
             
+            //*Biology Form 4 Activity 3.1
+            ['name' => 'beaker', 'quantity' => '1','experiment_id' => 106],
+            ['name' => 'Test Tube', 'quantity' => '1','experiment_id' => 106],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 106],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 106],
+            ['name' => '100 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 106],
+
+            //*Biology Form 4 Activity 3.2
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 107],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 107],
+            ['name' => '25 cm Capillary Tube', 'quantity' => '1','experiment_id' => 107],
+            ['name' => 'Syringe', 'quantity' => '1','experiment_id' => 107],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 107],
+            ['name' => '50 mL Beaker', 'quantity' => '1','experiment_id' => 107],
+            ['name' => 'Marker Pen', 'quantity' => '1','experiment_id' => 107],
+            ['name' => 'Scissor', 'quantity' => '1','experiment_id' => 107],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 107],
+
+             //*Biology Form 4 Activity 3.3
+            ['name' => 'Light Microscope', 'quantity' => '1','experiment_id' => 108],
+            ['name' => 'Glass Slide', 'quantity' => '1','experiment_id' => 108],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 108],
+            ['name' => 'Mounting Needle', 'quantity' => '1','experiment_id' => 108],
+            ['name' => 'Cover Slip', 'quantity' => '1','experiment_id' => 108],
+
+             //*Biology Form 4 Activity 3.4
+            ['name' => 'Light Microscope', 'quantity' => '1','experiment_id' => 109],
+            ['name' => 'Glass Slide', 'quantity' => '1','experiment_id' => 109],
+            ['name' => 'Cover Slip', 'quantity' => '1','experiment_id' => 109],
+            ['name' => 'Small Knife', 'quantity' => '1','experiment_id' => 109],
+            ['name' => 'Mounting Needle', 'quantity' => '1','experiment_id' => 109],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 109],
+            ['name' => 'Forcep', 'quantity' => '1','experiment_id' => 109],
+
+            //*Biology Form 4 Activity 3.5
+            ['name' => 'Test Tube', 'quantity' => '1','experiment_id' => 110],
+            ['name' => 'Cork Borer', 'quantity' => '1','experiment_id' => 110],
+            ['name' => 'Knife', 'quantity' => '1','experiment_id' => 110],
+            ['name' => 'Forcep', 'quantity' => '1','experiment_id' => 110],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 110],
+            ['name' => '50 cm³ Beaker', 'quantity' => '1','experiment_id' => 110],
+            ['name' => '100 cm³ Measuring Cylinder', 'quantity' => '1','experiment_id' => 110],
+            ['name' => 'Test Tube Rack', 'quantity' => '2','experiment_id' => 110],
+            ['name' => 'Electronic Weighing Scale ', 'quantity' => '1','experiment_id' => 110],
+
+            //*Biology Form 4 Activity 3.6
+            ['name' => 'Knife', 'quantity' => '1','experiment_id' => 111],
+            ['name' => 'Bottle', 'quantity' => '1','experiment_id' => 111],
+            ['name' => 'Oven', 'quantity' => '1','experiment_id' => 111],
+
+            //*Biology Form 4 Activity 5.1
+            ['name' => 'Beaker', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'Test Tube', 'quantity' => '10','experiment_id' => 112],
+            ['name' => 'Syringe', 'quantity' => '2','experiment_id' => 112],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'Glass Rod', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'White Grooved Tile', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'Measuring Cylinder', 'quantity' => '1','experiment_id' => 112],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 112],
+
+            //*Biology Form 4 Activity 5.2
+            ['name' => 'Beaker', 'quantity' => '1','experiment_id' => 113],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 113],
+            ['name' => 'Thermometer', 'quantity' => '2','experiment_id' => 113],
+            ['name' => 'Test Tube', 'quantity' => '3','experiment_id' => 113],
+            ['name' => '5 mL Syringe (Without Needle)', 'quantity' => '1','experiment_id' => 113],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 113],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 113],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 113],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 113],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 113],
+
+            //*Biology Form 4 Activity 7.1
+            ['name' => 'Boiling Tube', 'quantity' => '2','experiment_id' => 114],
+            ['name' => 'Screw Clip', 'quantity' => '2','experiment_id' => 114],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 114],
+            ['name' => '250 mL Beaker', 'quantity' => '3','experiment_id' => 114],
+            ['name' => 'Capilary Tube', 'quantity' => '2','experiment_id' => 114],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 114],
+            ['name' => 'Rubber Tube', 'quantity' => '2','experiment_id' => 114],
+            ['name' => 'Water Bath', 'quantity' => '1','experiment_id' => 114],
+
+            //*Biology Form 4 Activity 7.3
+            ['name' => 'Boiling Tube', 'quantity' => '2','experiment_id' => 115],
+            ['name' => 'Test Tube', 'quantity' => '2','experiment_id' => 115],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 115],
+            ['name' => 'Measuring Cylinder', 'quantity' => '2','experiment_id' => 115],
+            ['name' => 'Delivery Tube', 'quantity' => '2','experiment_id' => 115],
+            ['name' => 'Cork', 'quantity' => '4','experiment_id' => 115],
+
+            //*Biology Form 4 Activity 9.1
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 116],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 116],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 116],
+            ['name' => '500 mL Beaker', 'quantity' => '1','experiment_id' => 116],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 116],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 116],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 116],
+            ['name' => 'Test Tube', 'quantity' => '2','experiment_id' => 116],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 116],
+            ['name' => 'Glass Rod', 'quantity' => '1','experiment_id' => 116],
+            ['name' => 'Measuring Cylinder', 'quantity' => '1','experiment_id' => 116],
+
+            //*Biology Form 4 Activity 9.2
+            ['name' => 'Test Tube', 'quantity' => '2','experiment_id' => 117],
+            ['name' => 'Measuring Cylinder', 'quantity' => '1','experiment_id' => 117],
+            ['name' => '500 mL Beaker', 'quantity' => '1','experiment_id' => 117],
+            ['name' => 'Water Bath', 'quantity' => '1','experiment_id' => 117],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 117],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 117],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 117],
+
+            //*Biology Form 4 Activity 9.3
+            ['name' => 'Test Tube', 'quantity' => '2','experiment_id' => 118],
+            ['name' => 'Test Tube Holder', 'quantity' => '1','experiment_id' => 118],
+            ['name' => 'Water Bath', 'quantity' => '1','experiment_id' => 118],
+            ['name' => '1 mL Syringe', 'quantity' => '1','experiment_id' => 118],
+            ['name' => 'Dropper', 'quantity' => '1','experiment_id' => 118],
+            ['name' => 'Stopper', 'quantity' => '2','experiment_id' => 118],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 118],
+
+            //*Biology Form 4 Activity 9.4
+            ['name' => 'Retort Stand', 'quantity' => '1','experiment_id' => 119],
+            ['name' => 'Clamp', 'quantity' => '2','experiment_id' => 119],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 119],
+            ['name' => 'Boiling Tube', 'quantity' => '1','experiment_id' => 119],
+            ['name' => 'Needle', 'quantity' => '1','experiment_id' => 119],
+            ['name' => 'Electronic Weighing Scale ', 'quantity' => '1','experiment_id' => 119],
+            ['name' => 'Measuring Cylinder', 'quantity' => '1','experiment_id' => 119],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 119],
+
+            //*Biology Form 4 Activity 9.5
+            ['name' => '1 mL Syringe Needle', 'quantity' => '1','experiment_id' => 120],
+            ['name' => '5 mL Syringe Needle', 'quantity' => '2','experiment_id' => 120],
+            ['name' => 'Knife', 'quantity' => '1','experiment_id' => 120],
+            ['name' => '50 mL Beaker', 'quantity' => '1','experiment_id' => 120],
+            ['name' => 'Specimen Tube', 'quantity' => '1','experiment_id' => 120],
+            ['name' => 'Juicer', 'quantity' => '1','experiment_id' => 120],
+            ['name' => 'Sieve', 'quantity' => '1','experiment_id' => 120],
+           
+            //*Biology Form 4 Activity 9.6
+            ['name' => 'Specimen Tube', 'quantity' => '1','experiment_id' => 121],
+            ['name' => 'Knife', 'quantity' => '1','experiment_id' => 121],
+            ['name' => '1 mL Syringe Needle', 'quantity' => '1','experiment_id' => 121],
+            ['name' => '5 mL Syringe Needle', 'quantity' => '1','experiment_id' => 121],
+            ['name' => '50 mL Beaker', 'quantity' => '1','experiment_id' => 121],
+            ['name' => '100 mL Beaker', 'quantity' => '1','experiment_id' => 121],
+            ['name' => 'Bunsen Burner', 'quantity' => '1','experiment_id' => 121],
+            ['name' => 'Tripod Stand', 'quantity' => '1','experiment_id' => 121],
+            ['name' => 'Sieve', 'quantity' => '1','experiment_id' => 121],
+            ['name' => 'Wire Gauze', 'quantity' => '1','experiment_id' => 121],
+
+            //*Biology Form 4 Activity 13.1
+            ['name' => 'Cup', 'quantity' => '4','experiment_id' => 122],
+            ['name' => 'Beaker', 'quantity' => '1','experiment_id' => 122],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 122],
+            ['name' => 'Measuring Cylinder', 'quantity' => '1','experiment_id' => 122],
+
+            //*Biology Form 5 Experiment 1.1
+            ['name' => 'Nursery Box', 'quantity' => '1','experiment_id' => 123],
+            ['name' => 'Electronic Balance', 'quantity' => '1','experiment_id' => 123],
+            ['name' => 'Oven', 'quantity' => '1','experiment_id' => 123],
+         
+            //*Biology Form 5 Experiment 1.2
+            ['name' => 'Classical Music', 'quantity' => '1','experiment_id' => 124],
+            ['name' => 'Heavy Metal Music', 'quantity' => '1','experiment_id' => 124],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 124],
+
+            //*Biology Form 5 Experiment 2.1
+            ['name' => 'Colourless Nail Polish', 'quantity' => '1','experiment_id' => 125],
+            ['name' => 'Magnifying Glass', 'quantity' => '1','experiment_id' => 125],
+            ['name' => 'Forcep', 'quantity' => '1','experiment_id' => 125],
+            ['name' => 'Glass Slide', 'quantity' => '1','experiment_id' => 125],
+            ['name' => 'Cover Slip', 'quantity' => '1','experiment_id' => 125],
+            ['name' => 'Light Microscope', 'quantity' => '1','experiment_id' => 125],
+            
+            //*Biology Form 5 Experiment 2.2
+            ['name' => 'Cork', 'quantity' => '1','experiment_id' => 126],
+            ['name' => 'Beaker', 'quantity' => '1','experiment_id' => 126],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 126],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 126],
+            ['name' => 'Electrical Table Fan', 'quantity' => '1','experiment_id' => 126],
+            ['name' => '100 W Bulb', 'quantity' => '1','experiment_id' => 126],
+            ['name' => 'Capillary Tube', 'quantity' => '1','experiment_id' => 126],
+            ['name' => 'Screw Clip', 'quantity' => '1','experiment_id' => 126],
+
+            //*Biology Form 5 Experiment 2.3
+            ['name' => 'Scissor', 'quantity' => '1','experiment_id' => 127],
+            ['name' => '60 W Bulb', 'quantity' => '1','experiment_id' => 127],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 127],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 127],
+            ['name' => 'Paper Clip', 'quantity' => '1','experiment_id' => 127],
+            ['name' => 'Boiling Tube', 'quantity' => '1','experiment_id' => 127],
+            ['name' => 'Measuring Cylinder', 'quantity' => '1','experiment_id' => 127],
+            ['name' => 'Retord Stand', 'quantity' => '1','experiment_id' => 127],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 127],
+            ['name' => 'Thermometer', 'quantity' => '1','experiment_id' => 127],
+            ['name' => 'Beaker', 'quantity' => '1','experiment_id' => 127],
+
+            //*Biology Form 5 Experiment 2.4
+            //*None
+
+            //*Biology Form 5 Experiment 3.1
+            ['name' => 'Culture Bottle', 'quantity' => '5','experiment_id' => 129],
+            ['name' => 'L Shape Delivery Tube', 'quantity' => '1','experiment_id' => 129],
+            ['name' => 'Cork', 'quantity' => '1','experiment_id' => 129],
+            ['name' => 'Air Pump', 'quantity' => '1','experiment_id' => 129],
+
+            //*Biology Form 5 Experiment 4.1
+            ['name' => 'Knife', 'quantity' => '1','experiment_id' => 130],
+            ['name' => 'Rubber Tube', 'quantity' => '1','experiment_id' => 130],
+            ['name' => 'Retord Stand', 'quantity' => '1','experiment_id' => 130],
+            ['name' => 'Clamp', 'quantity' => '1','experiment_id' => 130],
+            ['name' => 'Marker Pen', 'quantity' => '1','experiment_id' => 130],
+            ['name' => 'Water Manometer', 'quantity' => '1','experiment_id' => 130],
+
+            //*Biology Form 5 Experiment 4.2
+            ['name' => 'Open Bottle', 'quantity' => '1','experiment_id' => 131],
+            ['name' => 'Side Tube', 'quantity' => '1','experiment_id' => 131],
+            ['name' => 'Cork', 'quantity' => '1','experiment_id' => 131],
+            ['name' => 'Marker Pen', 'quantity' => '1','experiment_id' => 131],
+
+            //*Biology Form 5 Experiment 4.3
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 132],
+            ['name' => 'Knife', 'quantity' => '1','experiment_id' => 132],
+
+            //*Biology Form 5 Experiment 4.4
+            ['name' => '5 Litre Glass Container', 'quantity' => '2','experiment_id' => 133],
+
+            //*Biology Form 5 Experiment 4.5
+            ['name' => '100 mL Beaker', 'quantity' => '1','experiment_id' => 134],
+            ['name' => 'Oven', 'quantity' => '1','experiment_id' => 134],
+
+            //*Biology Form 5 Experiment 5.1
+            //*None
+
+            //*Biology Form 5 Experiment 5.2
+            //*None
+
+            //*Biology Form 5 Experiment 9.1
+            ['name' => 'Plastic Tray', 'quantity' => '3','experiment_id' => 137],
+            ['name' => 'Ruler', 'quantity' => '1','experiment_id' => 137],
+            ['name' => 'Mini Shovel', 'quantity' => '1','experiment_id' => 137],
+
+             //*Biology Form 5 Experiment 10.1
+            ['name' => 'Reagent Bottle', 'quantity' => '2','experiment_id' => 138],
+            ['name' => '1 mL Syringe With Needle', 'quantity' => '1','experiment_id' => 138],
+            ['name' => 'Stopwatch', 'quantity' => '1','experiment_id' => 138],
+            ['name' => 'Marker Pen', 'quantity' => '1','experiment_id' => 138],
+            ['name' => 'Measuring Cylinder', 'quantity' => '1','experiment_id' => 138],
+
+            //*Biology Form 5 Experiment 12.1
+            ['name' => 'Height Measuring Equipment', 'quantity' => '1','experiment_id' => 139],
+            ['name' => 'Weighing Machine', 'quantity' => '1','experiment_id' => 139],
+            ['name' => 'Ink Pad', 'quantity' => '1','experiment_id' => 139],
+
 
         ];
         foreach ($apparatus as $item) {

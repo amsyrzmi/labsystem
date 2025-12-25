@@ -284,42 +284,6 @@ class DefaultmaterialSeeder extends Seeder
             ['name' => 'Detergent', 'quantity' => '1', 'unit' => 'set','experiment_id' => 42],
             ['name' => 'Stained Cloth', 'quantity' => '1', 'unit' => 'set','experiment_id' => 42],
 
-            //!Physics Form 5 Experiment 1.1
-            ['name' => 'Pin', 'quantity' => '1', 'unit' => 'set','experiment_id' => 94],
-            ['name' => 'Plasticine', 'quantity' => '200', 'unit' => 'g','experiment_id' => 94],
-            ['name' => 'Thread', 'quantity' => '1', 'unit' => 'set','experiment_id' => 94],
-
-            //!Physics Form 5 Experiment 2.1
-            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 95],
-            ['name' => 'Food Coloring', 'quantity' => '1', 'unit' => 'set','experiment_id' => 95],
-
-            //!Physics Form 5 Experiment 2.2
-            ['name' => 'Masking Tape', 'quantity' => '1', 'unit' => 'set','experiment_id' => 96],
-            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 96],
-            ['name' => 'Alcohol', 'quantity' => '1', 'unit' => 'set','experiment_id' => 96],
-            ['name' => 'Glycerine', 'quantity' => '1', 'unit' => 'set','experiment_id' => 96],
-
-            //!Physics Form 5 Experiment 2.3
-            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 97],
-
-            //!Physics Form 5 Experiment 3.1
-            ['name' => 's.w.g.24 Constantan Wire', 'quantity' => '20','unit' => 'cm','experiment_id' => 98],
-
-            //!Physics Form 5 Experiment 3.2
-            ['name' => 's.w.g.24 Constantan Wire', 'quantity' => '110','unit' => 'cm','experiment_id' => 99],
-
-            //!Physics Form 5 Experiment 3.3
-            ['name' => 's.w.g.22 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
-            ['name' => 's.w.g.24 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
-            ['name' => 's.w.g.26 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
-            ['name' => 's.w.g.28 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
-            ['name' => 's.w.g.30 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
-            //!Physics Form 5 Experiment 3.4
-            ['name' => 's.w.g.24 Constantan Wire', 'quantity' => '35','unit' => 'cm','experiment_id' => 101],
-            ['name' => 's.w.g.24 Nichrome Wire', 'quantity' => '35','unit' => 'cm','experiment_id' => 101],
-
-            //!Physics Form 5 Experiment 3.5
-            //!None
 
             //*Science Form 4 Experiment 3.1
             //*None
@@ -435,6 +399,79 @@ class DefaultmaterialSeeder extends Seeder
             ['name' => 'Wooden Splinter', 'quantity' => '1', 'unit' => 'set','experiment_id' => 61],
 
 
+            //*Science Form 1 Experiment 1.1
+            ['name' => 'Wood', 'quantity' => '1', 'unit' => 'set','experiment_id' => 62],
+            ['name' => 'Pendulum', 'quantity' => '1', 'unit' => 'set','experiment_id' => 62],
+            ['name' => 'String', 'quantity' => '1', 'unit' => 'set','experiment_id' => 62],
+
+            //*Science Form 1 Experiment 2.1
+            ['name' => 'Plant in a Pot', 'quantity' => '2', 'unit' => 'set','experiment_id' => 63],
+            ['name' => 'Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 63],
+            ['name' => 'Ethanol', 'quantity' => '1', 'unit' => 'set','experiment_id' => 63],
+            ['name' => 'Iodine Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 63],
+
+            //*Science Form 1 Experiment 2.2
+            ['name' => 'Leaf', 'quantity' => '1', 'unit' => 'set','experiment_id' => 64],
+            ['name' => 'Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 64],
+            ['name' => 'Ethanol', 'quantity' => '1', 'unit' => 'set','experiment_id' => 64],
+            ['name' => 'Iodine Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 64],
+
+            //*Science Form 1 Experiment 2.3
+            ['name' => 'Plant in a Pot', 'quantity' => '2', 'unit' => 'set','experiment_id' => 65],
+            ['name' => 'Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 65],
+            ['name' => 'Ethanol', 'quantity' => '1', 'unit' => 'set','experiment_id' => 65],
+            ['name' => 'Iodine Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 65],
+            ['name' => 'Potassium Hydroxide', 'quantity' => '1', 'unit' => 'set','experiment_id' => 65,'concentration'=> 0.1],
+            ['name' => 'Vaseline', 'quantity' => '1', 'unit' => 'set','experiment_id' => 65],
+
+            //*Science Form 1 Experiment 2.4
+            ['name' => 'Plant in a Pot', 'quantity' => '2', 'unit' => 'set','experiment_id' => 66],
+            ['name' => 'Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 66],
+            ['name' => 'Ethanol', 'quantity' => '1', 'unit' => 'set','experiment_id' => 66],
+            ['name' => 'Iodine Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 66],
+
+            //*Science Form 1 Experiment 3.1
+            //*None
+
+            //*Science Form 1 Experiment 3.2
+            //*None
+
+            //*Science Form 1 Experiment 4.1
+            ['name' => 'Cotton Wool', 'quantity' => '1', 'unit' => 'set','experiment_id' => 69],
+            ['name' => 'Cooking Oil', 'quantity' => '1', 'unit' => 'set','experiment_id' => 69],
+            ['name' => 'Sugar Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 69],
+            ['name' => 'Green Bean', 'quantity' => '1', 'unit' => 'set','experiment_id' => 69],
+
+            //*Science Form 1 Experiment 5.1
+            ['name' => 'Copper(II) Sulphate Crystal', 'quantity' => '1', 'unit' => 'set','experiment_id' => 70],
+            ['name' => 'Colourless Gel', 'quantity' => '1', 'unit' => 'set','experiment_id' => 70],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 70],
+
+            //*Science Form 1 Experiment 6.2
+            ['name' => 'Copper Rod', 'quantity' => '2', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Carbon Rod', 'quantity' => '3', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Copper Wire', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Copper Piece', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Sulphur Piece', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Hammer', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Wooden Block', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Iron Rod', 'quantity' => '2', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Sulphur Rod', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Candle', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Thumbstack', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Wax', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Tin Powder', 'quantity' => '1', 'unit' => 'set','experiment_id' => 71],
+            ['name' => 'Sulphur Powder', 'quantity' => '100', 'unit' => 'set','experiment_id' => 71],
+
+            //*Science Form 1 Experiment 8.1
+            ['name' => 'Plane Mirror', 'quantity' => '1', 'unit' => 'set','experiment_id' => 72],
+            ['name' => 'White Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 72],
+
+            //*Science Form 1 Experiment 8.2
+            ['name' => 'Glass Block', 'quantity' => '1', 'unit' => 'set','experiment_id' => 73],
+            ['name' => 'White Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 73],
+            
+
             //*Science Form 2 Experiment 2.1
             ['name' => 'Woodlice', 'quantity' => '2','unit' => 'set','experiment_id' => 74],
             ['name' => 'Hot Water', 'quantity' => '1','unit' => 'set','experiment_id' => 74],
@@ -511,7 +548,6 @@ class DefaultmaterialSeeder extends Seeder
             ['name' => 'Distilled Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 84],
             ['name' => 'Lime Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 84],
 
-
             //*Science Form 3 Experiment 2.1
             ['name' => 'Candle', 'quantity' => '200', 'unit' => 'cm³','experiment_id' => 85],
             ['name' => 'Plasticine', 'quantity' => '1', 'unit' => 'set','experiment_id' => 85],
@@ -565,6 +601,292 @@ class DefaultmaterialSeeder extends Seeder
             ['name' => 'Insulated Copper Wire', 'quantity' => '1', 'unit' => 'set','experiment_id' => 93,'concentration' => 0.1],
             ['name' => 'Light Bulb', 'quantity' => '2', 'unit' => 'g','experiment_id' => 93],
 
+
+            //!Physics Form 5 Experiment 1.1
+            ['name' => 'Pin', 'quantity' => '1', 'unit' => 'set','experiment_id' => 94],
+            ['name' => 'Plasticine', 'quantity' => '200', 'unit' => 'g','experiment_id' => 94],
+            ['name' => 'Thread', 'quantity' => '1', 'unit' => 'set','experiment_id' => 94],
+
+            //!Physics Form 5 Experiment 2.1
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 95],
+            ['name' => 'Food Coloring', 'quantity' => '1', 'unit' => 'set','experiment_id' => 95],
+
+            //!Physics Form 5 Experiment 2.2
+            ['name' => 'Masking Tape', 'quantity' => '1', 'unit' => 'set','experiment_id' => 96],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 96],
+            ['name' => 'Alcohol', 'quantity' => '1', 'unit' => 'set','experiment_id' => 96],
+            ['name' => 'Glycerine', 'quantity' => '1', 'unit' => 'set','experiment_id' => 96],
+
+            //!Physics Form 5 Experiment 2.3
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 97],
+
+            //!Physics Form 5 Experiment 3.1
+            ['name' => 's.w.g.24 Constantan Wire', 'quantity' => '20','unit' => 'cm','experiment_id' => 98],
+
+            //!Physics Form 5 Experiment 3.2
+            ['name' => 's.w.g.24 Constantan Wire', 'quantity' => '110','unit' => 'cm','experiment_id' => 99],
+
+            //!Physics Form 5 Experiment 3.3
+            ['name' => 's.w.g.22 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
+            ['name' => 's.w.g.24 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
+            ['name' => 's.w.g.26 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
+            ['name' => 's.w.g.28 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
+            ['name' => 's.w.g.30 Constantan Wire', 'quantity' => '30','unit' => 'cm','experiment_id' => 100],
+            //!Physics Form 5 Experiment 3.4
+            ['name' => 's.w.g.24 Constantan Wire', 'quantity' => '35','unit' => 'cm','experiment_id' => 101],
+            ['name' => 's.w.g.24 Nichrome Wire', 'quantity' => '35','unit' => 'cm','experiment_id' => 101],
+
+            //!Physics Form 5 Experiment 3.5
+            //!None
+
+            //*Biology Form 4 Activity 1.1
+            //*None
+
+            //*Biology Form 4 Activity 2.1
+            ['name' => 'Big Onion', 'quantity' => '1', 'unit' => 'set','experiment_id' => 104],
+            ['name' => 'Iodine', 'quantity' => '1', 'unit' => 'set','experiment_id' => 104],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 104],
+            ['name' => 'Filter Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 104],
+
+            //*Biology Form 4 Activity 2.2
+            ['name' => 'Cheek Sel', 'quantity' => '1', 'unit' => 'set','experiment_id' => 105],
+            ['name' => 'Methylene Blue', 'quantity' => '1', 'unit' => 'set','experiment_id' => 105],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 105],
+            ['name' => 'Filter Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 105],
+            ['name' => 'Toothpick', 'quantity' => '1', 'unit' => 'set','experiment_id' => 105],
+
+            //*Biology Form 4 Activity 3.1
+            ['name' => 'Benedict Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 106],
+            ['name' => '1% Starch Suspension', 'quantity' => '10', 'unit' => 'mL','experiment_id' => 106],
+            ['name' => 'Iodine', 'quantity' => '1', 'unit' => 'set','experiment_id' => 106],
+            ['name' => '30% Glucose Solution ', 'quantity' => '10', 'unit' => 'mL','experiment_id' => 106],
+            ['name' => 'Distilled Water', 'quantity' => '400', 'unit' => 'cm³','experiment_id' => 106],
+            ['name' => 'Visking Tube ', 'quantity' => '1', 'unit' => 'set','experiment_id' => 106],
+            ['name' => 'Thread', 'quantity' => '1', 'unit' => 'set','experiment_id' => 106],
+
+            //*Biology Form 4 Activity 3.2
+            ['name' => '30% Sucrose Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 107],
+            ['name' => 'Visking Tube', 'quantity' => '10', 'unit' => 'mL','experiment_id' => 107],
+            ['name' => 'Thread', 'quantity' => '1', 'unit' => 'set','experiment_id' => 107],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 107],
+
+            //*Biology Form 4 Activity 3.3
+            ['name' => 'Chicken Blood', 'quantity' => '1', 'unit' => 'set','experiment_id' => 108,],
+            ['name' => 'Sodium Chloride', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 108, 'concentration'=> 0.15],
+            ['name' => 'Sodium Chloride', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 108, 'concentration'=> 0.50],
+            ['name' => 'Filter Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 108],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 108],
+
+            //*Biology Form 4 Activity 3.4
+            ['name' => 'Sucrose Solution', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 109, 'concentration'=> 0.50],
+            ['name' => 'Sucrose Solution', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 109, 'concentration'=> 1.0],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 109],
+            ['name' => 'Filter Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 109],
+            ['name' => 'Onion Bulb', 'quantity' => '1', 'unit' => 'set','experiment_id' => 109],
+
+            //*Biology Form 4 Activity 3.5
+            ['name' => 'Potato', 'quantity' => '1', 'unit' => 'set','experiment_id' => 110],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 110],
+            ['name' => 'Sucrose Solution', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 110, 'concentration'=> 0.50],
+            ['name' => 'Sucrose Solution', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 110, 'concentration'=> 0.50],
+            ['name' => 'Sucrose Solution', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 110, 'concentration'=> 0.50],
+            ['name' => 'Sucrose Solution', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 110, 'concentration'=> 0.50],
+            ['name' => 'Sucrose Solution', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 110, 'concentration'=> 0.50],
+            ['name' => 'Sucrose Solution', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 110, 'concentration'=> 0.50],
+            ['name' => 'Filter Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 110],
+
+            //*Biology Form 4 Activity 3.6
+            ['name' => 'Egg', 'quantity' => '1', 'unit' => 'set','experiment_id' => 111],
+            ['name' => 'Banana', 'quantity' => '10', 'unit' => 'set','experiment_id' => 111],
+            ['name' => 'Cabbage', 'quantity' => '1', 'unit' => 'set','experiment_id' => 111],
+            ['name' => 'Fruit', 'quantity' => '1', 'unit' => 'set','experiment_id' => 111],
+            ['name' => 'Gelama Fish', 'quantity' => '1', 'unit' => 'set','experiment_id' => 111],
+            ['name' => 'Sugar', 'quantity' => '1', 'unit' => 'set','experiment_id' => 111],
+            ['name' => 'Salt', 'quantity' => '1', 'unit' => 'set','experiment_id' => 111],
+            ['name' => 'Vinegar', 'quantity' => '1', 'unit' => 'set','experiment_id' => 111],
+            ['name' => 'Boiled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 111],
+
+            //*Biology Form 4 Activity 5.1
+            ['name' => '1% Starch Suspension', 'quantity' => '5', 'unit' => 'mL','experiment_id' => 112],
+            ['name' => '0.5% Amylase Enzyme Solution', 'quantity' => '2', 'unit' => 'mL','experiment_id' => 112],
+            ['name' => 'Iodine', 'quantity' => '1', 'unit' => 'set','experiment_id' => 112],
+            ['name' => 'Ice', 'quantity' => '1', 'unit' => 'set','experiment_id' => 112],
+            ['name' => 'Filtered Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 112],
+
+            //*Biology Form 4 Activity 5.2
+            ['name' => 'Albumen Suspension', 'quantity' => '5', 'unit' => 'mL','experiment_id' => 113],
+            ['name' => '1% Pepsin Solution', 'quantity' => '3', 'unit' => 'mL','experiment_id' => 113],
+            ['name' => 'Hydrochloric Acid', 'quantity' => '1', 'unit' => 'mL','experiment_id' => 113, 'concentration'=> 0.1],
+            ['name' => 'Hydroxide Solution', 'quantity' => '1', 'unit' => 'mL','experiment_id' => 113, 'concentration'=> 0.1],
+            ['name' => 'Water Bath (37°C)', 'quantity' => '50', 'unit' => 'cm³','experiment_id' => 113],
+            ['name' => 'Ph Paper', 'quantity' => '3', 'unit' => 'set','experiment_id' => 113],
+            ['name' => 'Distilled Water', 'quantity' => '1', 'unit' => 'mL','experiment_id' => 113],
+
+            //*Biology Form 4 Activity 7.1
+            ['name' => 'Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 114],
+            ['name' => 'Coloured Liquid', 'quantity' => '2', 'unit' => 'set','experiment_id' => 114],
+            ['name' => 'Soda Lime', 'quantity' => '20', 'unit' => 'g','experiment_id' => 114],
+            ['name' => 'Cockroach', 'quantity' => '1', 'unit' => 'set','experiment_id' => 114],
+            ['name' => 'Petroleum Jelly', 'quantity' => '1', 'unit' => 'set','experiment_id' => 114],
+
+            //*Biology Form 4 Activity 7.3
+            ['name' => '5% Yeast Suspension', 'quantity' => '5', 'unit' => 'mL','experiment_id' => 115],
+            ['name' => '5% Boiled Glucose Solution', 'quantity' => '30', 'unit' => 'mL','experiment_id' => 115],
+            ['name' => 'Lime Water', 'quantity' => '4', 'unit' => 'mL','experiment_id' => 115],
+            ['name' => 'Paraffin Oil', 'quantity' => '1', 'unit' => 'set','experiment_id' => 115],
+
+            //*Biology Form 4 Activity 9.1
+            ['name' => '0.5% Amylase Solution', 'quantity' => '6', 'unit' => 'mL','experiment_id' => 116],
+            ['name' => '1% Starch Suspension', 'quantity' => '6', 'unit' => 'mL','experiment_id' => 116],
+            ['name' => 'Iodine', 'quantity' => '4', 'unit' => 'mL','experiment_id' => 116],
+            ['name' => 'Benedict Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 116],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 116],
+
+            //*Biology Form 4 Activity 9.2
+            ['name' => 'Egg White', 'quantity' => '10', 'unit' => 'mL','experiment_id' => 117],
+            ['name' => '1% Pepsin Solution', 'quantity' => '1', 'unit' => 'mL','experiment_id' => 117],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 117],
+            ['name' => 'Hydrochloric Acid', 'quantity' => '2', 'unit' => 'mL','experiment_id' => 117, 'concentration'=> 0.1],
+
+            //*Biology Form 4 Activity 9.3
+            ['name' => 'Cooking Oil', 'quantity' => '4', 'unit' => 'mL','experiment_id' => 118],
+            ['name' => 'Sodium Carbonate Solution', 'quantity' => '2', 'unit' => 'mL','experiment_id' => 118, 'concentration'=> 0.2],
+            ['name' => 'Dishwashing Liquid', 'quantity' => '2', 'unit' => 'mL','experiment_id' => 118],
+            ['name' => 'Phenolphthalein Indicator', 'quantity' => '1', 'unit' => 'set','experiment_id' => 118],
+            ['name' => 'Distilled Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 118],
+            ['name' => 'Lipase', 'quantity' => '1', 'unit' => 'mL','experiment_id' => 118],
+
+            //*Biology Form 4 Activity 9.4
+            ['name' => 'Distilled Water', 'quantity' => '50', 'unit' => 'cm³','experiment_id' => 119],
+            ['name' => 'Cashew Nut', 'quantity' => '1', 'unit' => 'set','experiment_id' => 119],
+            ['name' => 'Groundnut', 'quantity' => '1', 'unit' => 'set','experiment_id' => 119],
+            ['name' => 'Cotton Wool', 'quantity' => '1', 'unit' => 'set','experiment_id' => 119],
+            ['name' => 'Plasticine', 'quantity' => '1', 'unit' => 'set','experiment_id' => 119],
+
+            //*Biology Form 4 Activity 9.5
+            ['name' => 'Orange Juice', 'quantity' => '1', 'unit' => 'set','experiment_id' => 120],
+            ['name' => 'Lime Juice', 'quantity' => '1', 'unit' => 'set','experiment_id' => 120],
+            ['name' => 'Carrot Juice', 'quantity' => '1', 'unit' => 'set','experiment_id' => 120],
+            ['name' => '0.1% Ascorbic Acid Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 120],
+            ['name' => '1% DCPIP Solution', 'quantity' => '2', 'unit' => 'mL','experiment_id' => 120],
+            ['name' => 'Distilled Water', 'quantity' => '50', 'unit' => 'cm³','experiment_id' => 120],
+
+            //*Biology Form 4 Activity 9.6
+            ['name' => 'Orange', 'quantity' => '60', 'unit' => 'mL','experiment_id' => 121],
+            ['name' => '1% DCPIP Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 121],
+            ['name' => 'Ice', 'quantity' => '1', 'unit' => 'set','experiment_id' => 121],
+
+            //*Biology Form 4 Activity 13.1
+            ['name' => 'Boiled Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 122],
+
+            //*Biology Form 5 Experiment 1.1
+            ['name' => '30 Corn Seed', 'quantity' => '1', 'unit' => 'set','experiment_id' => 123],
+
+            //*Biology Form 5 Experiment 1.2
+            ['name' => '5 Corn Seed', 'quantity' => '1', 'unit' => 'set','experiment_id' => 124],
+
+            //*Biology Form 5 Experiment 2.1
+            ['name' => 'Balsam Leaf', 'quantity' => '1', 'unit' => 'set','experiment_id' => 125],
+            ['name' => 'Lily Leaf', 'quantity' => '1', 'unit' => 'set','experiment_id' => 125],
+            
+            //*Biology Form 5 Experiment 2.2
+            ['name' => 'Leafy Twig', 'quantity' => '1', 'unit' => 'set','experiment_id' => 126],
+            ['name' => 'Water', 'quantity' => '1', 'unit' => 'set','experiment_id' => 126],
+            ['name' => 'Petroleum Jelly', 'quantity' => '1', 'unit' => 'set','experiment_id' => 126],
+            ['name' => 'Plastic Bag', 'quantity' => '1', 'unit' => 'set','experiment_id' => 126],
+            ['name' => 'Tissue Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 126],
+            
+            //*Biology Form 5 Experiment 2.3
+            ['name' => 'Hydrilla SP', 'quantity' => '3', 'unit' => 'set','experiment_id' => 127],
+            ['name' => 'Distilled Water ', 'quantity' => '50', 'unit' => 'cm³','experiment_id' => 127],
+            ['name' => '0.2% Sodium Hydrogen Carbonate Solution', 'quantity' => '2', 'unit' => 'set','experiment_id' => 127,],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.01],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.02],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.03],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.04],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.05],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.06],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.07],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.08],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.09],
+            ['name' => 'Sodium Hydrogen Carbonate Solution', 'quantity' => '1', 'unit' => 'set','experiment_id' => 127, 'concentration'=> 0.10],
+
+            //*Biology Form 5 Experiment 2.4
+            //*None
+
+            //*Biology Form 5 Experiment 3.1
+            ['name' => 'Corn Seedling', 'quantity' => '1', 'unit' => 'set','experiment_id' => 129],
+            ['name' => 'Calcium Nitrate', 'quantity' => '0.8', 'unit' => 'g','experiment_id' => 129],
+            ['name' => 'Potassium Nitrate', 'quantity' => '0.2', 'unit' => 'g','experiment_id' => 129],
+            ['name' => 'Potassium Dihydrogen Phosphate', 'quantity' => '0.2', 'unit' => 'g','experiment_id' => 129],
+            ['name' => 'Magnisium Sulphate', 'quantity' => '0.2', 'unit' => 'g','experiment_id' => 129],
+            ['name' => 'Iron (III) Phosphate', 'quantity' => '1', 'unit' => 'set','experiment_id' => 129],
+            ['name' => 'Distilled Water', 'quantity' => '1000', 'unit' => 'cm³','experiment_id' => 129],
+            ['name' => 'Cotton', 'quantity' => '1', 'unit' => 'set','experiment_id' => 129],
+            ['name' => 'Black Papper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 129],
+            ['name' => 'Calcium Chloride', 'quantity' => '1', 'unit' => 'set','experiment_id' => 129],
+            ['name' => 'Potassium Chloride', 'quantity' => '1', 'unit' => 'set','experiment_id' => 129],
+            ['name' => 'Calcium Phosphate', 'quantity' => '1', 'unit' => 'set','experiment_id' => 129],
+            ['name' => 'Iron (III) Oxide', 'quantity' => '1', 'unit' => 'set','experiment_id' => 129],
+            ['name' => 'Sodium Nitrate', 'quantity' => '1', 'unit' => 'set','experiment_id' => 129],
+            
+            //*Biology Form 5 Experiment 4.1
+            ['name' => 'Balsam Plant In Vase', 'quantity' => '1', 'unit' => 'set','experiment_id' => 130],
+            ['name' => 'Petroleum Jelly', 'quantity' => '1', 'unit' => 'set','experiment_id' => 130],
+            ['name' => 'Soil', 'quantity' => '1', 'unit' => 'set','experiment_id' => 130],
+
+            //*Biology Form 5 Experiment 4.2
+            ['name' => 'Plant With Leaf And Root', 'quantity' => '1', 'unit' => 'set','experiment_id' => 131],
+            ['name' => 'Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 131],
+            ['name' => 'Cooking Oil', 'quantity' => '1', 'unit' => 'set','experiment_id' => 131],
+            ['name' => 'Petroleum Jelly', 'quantity' => '1', 'unit' => 'set','experiment_id' => 131],
+
+            //*Biology Form 5 Experiment 4.3
+            ['name' => 'Hibiscus Plant', 'quantity' => '1', 'unit' => 'set','experiment_id' => 132],
+            ['name' => 'Petroleum Jelly', 'quantity' => '1', 'unit' => 'set','experiment_id' => 132],
+
+            //*Biology Form 5 Experiment 4.4
+            ['name' => 'Water Hyacinth', 'quantity' => '1', 'unit' => 'set','experiment_id' => 133],
+            ['name' => 'Lake Water', 'quantity' => '10', 'unit' => 'L','experiment_id' => 133],
+            ['name' => '10% Ammonium Chloride Solution', 'quantity' => '100', 'unit' => 'mL','experiment_id' => 133],
+            ['name' => 'Water', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 133],
+            ['name' => 'Ammonia Test Kit', 'quantity' => '1', 'unit' => 'set','experiment_id' => 133],
+
+            //*Biology Form 5 Experiment 4.5
+            ['name' => 'Water Spinach', 'quantity' => '20', 'unit' => 'set','experiment_id' => 134],
+            ['name' => 'Food Waste', 'quantity' => '5', 'unit' => 'kg','experiment_id' => 134],
+            ['name' => 'Potassium Chloride Solution', 'quantity' => '50', 'unit' => 'mL','experiment_id' => 134, 'concentration'=> 2.0],
+            ['name' => 'Plastic Container', 'quantity' => '100', 'unit' => 'cm³','experiment_id' => 134],
+            ['name' => 'Black Soil', 'quantity' => '5', 'unit' => 'kg','experiment_id' => 134],
+            ['name' => 'Distilled Water', 'quantity' => '20', 'unit' => 'cm³','experiment_id' => 134],
+            ['name' => 'Ammonia Test Kit', 'quantity' => '1', 'unit' => 'set','experiment_id' => 134],
+
+            //*Biology Form 5 Experiment 5.1
+            //*None
+
+            //*Biology Form 5 Experiment 5.2
+            ['name' => 'Paper Bag', 'quantity' => '2', 'unit' => 'set','experiment_id' => 136],
+            ['name' => 'Banana', 'quantity' => '1', 'unit' => 'set','experiment_id' => 136],
+            ['name' => 'Tomatoes', 'quantity' => '2', 'unit' => 'set','experiment_id' => 136],
+
+            //*Biology Form 5 Experiment 9.1
+            ['name' => 'Fertilised Soil', 'quantity' => '2', 'unit' => 'set','experiment_id' => 137],
+            ['name' => 'Corn Seed', 'quantity' => '120', 'unit' => 'set','experiment_id' => 137],
+            ['name' => 'Paddy Seed', 'quantity' => '120', 'unit' => 'set','experiment_id' => 137],
+
+            //*Biology Form 5 Experiment 10.1
+            ['name' => 'Labelling Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 138],
+            ['name' => 'Water Sample From Tap Water', 'quantity' => '250', 'unit' => 'mL','experiment_id' => 138],
+            ['name' => 'Water Sample From Drain Water', 'quantity' => '250', 'unit' => 'mL','experiment_id' => 138],
+            ['name' => 'Water Sample From River Water', 'quantity' => '250', 'unit' => 'mL','experiment_id' => 138],
+            ['name' => 'Water Sample From Pond Water', 'quantity' => '250', 'unit' => 'mL','experiment_id' => 138],
+            ['name' => 'Water Sample From Well Water', 'quantity' => '250', 'unit' => 'mL','experiment_id' => 138],
+            ['name' => 'Distilled Water', 'quantity' => '250', 'unit' => 'cm³','experiment_id' => 138],
+            ['name' => '0.1% Methylene Blue Solution', 'quantity' => '5', 'unit' => 'mL','experiment_id' => 138],
+
+            //*Biology Form 5 Experiment 12.1
+            ['name' => 'Graph Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 139],
+            ['name' => 'White Paper', 'quantity' => '1', 'unit' => 'set','experiment_id' => 139],
             
 
         ];
