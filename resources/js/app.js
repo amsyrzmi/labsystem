@@ -286,13 +286,71 @@ async function fetchExperiments(topicId) {
                 experimentGroup.appendChild(radioDiv);
             });
 
+            // ADD CUSTOM EXPERIMENT OPTION
+            const customDiv = document.createElement('div');
+            customDiv.className = 'radio-button custom-experiment-option';
+            customDiv.innerHTML = `
+                <input type="radio" name="experiment_id" id="experimentCustom" value="custom">
+                <label for="experimentCustom">📝 Custom Experiment</label>
+            `;
+            experimentGroup.appendChild(customDiv);
+
+            // ADD CUSTOM EXPERIMENT INPUT (hidden by default)
+            const customInputDiv = document.createElement('div');
+            customInputDiv.id = 'customExperimentInput';
+            customInputDiv.className = 'custom-experiment-input hidden';
+            customInputDiv.innerHTML = `
+                <label for="custom_experiment_name" style="display: block; margin-bottom: 8px; color: #2c3e50; font-weight: 600;">
+                    Enter Custom Experiment Name:
+                </label>
+                <input 
+                    type="text" 
+                    id="custom_experiment_name" 
+                    name="custom_experiment_name" 
+                    placeholder="e.g., Investigating pH levels in household products"
+                    style="width: 100%; padding: 12px; border: 2px solid #3498db; border-radius: 8px; font-size: 15px;"
+                />
+                <small style="display: block; margin-top: 6px; color: #7f8c8d;">
+                    Provide a clear, descriptive name for your custom experiment
+                </small>
+            `;
+            experimentGroup.appendChild(customInputDiv);
+
             const experimentInputs = document.querySelectorAll('input[name="experiment_id"]');
-            experimentInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    selectedExperimentId = this.value;
-                    nextBtn1.disabled = false;
-                });
+experimentInputs.forEach(input => {
+    input.addEventListener('change', function() {
+        if (this.value === 'custom') {
+            // Show custom input, clear experiment_id
+            document.getElementById('customExperimentInput').classList.remove('hidden');
+            selectedExperimentId = null;
+            
+            // Remove the experiment_id input from form OR set it to empty
+            this.value = ''; // Clear the value
+            this.removeAttribute('name'); // Remove name so it doesn't submit
+            
+            // Enable next button when custom name is entered
+            const customNameInput = document.getElementById('custom_experiment_name');
+            customNameInput.addEventListener('input', function() {
+                nextBtn1.disabled = this.value.trim().length < 3;
             });
+            
+            nextBtn1.disabled = true;
+        } else {
+            // Hide custom input, set selected experiment
+            document.getElementById('customExperimentInput').classList.add('hidden');
+            document.getElementById('custom_experiment_name').value = '';
+            
+            // Re-enable the name attribute for other radios
+            const customRadio = document.getElementById('experimentCustom');
+            if (customRadio) {
+                customRadio.setAttribute('name', 'experiment_id');
+            }
+            
+            selectedExperimentId = this.value;
+            nextBtn1.disabled = false;
+        }
+    });
+});
         } else {
             experimentGroup.innerHTML = '<p style="text-align: center; color: #999;">No experiments available.</p>';
         }
@@ -304,6 +362,34 @@ async function fetchExperiments(topicId) {
 }
 
 async function loadExperimentDetails() {
+    const customRadio = document.getElementById('experimentCustom');
+    const isCustom = customRadio && customRadio.checked;
+
+    if (isCustom) {
+        // For custom experiments, show placeholder content
+        const customName = document.getElementById('custom_experiment_name').value;
+        
+        materialsList.innerHTML = `
+            <div class="empty-message" style="background: #e3f2fd; padding: 20px; border-radius: 8px; color: #1976d2;">
+                <strong>📝 Custom Experiment: ${customName}</strong>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    Since this is a custom experiment, please specify required materials and apparatus 
+                    in the "Additional Notes" section below.
+                </p>
+            </div>
+        `;
+        apparatusList.innerHTML = `
+            <div class="empty-message" style="background: #fff3e0; padding: 20px; border-radius: 8px; color: #e65100;">
+                <strong>⚠️ Important</strong>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    Please list all required apparatus in the Additional Notes section.
+                </p>
+            </div>
+        `;
+        return;
+    }
+
+    // Original logic for standard experiments
     try {
         const response = await fetch(`/experiment-details?experiment_id=${encodeURIComponent(selectedExperimentId)}`, {
             headers: {

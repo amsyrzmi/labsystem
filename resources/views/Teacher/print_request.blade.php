@@ -287,7 +287,14 @@
                 </div>
                 <div class="info-item" style="grid-column: span 2;">
                     <div class="info-label">Experiment</div>
-                    <div class="info-value">{{ $request->experiment->name ?? 'N/A' }}</div>
+                    <div class="info-value">
+                        @if($request->custom_experiment_name)
+                            <span style="background:#667eea;color:white;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:600;">CUSTOM</span>
+                            {{ $request->custom_experiment_name }}
+                        @else
+                            {{ optional($request->experiment)->name ?? '— No experiment —' }}
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

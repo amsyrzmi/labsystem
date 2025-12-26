@@ -1,149 +1,114 @@
 <x-admin-layout>
-    <div style="max-width: 1400px; margin: 40px auto; padding: 0 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-            <h1 style="margin:0;font-size:32px;color:var(--accent);font-weight:700;">Manage Users</h1>
-            <a href="{{ route('admin.users.create') }}" 
-               style="display: inline-block; padding: 12px 24px; background: var(--accent); color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
-                + Create User
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h1 class="page-title" style="color:var(--accent)">Manage Users</h1>
+                <p class="page-subtitle">Oversee account permissions and system access</p>
+            </div>
+            <a href="{{ route('admin.users.create') }}" class="btn-create">
+                <span class="icon">+</span> Create New User
             </a>
         </div>
 
-        @if(session('success'))
-            <div style="background: #d4edda; color: #155724; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
-                ✓ {{ session('success') }}
+        @if(session('success') || session('error') || session('info'))
+            <div class="alert-container">
+                @if(session('success'))
+                    <div class="alert alert-success"><b>✓</b> {{ session('success') }}</div>
+                @endif
+                @if(session('error'))
+                    <div class="alert alert-error"><b>✗</b> {{ session('error') }}</div>
+                @endif
             </div>
         @endif
 
-        @if(session('error'))
-            <div style="background: #f8d7da; color: #721c24; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
-                ✗ {{ session('error') }}
-            </div>
-        @endif
-
-        @if(session('info'))
-            <div style="background: #d1ecf1; color: #0c5460; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #bee5eb;">
-                ℹ {{ session('info') }}
-            </div>
-        @endif
-
-        <!-- Filters -->
-        <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-            <form method="GET" action="{{ route('admin.users') }}" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: end;">
-                <!-- Search -->
-                <div style="flex: 1; min-width: 250px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #415A77; font-size: 14px;">Search</label>
-                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Name or email..." 
-                           style="color: #415A77;width: 100%; padding: 10px 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 14px;">
+        <div class="toolbar-card">
+            <form method="GET" action="{{ route('admin.users') }}" class="filter-grid">
+                <div class="input-group search">
+                    <label>Search Directory</label>
+                    <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Name, email, or staff ID...">
                 </div>
 
-                <!-- Status Filter -->
-                <div style="min-width: 150px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #415A77; font-size: 14px;">Status</label>
-                    <select name="status" style="width: 100%; padding: 10px 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 14px;color: #415A77;">
-                        <option value="all" {{ $status === 'all' ? 'selected' : '' }}>All</option>
-                        <option value="pending" {{ $status === 'pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="approved" {{ $status === 'approved' ? 'selected' : '' }}>Approved</option>
+                <div class="input-group">
+                    <label>Status</label>
+                    <select name="status">
+                        <option value="all" {{ $status === 'all' ? 'selected' : '' }}>All Statuses</option>
+                        <option value="pending" {{ $status === 'pending' ? 'selected' : '' }}>⏳ Pending Approval</option>
+                        <option value="approved" {{ $status === 'approved' ? 'selected' : '' }}>✅ Approved</option>
                     </select>
                 </div>
 
-                <!-- Role Filter -->
-                <div style="min-width: 150px;">
-                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #415A77; font-size: 14px;">Role</label>
-                    <select name="role" style="width: 100%; padding: 10px 12px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 14px;color: #415A77;">
+                <div class="input-group">
+                    <label>Access Level</label>
+                    <select name="role">
                         <option value="">All Roles</option>
                         <option value="teacher" {{ $role === 'teacher' ? 'selected' : '' }}>Teacher</option>
                         <option value="lab_assistant" {{ $role === 'lab_assistant' ? 'selected' : '' }}>Lab Assistant</option>
-                        <option value="admin" {{ $role === 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="admin" {{ $role === 'admin' ? 'selected' : '' }}>Administrator</option>
                     </select>
                 </div>
 
-                <!-- Buttons -->
-                <div style="display: flex; gap: 8px;">
-                    <button type="submit" style="padding: 10px 20px; background: var(--accent); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                        Filter
-                    </button>
-                    <a href="{{ route('admin.users') }}" style="padding: 10px 20px; background: var(--muted); color: white; border-radius: 8px; text-decoration: none; display: inline-block; font-weight: 600;">
-                        Reset
-                    </a>
+                <div class="filter-actions">
+                    <button type="submit" class="btn-filter" style="background:var(--accent)">Apply Filters</button>
+                    <a href="{{ route('admin.users') }}" class="btn-reset">Reset</a>
                 </div>
             </form>
         </div>
 
-        <!-- Users Table -->
-        <div style="background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+        <div class="table-card">
             @if($users->isEmpty())
-                <div style="padding: 60px 20px; text-align: center; color: #666;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">👥</div>
-                    <p>No users found matching your criteria.</p>
+                <div class="empty-state">
+                    <div class="empty-icon">👥</div>
+                    <h3>No users matching your search</h3>
+                    <p>Try adjusting your filters or clearing the search bar.</p>
                 </div>
             @else
-                <table style="width: 100%; border-collapse: collapse;">
-                    <thead style="background: #f8f9fa;">
+                <table class="modern-table">
+                    <thead>
                         <tr>
-                            <th style="padding: 16px; text-align: left; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">User</th>
-                            <th style="padding: 16px; text-align: left; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">Role</th>
-                            <th style="padding: 16px; text-align: left; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">Status</th>
-                            <th style="padding: 16px; text-align: left; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">Registered</th>
-                            <th style="padding: 16px; text-align: center; font-weight: 600; color: var(--accentlight); border-bottom: 2px solid #e1e8ed;">Actions</th>
+                            <th>User Identification</th>
+                            <th>Role</th>
+                            <th>Account Status</th>
+                            <th>Join Date</th>
+                            <th style="text-align: right;">Management</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($users as $user)
-                            <tr style="border-bottom: 1px solid #f0f4f8;">
-                                <td style="padding: 16px;">
-                                    <div style="font-weight: 600; color: #1b263b; margin-bottom: 2px;">{{ $user->name }}</div>
-                                    <div style="font-size: 13px; color: #7b8aa3;">{{ $user->email }}</div>
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar">{{ strtoupper(substr($user->name, 0, 1)) }}</div>
+                                        <div>
+                                            <div class="user-name">{{ $user->name }}</div>
+                                            <div class="user-email">{{ $user->email }}</div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td style="padding: 16px;">
-                                    <span style="display: inline-block; padding: 4px 12px; background: #415A77; color: #E0E1DD; border-radius: 12px; font-size: 13px; font-weight: 600;">
+                                <td>
+                                    <span class="role-badge role-{{ $user->role }}">
                                         {{ ucfirst(str_replace('_', ' ', $user->role)) }}
                                     </span>
                                 </td>
-                                <td style="padding: 16px;">
+                                <td>
                                     @if($user->is_approved)
-                                        <span style="display: inline-block; padding: 4px 12px; background: #d4edda; color: #155724; border-radius: 12px; font-size: 13px; font-weight: 600;">
-                                            ✓ Approved
-                                        </span>
+                                        <span class="status-indicator status-active">Active</span>
                                     @else
-                                        <span style="display: inline-block; padding: 4px 12px; background: #fff3cd; color: #856404; border-radius: 12px; font-size: 13px; font-weight: 600;">
-                                            ⏳ Pending
-                                        </span>
+                                        <span class="status-indicator status-pending">Pending Approval</span>
                                     @endif
                                 </td>
-                                <td style="padding: 16px; color: #7b8aa3; font-size: 14px;">
-                                    {{ $user->created_at->format('d M Y') }}
-                                </td>
-                                <td style="padding: 16px;">
-                                    <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                                <td class="date-cell">{{ $user->created_at->format('d M Y') }}</td>
+                                <td>
+                                    <div class="action-flex">
                                         @if(!$user->is_approved)
-                                            <form action="{{ route('admin.users.approve', $user->id) }}" method="POST" style="display: inline;">
+                                            <form action="{{ route('admin.users.approve', $user->id) }}" method="POST">
                                                 @csrf
-                                                <button type="submit" onclick="return confirm('Approve this user?')" 
-                                                        style="padding: 6px 12px; background: #28a745; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600;">
-                                                    ✓ Approve
-                                                </button>
-                                            </form>
-                                            <form action="{{ route('admin.users.reject', $user->id) }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                <button type="submit" onclick="return confirm('Reject this user?')" 
-                                                        style="padding: 6px 12px; background: #dc3545; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600;">
-                                                    ✗ Reject
-                                                </button>
+                                                <button type="submit" class="btn-icon approve" title="Approve User">✓</button>
                                             </form>
                                         @endif
-                                        
-                                        <a href="{{ route('admin.users.edit', $user->id) }}" 
-                                           style="padding: 6px 12px; background: var(--accent); color: white; border-radius: 6px; font-size: 13px; text-decoration: none; font-weight: 600;">
-                                            Edit
-                                        </a>
-                                        
-                                        <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" style="display: inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Are you sure you want to delete this user? This action cannot be undone.')" 
-                                                    style="padding: 6px 12px; background: red; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600;">
-                                                Delete
-                                            </button>
+                                        <a href="{{ route('admin.users.edit', $user->id) }}" class="btn-icon edit" title="Edit User">✎</a>
+                                        <form action="{{ route('admin.users.delete', $user->id) }}" method="POST">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="btn-icon delete" onclick="return confirm('Delete user?')" title="Delete User">🗑</button>
                                         </form>
                                     </div>
                                 </td>
@@ -152,11 +117,65 @@
                     </tbody>
                 </table>
 
-                <!-- Pagination -->
-                <div style="padding: 20px;">
+                <div class="pagination-footer">
                     {{ $users->links() }}
                 </div>
             @endif
         </div>
     </div>
+
+    <style>
+        .admin-container { max-width: 1400px; margin: 40px auto; padding: 0 20px; font-family: 'Inter', sans-serif; }
+        
+        /* Header */
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .page-title { margin: 0; font-size: 28px; color: #1e293b; font-weight: 800; }
+        .page-subtitle { margin: 4px 0 0 0; color: #64748b; font-size: 14px; }
+        .btn-create { background: var(--accent); color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: 0.2s; box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.2); }
+        .btn-create:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        /* Toolbar */
+        .toolbar-card { background: white; padding: 24px; border-radius: 16px; margin-bottom: 24px; border: 1px solid #e2e8f0; }
+        .filter-grid { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 20px; align-items: end; }
+        .input-group label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .input-group input, .input-group select { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; color: #334155; }
+        .btn-filter { background: #1e293b; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-reset { color: #64748b; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px; }
+
+        /* Table Structure */
+        .table-card { background: white; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .modern-table { width: 100%; border-collapse: collapse; }
+        .modern-table thead { background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+        .modern-table th { padding: 16px 24px; text-align: left; font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; }
+        .modern-table td { padding: 16px 24px; vertical-align: middle; border-bottom: 1px solid #f1f5f9; }
+
+        /* User Identity Cell */
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .user-avatar { width: 40px; height: 40px; background: var(--accent); color: #ffffff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+        .user-name { font-weight: 700; color: #1e293b; font-size: 15px; }
+        .user-email { font-size: 13px; color: #64748b; }
+
+        /* Badges */
+        .role-badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .role-admin { background: #fef2f2; color: #dc2626; }
+        .role-teacher { background: #eff6ff; color: #2563eb; }
+        .role-lab_assistant { background: #f0fdf4; color: #16a34a; }
+
+        .status-indicator { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+        .status-active::before { content: ""; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; }
+        .status-pending::before { content: ""; width: 8px; height: 8px; background: #eab308; border-radius: 50%; }
+
+        /* Action Buttons */
+        .action-flex { display: flex; gap: 8px; justify-content: flex-end; }
+        .btn-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: 0.2s; text-decoration: none; font-size: 16px; }
+        .btn-icon.approve { background: #dcfce7; color: #16a34a; }
+        .btn-icon.edit { background: #f1f5f9; color: #475569; }
+        .btn-icon.delete { background: #fee2e2; color: #ef4444; }
+        .btn-icon:hover { transform: scale(1.1); filter: brightness(0.95); }
+
+        /* Alerts */
+        .alert { padding: 12px 16px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; }
+        .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        .alert-error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    </style>
 </x-admin-layout>

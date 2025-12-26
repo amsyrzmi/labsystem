@@ -15,6 +15,7 @@ class LabRequest extends Model
         'subject_id',
         'topic_id',
         'experiment_id',
+        'custom_experiment_name',
         'num_students',
         'group_size',
         'classname',

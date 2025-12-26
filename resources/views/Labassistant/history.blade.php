@@ -74,7 +74,14 @@
                         <div class="card-header">
                             <div>
                                 <div class="card-title">{{ optional($req->subject)->name ?? 'No Subject' }}</div>
-                                <div class="card-subtitle">{{ optional($req->experiment)->name ?? 'No Experiment' }}</div>
+                                <div class="card-subtitle">
+                                    @if($req->custom_experiment_name)
+                                        <span style="background:#667eea;color:white;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:600;">CUSTOM</span>
+                                        {{ $req->custom_experiment_name }}
+                                    @else
+                                        {{ optional($req->experiment)->name ?? '— No experiment selected —' }}
+                                    @endif
+                                </div>
                             </div>
                             <span class="status-badge status-{{ $req->status }}">
                                 {{ ucfirst(str_replace('_', ' ', $req->status)) }}

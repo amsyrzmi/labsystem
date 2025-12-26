@@ -57,7 +57,14 @@
             </div>
             <div class="info-row">
                 <span class="info-label">Experiment</span>
-                <span class="info-value">{{ optional($request->experiment)->name ?? 'Not specified' }}</span>
+                <span class="info-value">
+                    @if($request->custom_experiment_name)
+                        <span style="background:#667eea;color:white;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:600;">CUSTOM</span>
+                        {{ $request->custom_experiment_name }}
+                    @else
+                        {{ optional($request->experiment)->name ?? 'Not specified' }}
+                    @endif
+                </span>
             </div>
             <div class="info-row">
                 <span class="info-label">Number of Students</span>

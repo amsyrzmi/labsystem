@@ -127,9 +127,8 @@
                 <p style="color: #7b8aa3; margin-bottom: 16px;">
                     To reset the user's password, send them a password reset link via their email.
                 </p>
-                <form action="{{ route('password.email') }}" method="POST">
+                <form action="{{ route('admin.users.send_password_reset', $user->id) }}" method="POST">
                     @csrf
-                    <input type="hidden" name="email" value="{{ $user->email }}">
                     <button type="submit" 
                             style="padding: 10px 20px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
                         Send Password Reset Link

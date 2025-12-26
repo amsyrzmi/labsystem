@@ -22,7 +22,15 @@
                 <div style="font-weight:700;color:#1b263b;font-size:18px;">
                     {{ optional($request->subject)->name ?? '— Subject —' }}
                 </div>
-                <div style="color:#415A77;margin-top:6px;">Experiment: {{ optional($request->experiment)->name ?? '— No experiment —' }}</div>
+                <div style="color:#415A77;margin-top:6px;">
+                    Experiment: 
+                    @if($request->custom_experiment_name)
+                        <span style="background:#667eea;color:white;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:600;">CUSTOM</span>
+                        {{ $request->custom_experiment_name }}
+                    @else
+                        {{ optional($request->experiment)->name ?? '— No experiment —' }}
+                    @endif
+                </div>
 
                 <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;">
                     <div>

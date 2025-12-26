@@ -28,7 +28,13 @@
                                         {{ optional($r->subject)->name ?? '— No subject —' }}
                                     </div>
                                     <div style="margin-top:4px;color:#415A77;font-size:14px;">
-                                        Experiment: {{ optional($r->experiment)->name ?? '— No experiment selected —' }}
+                                        Experiment: 
+                                        @if($r->custom_experiment_name)
+                                            <span style="background:#667eea;color:white;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:600;">CUSTOM</span>
+                                            {{ $r->custom_experiment_name }}
+                                        @else
+                                            {{ optional($r->experiment)->name ?? '— No experiment —' }}
+                                        @endif
                                     </div>
                                 </div>
 

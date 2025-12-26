@@ -127,6 +127,18 @@ class AdminController extends Controller
         return view('admin.edit-user', compact('user'));
     }
 
+    public function sendPasswordReset($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Generate a password reset token
+        $token = app('auth.password.broker')->createToken($user);
+        
+        // Send the reset notification
+        $user->sendPasswordResetNotification($token);
+        
+        return back()->with('success', 'Password reset link sent to ' . $user->email);
+    }
 
     public function updateUser(Request $request, $id)
     {

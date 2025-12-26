@@ -286,7 +286,14 @@
             <div class="request-card">
                 <div class="request-header">
                     <div>
-                        <div class="request-title">{{ $request->experiment->name ?? 'N/A' }}</div>
+                        <div class="request-title">
+                            @if($request->custom_experiment_name)
+                                <span style="background:#667eea;color:white;padding:3px 8px;border-radius:6px;font-size:12px;font-weight:600;">CUSTOM</span>
+                                {{ $request->custom_experiment_name }}
+                            @else
+                                {{ optional($request->experiment)->name ?? '— No experiment —' }}
+                            @endif
+                        </div>
                         <div class="request-id">Request #{{ $request->id }}</div>
                     </div>
                     <div>

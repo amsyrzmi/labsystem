@@ -70,6 +70,8 @@ Route::middleware('auth')->group(function () {
         //? AJAX endpoints for dynamic dropdowns
         Route::get('/api/subjects/{formLevel}', [AdminController::class, 'getSubjectsByForm'])->name('api.subjects');
         Route::get('/api/topics/{subjectId}', [AdminController::class, 'getTopicsBySubject'])->name('api.topics');
+        Route::post('/users/{id}/send-password-reset', [AdminController::class, 'sendPasswordReset'])
+        ->name('users.send_password_reset');
     });
 
     //! Role lab assistant

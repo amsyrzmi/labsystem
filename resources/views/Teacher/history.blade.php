@@ -90,9 +90,15 @@
                                     <div style="font-weight:700;font-size:18px;color:var(--accent);">
                                         {{ optional($r->subject)->name ?? '— No subject —' }}
                                     </div>
-                                    <div style="margin-top:4px;color:var(--text);font-size:14px;">
-                                        Experiment: {{ optional($r->experiment)->name ?? '— No experiment selected —' }}
-                                    </div>
+                                <div style="margin-top:4px;color:var(--text);font-size:14px;">
+                                    Experiment: 
+                                    @if($r->custom_experiment_name)
+                                        <span style="background:#667eea;color:white;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:600;">CUSTOM</span>
+                                        {{ $r->custom_experiment_name }}
+                                    @else
+                                        {{ optional($r->experiment)->name ?? '— No experiment selected —' }}
+                                    @endif
+                                </div>
                                 </div>
 
                                 <div style="text-align:right;">
