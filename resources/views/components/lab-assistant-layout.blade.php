@@ -53,6 +53,13 @@
               </a>
           </li>
           <li role="none">
+            <a role="menuitem" 
+              href="{{ route('lab_assistant.manage_experiments.index') }}" 
+              class="nav-link {{ request()->routeIs('lab_assistant.manage_experiments.*') ? 'active' : '' }}">
+              Experiments
+            </a>
+          </li>
+          <li role="none">
               <a role="menuitem" 
                 href="{{ route('lab_assistant.history') }}" 
                 class="nav-link {{ request()->routeIs('lab_assistant.history') ? 'active' : '' }}">

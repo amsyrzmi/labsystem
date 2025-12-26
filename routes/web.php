@@ -91,6 +91,18 @@ Route::middleware('auth')->group(function () {
         // Route for calculating reagents (add to your lab assistant routes group)
         Route::post('/requests/{id}/calculate-reagents', [LabassistantController::class, 'calculateReagents'])
             ->name('lab_assistant.requests.calculate_reagents');
+
+        //? Experiments Management - NEW ROUTES
+        Route::get('/lab-assistant/manage-experiments', [LabassistantController::class, 'manageExperimentsIndex'])->name('lab_assistant.manage_experiments.index');
+        Route::get('/lab-assistant/manage-experiments/create', [LabassistantController::class, 'manageExperimentsCreate'])->name('lab_assistant.manage_experiments.create');
+        Route::post('/lab-assistant/manage-experiments', [LabassistantController::class, 'manageExperimentsStore'])->name('lab_assistant.manage_experiments.store');
+        Route::get('/lab-assistant/manage-experiments/{id}/edit', [LabassistantController::class, 'manageExperimentsEdit'])->name('lab_assistant.manage_experiments.edit');
+        Route::put('/lab-assistant/manage-experiments/{id}', [LabassistantController::class, 'manageExperimentsUpdate'])->name('lab_assistant.manage_experiments.update');
+        Route::delete('/lab-assistant/manage-experiments/{id}', [LabassistantController::class, 'manageExperimentsDestroy'])->name('lab_assistant.manage_experiments.destroy');
+        
+        //? AJAX endpoints for dynamic dropdowns
+        Route::get('/lab-assistant/api/subjects/{formLevel}', [LabassistantController::class, 'getSubjectsByForm'])->name('lab_assistant.api.subjects');
+        Route::get('/lab-assistant/api/topics/{subjectId}', [LabassistantController::class, 'getTopicsBySubject'])->name('lab_assistant.api.topics');
     });
 
     
