@@ -59,6 +59,17 @@ Route::middleware('auth')->group(function () {
         
         // NEW: History
         Route::get('/history', [AdminController::class, 'allHistory'])->name('history');
+        //? Experiments Management - NEW ROUTES
+        Route::get('/manage-experiments', [AdminController::class, 'manageExperimentsIndex'])->name('manage_experiments.index');
+        Route::get('/manage-experiments/create', [AdminController::class, 'manageExperimentsCreate'])->name('manage_experiments.create');
+        Route::post('/manage-experiments', [AdminController::class, 'manageExperimentsStore'])->name('manage_experiments.store');
+        Route::get('/manage-experiments/{id}/edit', [AdminController::class, 'manageExperimentsEdit'])->name('manage_experiments.edit');
+        Route::put('/manage-experiments/{id}', [AdminController::class, 'manageExperimentsUpdate'])->name('manage_experiments.update');
+        Route::delete('/manage-experiments/{id}', [AdminController::class, 'manageExperimentsDestroy'])->name('manage_experiments.destroy');
+        
+        //? AJAX endpoints for dynamic dropdowns
+        Route::get('/api/subjects/{formLevel}', [AdminController::class, 'getSubjectsByForm'])->name('api.subjects');
+        Route::get('/api/topics/{subjectId}', [AdminController::class, 'getTopicsBySubject'])->name('api.topics');
     });
 
     //! Role lab assistant
@@ -128,6 +139,9 @@ Route::middleware('auth')->group(function () {
         //? show details (materials & apparatus) for a specific request
         Route::get('/teacher/requests/{id}/details', [TeacherController::class, 'requestDetails'])->name('teacher.requests.details');
         Route::get('/teacher/requests/{id}/history', [TeacherController::class, 'requestDetailsH'])->name('teacher.requests.detailsH');
+
+       //? Timetable
+        Route::get('/teacher/timetable', [TeacherController::class, 'timetable'])->name('teacher.timetable');
 
         //? Print routes
         Route::get('/teacher/history/print/{id}', [TeacherController::class, 'printRequest'])

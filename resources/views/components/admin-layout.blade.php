@@ -35,6 +35,13 @@
             <li role="none"><a role="menuitem" href="{{ route('admin.requests') }}" class="nav-link {{ request()->routeIs('admin.requests') ? 'active' : '' }}">Request</a></li>
             <li role="none"><a role="menuitem" href="{{ route('admin.history') }}" class="nav-link {{ request()->routeIs('admin.history') ? 'active' : '' }}">History</a></li>
             <li role="none"><a role="menuitem" href="{{ route('admin.users') }}" class="nav-link {{ request()->routeIs('admin.users') ? 'active' : '' }}">Manage Users</a></li>
+            <li role="none">
+              <a role="menuitem" 
+                href="{{ route('admin.manage_experiments.index') }}" 
+                class="nav-link {{ request()->routeIs('admin.manage_experiments.*') ? 'active' : '' }}">
+                Experiments
+              </a>
+            </li>
           </ul>
           @endauth
 

@@ -37,6 +37,13 @@
             <li role="none"><a role="menuitem" href="{{ route('teacher.index') }}" class="nav-link {{ request()->routeIs('teacher.index') ? 'active' : '' }}">Home</a></li>
             <li role="none"><a role="menuitem" href="{{ route('teacher.requests.list') }}" class="nav-link {{ request()->routeIs('teacher.requests.list') ? 'active' : '' }}">Request</a></li>
             <li role="none"><a role="menuitem" href="{{ route('teacher.history') }}" class="nav-link {{ request()->routeIs('teacher.history') ? 'active' : '' }}">History</a></li>
+            <li role="none">
+                <a role="menuitem" 
+                  href="{{ route('teacher.timetable') }}" 
+                  class="nav-link {{ request()->routeIs('teacher.timetable') ? 'active' : '' }}">
+                  Timetable
+                </a>
+            </li>
           </ul>
           
           @endauth

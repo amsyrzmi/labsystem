@@ -586,189 +586,82 @@ class LabassistantController extends Controller
             'labNumber' => $validated['lab_number'] ?? null,
         ]);
     }
-// ============================================
-// EXPERIMENTS MANAGEMENT METHODS
-// ============================================
+    // ============================================
+    // EXPERIMENTS MANAGEMENT METHODS
+    // ============================================
 
-public function manageExperimentsIndex(Request $request)
-{
-    $query = Experiment::with(['topic.subject']);
-    
-    // Filter by form level - handle both "Form X" and "X" formats
-    if ($request->has('form_level') && $request->form_level != '') {
-        $formLevel = $request->form_level;
-        // Convert to "Form X" format if just number is provided
-        $formLevelString = is_numeric($formLevel) ? "Form {$formLevel}" : $formLevel;
+    public function manageExperimentsIndex(Request $request)
+    {
+        $query = Experiment::with(['topic.subject']);
         
-        $query->whereHas('topic.subject', function($q) use ($formLevelString) {
-            $q->where('form_level', $formLevelString);
-        });
-    }
-    
-    // Filter by subject
-    if ($request->has('subject_id') && $request->subject_id != '') {
-        $query->whereHas('topic', function($q) use ($request) {
-            $q->where('subject_id', $request->subject_id);
-        });
-    }
-    
-    // Search
-    if ($request->has('search') && $request->search != '') {
-        $query->where('name', 'like', '%' . $request->search . '%');
-    }
-    
-    $experiments = $query->orderBy('name')->paginate(15);
-    
-    // Get all subjects for filter grouped by form level
-    $subjects = Subject::orderBy('form_level')->orderBy('name')->get();
-    
-    return view('Labassistant.manage_experiments.index', compact('experiments', 'subjects'));
-}
-
-public function manageExperimentsCreate()
-{
-    return view('Labassistant.manage_experiments.create');
-}
-
-public function manageExperimentsStore(Request $request)
-{
-    $validated = $request->validate([
-        'form_level' => 'required|string',
-        'subject_id' => 'required|exists:subjects,id',
-        'topic_id' => 'required|exists:topics,id',
-        'experiment_name' => 'required|string|max:255',
-        
-        // Materials
-        'materials' => 'nullable|array',
-        'materials.*.name' => 'required|string|max:255',
-        'materials.*.quantity' => 'required|numeric|min:0',
-        'materials.*.unit' => 'required|string|max:50',
-        'materials.*.concentration' => 'nullable|numeric|min:0',
-        
-        // Apparatus
-        'apparatus' => 'nullable|array',
-        'apparatus.*.name' => 'required|string|max:255',
-        'apparatus.*.quantity' => 'required|integer|min:1',
-    ]);
-    
-    DB::beginTransaction();
-    try {
-        // Create experiment
-        $experiment = Experiment::create([
-            'name' => $validated['experiment_name'],
-            'topic_id' => $validated['topic_id'],
-        ]);
-        
-        // Add materials
-        if (!empty($validated['materials'])) {
-            foreach ($validated['materials'] as $material) {
-                DefaultMaterial::create([
-                    'experiment_id' => $experiment->id,
-                    'name' => $material['name'],
-                    'quantity' => $material['quantity'],
-                    'unit' => $material['unit'],
-                    'concentration' => $material['concentration'] ?? null,
-                ]);
-            }
-        }
-        
-        // Add apparatus
-        if (!empty($validated['apparatus'])) {
-            foreach ($validated['apparatus'] as $item) {
-                DefaultApparatus::create([
-                    'experiment_id' => $experiment->id,
-                    'name' => $item['name'],
-                    'quantity' => $item['quantity'],
-                ]);
-            }
-        }
-        
-        DB::commit();
-        return redirect()->route('lab_assistant.manage_experiments.index')
-            ->with('success', 'Experiment created successfully!');
+        // Filter by form level - handle both "Form X" and "X" formats
+        if ($request->has('form_level') && $request->form_level != '') {
+            $formLevel = $request->form_level;
+            // Convert to "Form X" format if just number is provided
+            $formLevelString = is_numeric($formLevel) ? "Form {$formLevel}" : $formLevel;
             
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error('Error creating experiment: ' . $e->getMessage());
-        return redirect()->back()
-            ->withInput()
-            ->with('error', 'Failed to create experiment. Please try again.');
+            $query->whereHas('topic.subject', function($q) use ($formLevelString) {
+                $q->where('form_level', $formLevelString);
+            });
+        }
+        
+        // Filter by subject
+        if ($request->has('subject_id') && $request->subject_id != '') {
+            $query->whereHas('topic', function($q) use ($request) {
+                $q->where('subject_id', $request->subject_id);
+            });
+        }
+        
+        // Search
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        
+        $experiments = $query->orderBy('name')->paginate(15);
+        
+        // Get all subjects for filter grouped by form level
+        $subjects = Subject::orderBy('form_level')->orderBy('name')->get();
+        
+        return view('Labassistant.manage_experiments.index', compact('experiments', 'subjects'));
     }
-}
 
-public function manageExperimentsEdit($id)
-{
-    $experiment = Experiment::with(['topic.subject', 'defaultmaterial', 'defaultapparatus'])
-        ->findOrFail($id);
-    
-    return view('Labassistant.manage_experiments.edit', compact('experiment'));
-}
+    public function manageExperimentsCreate()
+    {
+        return view('Labassistant.manage_experiments.create');
+    }
 
-public function manageExperimentsUpdate(Request $request, $id)
-{
-    $validated = $request->validate([
-        'experiment_name' => 'required|string|max:255',
-        'topic_id' => 'required|exists:topics,id',
-        
-        // Materials
-        'materials' => 'nullable|array',
-        'materials.*.id' => 'nullable|exists:defaultmaterials,id',
-        'materials.*.name' => 'required|string|max:255',
-        'materials.*.quantity' => 'required|numeric|min:0',
-        'materials.*.unit' => 'required|string|max:50',
-        'materials.*.concentration' => 'nullable|numeric|min:0',
-        
-        // Apparatus
-        'apparatus' => 'nullable|array',
-        'apparatus.*.id' => 'nullable|exists:defaultapparatuses,id',
-        'apparatus.*.name' => 'required|string|max:255',
-        'apparatus.*.quantity' => 'required|integer|min:1',
-        
-        // Deleted items
-        'deleted_materials' => 'nullable|string',
-        'deleted_apparatus' => 'nullable|string',
-    ]);
-    
-    DB::beginTransaction();
-    try {
-        $experiment = Experiment::findOrFail($id);
-        
-        // Update experiment
-        $experiment->update([
-            'name' => $validated['experiment_name'],
-            'topic_id' => $validated['topic_id'],
+    public function manageExperimentsStore(Request $request)
+    {
+        $validated = $request->validate([
+            'form_level' => 'required|string',
+            'subject_id' => 'required|exists:subjects,id',
+            'topic_id' => 'required|exists:topics,id',
+            'experiment_name' => 'required|string|max:255',
+            
+            // Materials
+            'materials' => 'nullable|array',
+            'materials.*.name' => 'required|string|max:255',
+            'materials.*.quantity' => 'required|numeric|min:0',
+            'materials.*.unit' => 'required|string|max:50',
+            'materials.*.concentration' => 'nullable|numeric|min:0',
+            
+            // Apparatus
+            'apparatus' => 'nullable|array',
+            'apparatus.*.name' => 'required|string|max:255',
+            'apparatus.*.quantity' => 'required|integer|min:1',
         ]);
         
-        // Handle deleted materials
-        if (!empty($validated['deleted_materials'])) {
-            $deletedMaterialIds = json_decode($validated['deleted_materials'], true);
-            if (is_array($deletedMaterialIds)) {
-                DefaultMaterial::whereIn('id', $deletedMaterialIds)->delete();
-            }
-        }
-        
-        // Handle deleted apparatus
-        if (!empty($validated['deleted_apparatus'])) {
-            $deletedApparatusIds = json_decode($validated['deleted_apparatus'], true);
-            if (is_array($deletedApparatusIds)) {
-                DefaultApparatus::whereIn('id', $deletedApparatusIds)->delete();
-            }
-        }
-        
-        // Update/Create materials
-        if (!empty($validated['materials'])) {
-            foreach ($validated['materials'] as $key => $material) {
-                // Check if this is an existing material (starts with "existing_")
-                if (strpos($key, 'existing_') === 0 && !empty($material['id'])) {
-                    // Update existing
-                    DefaultMaterial::where('id', $material['id'])->update([
-                        'name' => $material['name'],
-                        'quantity' => $material['quantity'],
-                        'unit' => $material['unit'],
-                        'concentration' => $material['concentration'] ?? null,
-                    ]);
-                } elseif (strpos($key, 'new_') === 0) {
-                    // Create new
+        DB::beginTransaction();
+        try {
+            // Create experiment
+            $experiment = Experiment::create([
+                'name' => $validated['experiment_name'],
+                'topic_id' => $validated['topic_id'],
+            ]);
+            
+            // Add materials
+            if (!empty($validated['materials'])) {
+                foreach ($validated['materials'] as $material) {
                     DefaultMaterial::create([
                         'experiment_id' => $experiment->id,
                         'name' => $material['name'],
@@ -778,20 +671,10 @@ public function manageExperimentsUpdate(Request $request, $id)
                     ]);
                 }
             }
-        }
-        
-        // Update/Create apparatus
-        if (!empty($validated['apparatus'])) {
-            foreach ($validated['apparatus'] as $key => $item) {
-                // Check if this is an existing apparatus (starts with "existing_")
-                if (strpos($key, 'existing_') === 0 && !empty($item['id'])) {
-                    // Update existing
-                    DefaultApparatus::where('id', $item['id'])->update([
-                        'name' => $item['name'],
-                        'quantity' => $item['quantity'],
-                    ]);
-                } elseif (strpos($key, 'new_') === 0) {
-                    // Create new
+            
+            // Add apparatus
+            if (!empty($validated['apparatus'])) {
+                foreach ($validated['apparatus'] as $item) {
                     DefaultApparatus::create([
                         'experiment_id' => $experiment->id,
                         'name' => $item['name'],
@@ -799,70 +682,187 @@ public function manageExperimentsUpdate(Request $request, $id)
                     ]);
                 }
             }
-        }
-        
-        DB::commit();
-        return redirect()->route('lab_assistant.manage_experiments.index')
-            ->with('success', 'Experiment updated successfully!');
             
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error('Error updating experiment: ' . $e->getMessage());
-        return redirect()->back()
-            ->withInput()
-            ->with('error', 'Failed to update experiment. Please try again.');
-    }
-}
-
-public function manageExperimentsDestroy($id)
-{
-    try {
-        $experiment = Experiment::findOrFail($id);
-        
-        // Check if experiment is being used in any lab requests
-        $usageCount = LabRequest::where('experiment_id', $id)->count();
-        
-        if ($usageCount > 0) {
+            DB::commit();
+            return redirect()->route('lab_assistant.manage_experiments.index')
+                ->with('success', 'Experiment created successfully!');
+                
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error creating experiment: ' . $e->getMessage());
             return redirect()->back()
-                ->with('error', "Cannot delete experiment. It is used in {$usageCount} lab request(s).");
+                ->withInput()
+                ->with('error', 'Failed to create experiment. Please try again.');
         }
-        
-        // Delete materials and apparatus (cascade)
-        $experiment->defaultmaterial()->delete();
-        $experiment->defaultapparatus()->delete();
-        
-        // Delete experiment
-        $experiment->delete();
-        
-        return redirect()->route('lab_assistant.manage_experiments.index')
-            ->with('success', 'Experiment deleted successfully!');
-            
-    } catch (\Exception $e) {
-        Log::error('Error deleting experiment: ' . $e->getMessage());
-        return redirect()->back()
-            ->with('error', 'Failed to delete experiment. Please try again.');
     }
-}
 
-// AJAX API endpoints
-public function getSubjectsByForm($formLevel)
-{
-    // Convert number to "Form X" format
-    $formLevelString = is_numeric($formLevel) ? "Form {$formLevel}" : $formLevel;
-    
-    $subjects = Subject::where('form_level', $formLevelString)
-        ->orderBy('name')
-        ->get(['id', 'name', 'form_level']);
-    
-    return response()->json($subjects);
-}
+    public function manageExperimentsEdit($id)
+    {
+        $experiment = Experiment::with(['topic.subject', 'defaultmaterial', 'defaultapparatus'])
+            ->findOrFail($id);
+        
+        return view('Labassistant.manage_experiments.edit', compact('experiment'));
+    }
 
-public function getTopicsBySubject($subjectId)
-{
-    $topics = Topic::where('subject_id', $subjectId)
-        ->orderBy('name')
-        ->get(['id', 'name']);
-    
-    return response()->json($topics);
-}
+    public function manageExperimentsUpdate(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'experiment_name' => 'required|string|max:255',
+            'topic_id' => 'required|exists:topics,id',
+            
+            // Materials
+            'materials' => 'nullable|array',
+            'materials.*.id' => 'nullable|exists:defaultmaterials,id',
+            'materials.*.name' => 'required|string|max:255',
+            'materials.*.quantity' => 'required|numeric|min:0',
+            'materials.*.unit' => 'required|string|max:50',
+            'materials.*.concentration' => 'nullable|numeric|min:0',
+            
+            // Apparatus
+            'apparatus' => 'nullable|array',
+            'apparatus.*.id' => 'nullable|exists:defaultapparatuses,id',
+            'apparatus.*.name' => 'required|string|max:255',
+            'apparatus.*.quantity' => 'required|integer|min:1',
+            
+            // Deleted items
+            'deleted_materials' => 'nullable|string',
+            'deleted_apparatus' => 'nullable|string',
+        ]);
+        
+        DB::beginTransaction();
+        try {
+            $experiment = Experiment::findOrFail($id);
+            
+            // Update experiment
+            $experiment->update([
+                'name' => $validated['experiment_name'],
+                'topic_id' => $validated['topic_id'],
+            ]);
+            
+            // Handle deleted materials
+            if (!empty($validated['deleted_materials'])) {
+                $deletedMaterialIds = json_decode($validated['deleted_materials'], true);
+                if (is_array($deletedMaterialIds)) {
+                    DefaultMaterial::whereIn('id', $deletedMaterialIds)->delete();
+                }
+            }
+            
+            // Handle deleted apparatus
+            if (!empty($validated['deleted_apparatus'])) {
+                $deletedApparatusIds = json_decode($validated['deleted_apparatus'], true);
+                if (is_array($deletedApparatusIds)) {
+                    DefaultApparatus::whereIn('id', $deletedApparatusIds)->delete();
+                }
+            }
+            
+            // Update/Create materials
+            if (!empty($validated['materials'])) {
+                foreach ($validated['materials'] as $key => $material) {
+                    // Check if this is an existing material (starts with "existing_")
+                    if (strpos($key, 'existing_') === 0 && !empty($material['id'])) {
+                        // Update existing
+                        DefaultMaterial::where('id', $material['id'])->update([
+                            'name' => $material['name'],
+                            'quantity' => $material['quantity'],
+                            'unit' => $material['unit'],
+                            'concentration' => $material['concentration'] ?? null,
+                        ]);
+                    } elseif (strpos($key, 'new_') === 0) {
+                        // Create new
+                        DefaultMaterial::create([
+                            'experiment_id' => $experiment->id,
+                            'name' => $material['name'],
+                            'quantity' => $material['quantity'],
+                            'unit' => $material['unit'],
+                            'concentration' => $material['concentration'] ?? null,
+                        ]);
+                    }
+                }
+            }
+            
+            // Update/Create apparatus
+            if (!empty($validated['apparatus'])) {
+                foreach ($validated['apparatus'] as $key => $item) {
+                    // Check if this is an existing apparatus (starts with "existing_")
+                    if (strpos($key, 'existing_') === 0 && !empty($item['id'])) {
+                        // Update existing
+                        DefaultApparatus::where('id', $item['id'])->update([
+                            'name' => $item['name'],
+                            'quantity' => $item['quantity'],
+                        ]);
+                    } elseif (strpos($key, 'new_') === 0) {
+                        // Create new
+                        DefaultApparatus::create([
+                            'experiment_id' => $experiment->id,
+                            'name' => $item['name'],
+                            'quantity' => $item['quantity'],
+                        ]);
+                    }
+                }
+            }
+            
+            DB::commit();
+            return redirect()->route('lab_assistant.manage_experiments.index')
+                ->with('success', 'Experiment updated successfully!');
+                
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error updating experiment: ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Failed to update experiment. Please try again.');
+        }
+    }
+
+    public function manageExperimentsDestroy($id)
+    {
+        try {
+            $experiment = Experiment::findOrFail($id);
+            
+            // Check if experiment is being used in any lab requests
+            $usageCount = LabRequest::where('experiment_id', $id)->count();
+            
+            if ($usageCount > 0) {
+                return redirect()->back()
+                    ->with('error', "Cannot delete experiment. It is used in {$usageCount} lab request(s).");
+            }
+            
+            // Delete materials and apparatus (cascade)
+            $experiment->defaultmaterial()->delete();
+            $experiment->defaultapparatus()->delete();
+            
+            // Delete experiment
+            $experiment->delete();
+            
+            return redirect()->route('lab_assistant.manage_experiments.index')
+                ->with('success', 'Experiment deleted successfully!');
+                
+        } catch (\Exception $e) {
+            Log::error('Error deleting experiment: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Failed to delete experiment. Please try again.');
+        }
+    }
+
+    // AJAX API endpoints
+    public function getSubjectsByForm($formLevel)
+    {
+        // Convert number to "Form X" format
+        $formLevelString = is_numeric($formLevel) ? "Form {$formLevel}" : $formLevel;
+        
+        $subjects = Subject::where('form_level', $formLevelString)
+            ->orderBy('name')
+            ->get(['id', 'name', 'form_level']);
+        
+        return response()->json($subjects);
+    }
+
+    public function getTopicsBySubject($subjectId)
+    {
+        $topics = Topic::where('subject_id', $subjectId)
+            ->orderBy('name')
+            ->get(['id', 'name']);
+        
+        return response()->json($topics);
+    }
 }

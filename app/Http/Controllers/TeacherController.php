@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Mail\LabRequestNotification;
 use Illuminate\Support\Facades\Mail;
-
+use Carbon\Carbon;
 
 class TeacherController extends Controller
 {
@@ -560,6 +560,95 @@ public function submitRequest(Request $request)
             'endDate' => $validated['end_date'],
             'status' => $validated['status'] ?? null,
             'labNumber' => $validated['lab_number'] ?? null,
+        ]);
+    }
+    public function timetable(Request $request)
+    {
+        // Get week parameter (current, next, next2)
+        $weekParam = $request->get('week', 'current');
+        
+        // Calculate date range based on week parameter
+        $startDate = match($weekParam) {
+            'next' => now()->addWeek()->startOfWeek(),
+            'next2' => now()->addWeeks(2)->startOfWeek(),
+            default => now()->startOfWeek(),
+        };
+        
+        $endDate = $startDate->copy()->endOfWeek();
+
+        // Get all approved sessions for the week
+        $schedules = LabRequest::with(['subject', 'topic', 'experiment', 'user'])
+            ->where('status', 'approved')
+            ->whereBetween('approved_date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])
+            ->orderBy('approved_date')
+            ->orderBy('approved_time')
+            ->get();
+
+        // Process schedules to split into individual 30-minute segments
+        $processedSchedules = collect();
+        
+        foreach($schedules as $session) {
+            $startTime = Carbon::parse($session->approved_time);
+            $duration = $session->duration;
+            
+            // Calculate how many 30-minute slots this session occupies
+            $slotsNeeded = ceil($duration / 30);
+            
+            // Create individual segment for each 30-minute slot
+            for ($i = 0; $i < $slotsNeeded; $i++) {
+                $slotTime = $startTime->copy()->addMinutes($i * 30);
+                $segmentDuration = min(30, $duration - ($i * 30)); // Remaining duration or 30 min
+                
+                $segment = clone $session;
+                $segment->segment_time = $slotTime->format('H:i');
+                $segment->segment_date = $session->approved_date;
+                $segment->segment_duration = $segmentDuration;
+                $segment->segment_number = $i + 1;
+                $segment->total_segments = $slotsNeeded;
+                $segment->original_start_time = $startTime->format('H:i');
+                
+                $processedSchedules->push($segment);
+            }
+        }
+
+        // Group schedules by date for list view
+        $schedulesByDate = $schedules->groupBy(function($item) {
+            return Carbon::parse($item->approved_date)->format('Y-m-d');
+        });
+
+        // Get unique labs for filter
+        $labs = LabRequest::where('status', 'approved')
+            ->distinct()
+            ->pluck('lab_number')
+            ->sort()
+            ->values();
+
+        // Generate week days array
+        $weekDays = [];
+        for ($i = 0; $i < 7; $i++) {
+            $date = $startDate->copy()->addDays($i);
+            $weekDays[] = [
+                'dayName' => $date->format('D'),
+                'date' => $date->format('d M'),
+                'fullDate' => $date->format('Y-m-d'),
+                'isToday' => $date->isToday(),
+            ];
+        }
+
+        // Time slots (school hours)
+        $timeSlots = [
+            '08:00', '08:30', '09:00', '09:30', '10:00', '10:30',
+            '11:00', '11:30', '12:00', '12:30', '13:00', '13:30',
+            '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
+        ];
+
+        return view('teacher.timetable', [
+            'schedules' => $processedSchedules,
+            'schedulesByDate' => $schedulesByDate,
+            'labs' => $labs,
+            'weekDays' => $weekDays,
+            'timeSlots' => $timeSlots,
+            'currentWeek' => $weekParam,
         ]);
     }
 }
