@@ -2,7 +2,7 @@
     @vite('resources/css/lab-assistant.css')
 
     <div class="container no-shadow">
-        
+
         <div class="page-header" style="margin-bottom: 30px;">
             <div style="display: flex; flex-direction: column; gap: 5px;">
                 <a href="{{ route('lab_assistant.manage_experiments.index') }}" style="text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 600;">
@@ -29,7 +29,7 @@
                     <div class="card-title">📑 General Information</div>
                 </div>
                 <hr class="divider">
-                
+
                 <div style="padding: 10px 0;">
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
                         <div class="form-group">
@@ -73,7 +73,7 @@
                     </button>
                 </div>
                 <hr class="divider">
-                
+
                 <div id="materialsContainer" style="display: flex; flex-direction: column; gap: 15px;">
                     </div>
             </div>
@@ -113,7 +113,7 @@
             const container = document.getElementById('materialsContainer');
             const idx = materialIndex++;
             const div = document.createElement('div');
-            
+
             // Using standard styling for the row
             div.style.backgroundColor = '#f8fafc';
             div.style.padding = '15px';
@@ -134,7 +134,10 @@
                     <div class="form-group" style="margin-bottom:0;">
                         <label class="form-label" style="font-size:11px;">Unit</label>
                         <select name="materials[${idx}][unit]" class="form-control" required>
-                            <option value="g">g</option><option value="ml">ml</option><option value="mol">mol</option><option value="pcs">pcs</option>
+                            <option value="cm³">cm³</option>
+                            <option value="g">g</option>
+                            <option value="set">set</option>
+                            <option value="cm">cm</option>
                         </select>
                     </div>
                     <div class="form-group" style="margin-bottom:0;">
@@ -151,7 +154,7 @@
             const container = document.getElementById('apparatusContainer');
             const idx = apparatusIndex++;
             const div = document.createElement('div');
-            
+
             div.style.backgroundColor = '#f8fafc';
             div.style.padding = '15px';
             div.style.borderRadius = '8px';

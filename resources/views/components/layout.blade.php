@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>@yield('title', 'My App')</title>
+  <title>@yield('title', '🧪 LabCore')</title>
 
   <!-- change paths to suit your build (Vite/Mix/public) -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -34,10 +34,10 @@
             @guest
             <a href="{{ route('show.login') }}" class="nav-link">Login</a>
             <a href="{{ route('show.register') }}" class="nav-link">Register</a>
-              
+
             @endguest
-            
-            
+
+
           </div>
         </div>
       </div>

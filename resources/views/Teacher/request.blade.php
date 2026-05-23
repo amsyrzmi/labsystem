@@ -107,24 +107,28 @@
                     <label class="section-title">Lab Number</label>
                     <div class="radio-group" id="labNumberGroup">
                         <div class="radio-button">
-                            <input type="radio" name="lab_number" id="lab1" value="Lab 1" required>
-                            <label for="lab1">Lab 1</label>
+                            <input type="radio" name="lab_number" id="lab1" value="Science Lab 1" required>
+                            <label for="lab1">Science Lab 1</label>
                         </div>
                         <div class="radio-button">
-                            <input type="radio" name="lab_number" id="lab2" value="Lab 2" required>
-                            <label for="lab2">Lab 2</label>
+                            <input type="radio" name="lab_number" id="lab2" value="Science Lab 2" required>
+                            <label for="lab2">Science Lab 2</label>
                         </div>
                         <div class="radio-button">
-                            <input type="radio" name="lab_number" id="lab3" value="Lab 3" required>
-                            <label for="lab3">Lab 3</label>
+                            <input type="radio" name="lab_number" id="lab3" value="Science Lab 3" required>
+                            <label for="lab3">Science Lab 3</label>
                         </div>
                         <div class="radio-button">
-                            <input type="radio" name="lab_number" id="lab4" value="Lab 4" required>
-                            <label for="lab4">Lab 4</label>
+                            <input type="radio" name="lab_number" id="lab4" value="Chemistry Lab" required>
+                            <label for="lab4">Chemistry Lab</label>
                         </div>
                         <div class="radio-button">
-                            <input type="radio" name="lab_number" id="lab5" value="Lab 5" required>
-                            <label for="lab5">Lab 5</label>
+                            <input type="radio" name="lab_number" id="lab5" value="Physics Lab" required>
+                            <label for="lab5">Physics Lab</label>
+                        </div>
+                        <div class="radio-button">
+                            <input type="radio" name="lab_number" id="lab6" value="Biology Lab" required>
+                            <label for="lab6">Biology Lab</label>
                         </div>
                     </div>
                 </div>

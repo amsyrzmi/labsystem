@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use App\Models\LabRequest;
-use App\Models\DefaultMaterial;
-use App\Models\DefaultApparatus;
+use App\Models\Defaultmaterial;
+use App\Models\Defaultapparatus;
 use Illuminate\Support\Facades\DB;
 use App\Models\Subject;
 use App\Models\Topic;
@@ -34,7 +34,7 @@ class AdminController extends Controller
                 ->count(),
         ];
 
-        return view('admin.index', compact('stats'));
+        return view('Admin.index', compact('stats'));
     }
     public function manageUsersMain()
     {
@@ -46,7 +46,7 @@ class AdminController extends Controller
             'lab_assistants' => User::byRole('lab_assistant')->approved()->count(),
         ];
 
-        return view('admin.manageusers', compact('stats'));
+        return view('Admin.manageusers', compact('stats'));
     }
 
     public function manageUsers(Request $request)
@@ -81,7 +81,7 @@ class AdminController extends Controller
 
         $users = $query->orderBy('created_at', 'desc')->paginate(15);
 
-        return view('admin.users', compact('users', 'status', 'role', 'search'));
+        return view('Admin.users', compact('users', 'status', 'role', 'search'));
     }
 
     public function approveUser($id)
@@ -124,7 +124,7 @@ class AdminController extends Controller
     public function editUser($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.edit-user', compact('user'));
+        return view('Admin.edit-user', compact('user'));
     }
 
     public function sendPasswordReset($id)
@@ -158,7 +158,7 @@ class AdminController extends Controller
 
     public function createUser()
     {
-        return view('admin.create-user');
+        return view('Admin.create-user');
     }
 
     public function storeUser(Request $request)
@@ -219,7 +219,7 @@ class AdminController extends Controller
         // Get unique lab numbers for filter
         $labNumbers = LabRequest::distinct()->pluck('lab_number')->sort();
 
-        return view('admin.requests', compact('requests', 'status', 'labNumber', 'search', 'labNumbers'));
+        return view('Admin.requests', compact('requests', 'status', 'labNumber', 'search', 'labNumbers'));
     }
 
     /**
@@ -265,7 +265,7 @@ class AdminController extends Controller
         // Get unique lab numbers for filter
         $labNumbers = LabRequest::distinct()->pluck('lab_number')->sort();
 
-        return view('admin.history', compact('requests', 'status', 'labNumber', 'search', 'labNumbers'));
+        return view('Admin.history', compact('requests', 'status', 'labNumber', 'search', 'labNumbers'));
     }
 
     /**
@@ -279,18 +279,18 @@ class AdminController extends Controller
         $apparatuses = collect();
 
         if ($labRequest->experiment_id) {
-            $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+            $materials = Defaultmaterial::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity', 'unit','concentration')
                 ->orderBy('name')
                 ->get();
 
-            $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+            $apparatuses = Defaultapparatus::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity')
                 ->orderBy('name')
                 ->get();
         }
 
-        return view('admin.request-details', [
+        return view('Admin.request-details', [
             'request' => $labRequest,
             'materials' => $materials,
             'apparatuses' => $apparatuses,
@@ -397,12 +397,12 @@ class AdminController extends Controller
         // Get all subjects for filter grouped by form level
         $subjects = Subject::orderBy('form_level')->orderBy('name')->get();
         
-        return view('admin.manage_experiments.index', compact('experiments', 'subjects'));
+        return view('Admin.manage_experiments.index', compact('experiments', 'subjects'));
     }
 
     public function manageExperimentsCreate()
     {
-        return view('admin.manage_experiments.create');
+        return view('Admin.manage_experiments.create');
     }
 
     public function manageExperimentsStore(Request $request)
@@ -437,7 +437,7 @@ class AdminController extends Controller
             // Add materials
             if (!empty($validated['materials'])) {
                 foreach ($validated['materials'] as $material) {
-                    DefaultMaterial::create([
+                    Defaultmaterial::create([
                         'experiment_id' => $experiment->id,
                         'name' => $material['name'],
                         'quantity' => $material['quantity'],
@@ -450,7 +450,7 @@ class AdminController extends Controller
             // Add apparatus
             if (!empty($validated['apparatus'])) {
                 foreach ($validated['apparatus'] as $item) {
-                    DefaultApparatus::create([
+                    Defaultapparatus::create([
                         'experiment_id' => $experiment->id,
                         'name' => $item['name'],
                         'quantity' => $item['quantity'],
@@ -476,7 +476,7 @@ class AdminController extends Controller
         $experiment = Experiment::with(['topic.subject', 'defaultmaterial', 'defaultapparatus'])
             ->findOrFail($id);
         
-        return view('admin.manage_experiments.edit', compact('experiment'));
+        return view('Admin.manage_experiments.edit', compact('experiment'));
     }
 
     public function manageExperimentsUpdate(Request $request, $id)
@@ -518,7 +518,7 @@ class AdminController extends Controller
             if (!empty($validated['deleted_materials'])) {
                 $deletedMaterialIds = json_decode($validated['deleted_materials'], true);
                 if (is_array($deletedMaterialIds)) {
-                    DefaultMaterial::whereIn('id', $deletedMaterialIds)->delete();
+                    Defaultmaterial::whereIn('id', $deletedMaterialIds)->delete();
                 }
             }
             
@@ -526,7 +526,7 @@ class AdminController extends Controller
             if (!empty($validated['deleted_apparatus'])) {
                 $deletedApparatusIds = json_decode($validated['deleted_apparatus'], true);
                 if (is_array($deletedApparatusIds)) {
-                    DefaultApparatus::whereIn('id', $deletedApparatusIds)->delete();
+                    Defaultapparatus::whereIn('id', $deletedApparatusIds)->delete();
                 }
             }
             
@@ -536,7 +536,7 @@ class AdminController extends Controller
                     // Check if this is an existing material (starts with "existing_")
                     if (strpos($key, 'existing_') === 0 && !empty($material['id'])) {
                         // Update existing
-                        DefaultMaterial::where('id', $material['id'])->update([
+                        Defaultmaterial::where('id', $material['id'])->update([
                             'name' => $material['name'],
                             'quantity' => $material['quantity'],
                             'unit' => $material['unit'],
@@ -544,7 +544,7 @@ class AdminController extends Controller
                         ]);
                     } elseif (strpos($key, 'new_') === 0) {
                         // Create new
-                        DefaultMaterial::create([
+                        Defaultmaterial::create([
                             'experiment_id' => $experiment->id,
                             'name' => $material['name'],
                             'quantity' => $material['quantity'],
@@ -561,13 +561,13 @@ class AdminController extends Controller
                     // Check if this is an existing apparatus (starts with "existing_")
                     if (strpos($key, 'existing_') === 0 && !empty($item['id'])) {
                         // Update existing
-                        DefaultApparatus::where('id', $item['id'])->update([
+                        Defaultapparatus::where('id', $item['id'])->update([
                             'name' => $item['name'],
                             'quantity' => $item['quantity'],
                         ]);
                     } elseif (strpos($key, 'new_') === 0) {
                         // Create new
-                        DefaultApparatus::create([
+                        Defaultapparatus::create([
                             'experiment_id' => $experiment->id,
                             'name' => $item['name'],
                             'quantity' => $item['quantity'],

@@ -32,7 +32,7 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe 
 
 /* NAV */
 .nav{background:var(--nav-bg);border-bottom:1px solid rgba(15,23,42,0.04);position:sticky;top:0;z-index:50}
-.nav-row{max-width:var(--container-width);margin:0 auto;padding:.5rem var(--gutter);display:flex;align-items:center;gap:1rem}
+.nav-row{max-width:var(--container-width);margin:0 auto;padding:.5rem var(--gutter);display:flex;align-items:center;gap:1rem;flex-wrap: wrap;}
 
 /* Brand */
 .brand{font-weight:700;text-decoration:none;color:var(--accent);font-size:2rem}
@@ -43,7 +43,7 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe 
 .nav-toggle svg rect{fill:var(--text)}
 
 /* Menu (mobile first) */
-.nav-menu{width:100%;overflow:hidden;transition:max-height .28s ease;max-height:0;background:var(--nav-bg)}
+.nav-menu{width:100%;overflow:hidden;transition:max-height .28s ease;max-height:0;background:var(--nav-bg);}
 .nav-menu[data-open="true"]{max-height:420px}
 
 /* left links stacked on mobile */
@@ -101,14 +101,37 @@ html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe 
 
 
 /* Desktop: show inline and hide toggle */
-@media(min-width:768px){
-  .nav-toggle{display:none}
-  .nav-menu{display:flex;align-items:center;max-height:none;background:transparent;width:100}
-  .nav-left{display:flex;gap:.5rem;padding-left:1rem}
-  .nav-left .nav-link{padding:.4rem .6rem}
-  .nav-right{margin-left:auto;padding:0}
-}
+@media (min-width: 768px) {
+  .nav-toggle {
+    display: none;
+  }
+  
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    max-height: none;
+    background: transparent;
+    
+    /* CRITICAL: Use flex-grow, and DO NOT use just "100" */
+    width: auto; 
+    flex-grow: 1; 
+  }
 
+  .nav-left {
+    display: flex;
+    gap: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  .nav-left .nav-link {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .nav-right {
+    margin-left: auto; /* Now that the parent is wide, this will push items to the far right */
+    padding: 0;
+  }
+}
 /* layout */
 .main{max-width:var(--container-width);margin:2rem auto;padding:0 var(--gutter)}
 .footer{text-align:center;padding:1rem;color:var(--muted);font-size:.9rem}
@@ -258,7 +281,7 @@ color: white;
 .btn-next:hover, .btn-submit:hover {
 transform: translateY(-2px);
 background: var(--accent);
-box-shadow: #778DA9;
+box-shadow: 0 4px 12px var(--accent);
 }
 
 .btn-back {

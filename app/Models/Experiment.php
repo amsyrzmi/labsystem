@@ -12,17 +12,17 @@ class experiment extends Model
 
     public function topic() :BelongsTo
     {
-        return $this->belongsTo(topic::class);
+        return $this->belongsTo(Topic::class);
     }
 
     public function defaultmaterial() :HasMany
     {
-        return $this->hasMany(defaultmaterial::class);
+        return $this->hasMany(Defaultmaterial::class);
     }
 
     public function defaultapparatus() :HasMany
     {
-        return $this->hasMany(defaultapparatus::class);
+        return $this->hasMany(Defaultapparatus::class);
     }
     
 }

@@ -101,11 +101,11 @@ let selectedFormLevel = null;
 
 // Class mapping based on form level
 const classMapping = {
-    'form 1': ['1A', '1B', '1C'],
-    'form 2': ['2A', '2B', '2C'],
-    'form 3': ['3A', '3B', '3C'],
-    'form 4': ['4A', '4B', '4C'],
-    'form 5': ['5A', '5B', '5C']
+    'form 1': ['1A', '1B', '1C','1D','1G','1H','1I','1M','1J'],
+    'form 2': ['2A', '2B', '2C','2D','2G','2H','2I','2M','2J'],
+    'form 3': ['3A', '3B', '3C','3D','3G','3H','3I','3M','3J'],
+    'form 4': ['4A', '4B', '4C', '4C','4D','4G','4H','4I','4M','4J'],
+    'form 5': ['5A', '5B', '5C', '5C','5D','5G','5H','5I','5M','5J']
 };
 
 // Function to populate class options based on form level

@@ -5,7 +5,7 @@
         <form method="POST" action="{{ route('admin.manage_experiments.update', $experiment->id) }}">
             @csrf
             @method('PUT')
-            
+
             <input type="hidden" name="deleted_materials" id="deletedMaterials" value="">
             <input type="hidden" name="deleted_apparatus" id="deletedApparatus" value="">
 
@@ -34,7 +34,7 @@
                         <div class="form-group" style="background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
                             <label class="form-label" style="font-size: 11px; color: #64748b;">Subject & Level</label>
                             <div style="font-weight: 700; color: #334155;">
-                                {{ $experiment->topic->subject->name }} 
+                                {{ $experiment->topic->subject->name }}
                                 <span style="color: var(--accent);">— Form {{ $experiment->topic->subject->form_level }}</span>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                     <button type="button" onclick="addMaterial()" class="btn btn-view" style="font-size: 12px;">+ Add Material</button>
                 </div>
                 <hr class="divider">
-                
+
                 <div id="materialsContainer" style="display: flex; flex-direction: column; gap: 12px; padding: 10px 0;">
                     @forelse($experiment->defaultmaterial as $material)
                         <div class="item-row-box" id="material-existing-{{ $material->id }}">
@@ -80,7 +80,7 @@
                                 <div class="form-group" style="margin:0">
                                     <label class="form-label" style="font-size: 10px;">Unit</label>
                                     <select name="materials[existing_{{ $material->id }}][unit]" class="form-control">
-                                        @foreach(['g','kg','mg','cm³','ml','L','mol','pcs'] as $unit)
+                                        @foreach(['cm³', 'g', 'set', 'cm'] as $unit)
                                             <option value="{{ $unit }}" {{ $material->unit == $unit ? 'selected' : '' }}>{{ $unit }}</option>
                                         @endforeach
                                     </select>
@@ -159,7 +159,7 @@
                         <input type="number" name="materials[new_${index}][quantity]" class="form-control" step="0.01" required></div>
                     <div class="form-group" style="margin:0"><label class="form-label" style="font-size:10px">Unit</label>
                         <select name="materials[new_${index}][unit]" class="form-control">
-                            <option value="g">g</option><option value="ml">ml</option><option value="pcs">pcs</option>
+                            <option value="cm³">cm³</option><option value="g">g</option><option value="set">set</option><option value="cm">cm</option>
                         </select></div>
                     <div class="form-group" style="margin:0"><label class="form-label" style="font-size:10px">Conc.</label>
                         <input type="text" name="materials[new_${index}][concentration]" class="form-control"></div>

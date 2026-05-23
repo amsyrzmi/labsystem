@@ -6,7 +6,7 @@
   <!-- teacher-layout.blade.php (inside <head>) -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="check-availability-url" content="{{ route('teacher.check.availability') }}">
-  <title>@yield('title', 'My App')</title>
+  <title>@yield('title', '🧪 LabCore')</title>
 
   <!-- change paths to suit your build (Vite/Mix/public) -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -38,14 +38,14 @@
             <li role="none"><a role="menuitem" href="{{ route('teacher.requests.list') }}" class="nav-link {{ request()->routeIs('teacher.requests.list') ? 'active' : '' }}">Request</a></li>
             <li role="none"><a role="menuitem" href="{{ route('teacher.history') }}" class="nav-link {{ request()->routeIs('teacher.history') ? 'active' : '' }}">History</a></li>
             <li role="none">
-                <a role="menuitem" 
-                  href="{{ route('teacher.timetable') }}" 
+                <a role="menuitem"
+                  href="{{ route('teacher.timetable') }}"
                   class="nav-link {{ request()->routeIs('teacher.timetable') ? 'active' : '' }}">
                   Timetable
                 </a>
             </li>
           </ul>
-          
+
           @endauth
 
           <div class="nav-right">
@@ -58,10 +58,10 @@
             @guest
             <a href="{{ route('show.login') }}" class="nav-link">Login</a>
             <a href="{{ route('show.register') }}" class="nav-link">Register</a>
-              
+
             @endguest
-            
-            
+
+
           </div>
         </div>
       </div>

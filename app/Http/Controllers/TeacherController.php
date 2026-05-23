@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Topic;
 use App\Models\Experiment;
-use App\Models\DefaultMaterial;
-use App\Models\DefaultApparatus;
+use App\Models\Defaultmaterial;
+use App\Models\Defaultapparatus;
 use App\Models\LabRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +52,7 @@ class TeacherController extends Controller
             ->take(5)
             ->get();
         
-        return view('teacher.index', compact('stats', 'upcomingSessions', 'recentRequests'));
+        return view('Teacher.index', compact('stats', 'upcomingSessions', 'recentRequests'));
     }
 
     public function requests()
@@ -98,12 +98,12 @@ class TeacherController extends Controller
     {
         $experimentId = $request->get('experiment_id');
         
-        $materials = DefaultMaterial::where('experiment_id', $experimentId)
+        $materials = Defaultmaterial::where('experiment_id', $experimentId)
             ->select('id', 'name', 'quantity', 'unit')
             ->orderBy('name')
             ->get();
         
-        $apparatuses = DefaultApparatus::where('experiment_id', $experimentId)
+        $apparatuses = Defaultapparatus::where('experiment_id', $experimentId)
             ->select('id', 'name', 'quantity')
             ->orderBy('name')
             ->get();
@@ -368,12 +368,12 @@ public function submitRequest(Request $request)
         $apparatuses = collect();
 
         if ($labRequest->experiment_id) {
-            $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+            $materials = Defaultmaterial::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity', 'unit')
                 ->orderBy('name')
                 ->get();
 
-            $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+            $apparatuses = Defaultapparatus::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity')
                 ->orderBy('name')
                 ->get();
@@ -399,12 +399,12 @@ public function submitRequest(Request $request)
         $apparatuses = collect();
 
         if ($labRequest->experiment_id) {
-            $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+            $materials = Defaultmaterial::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity', 'unit')
                 ->orderBy('name')
                 ->get();
 
-            $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+            $apparatuses = Defaultapparatus::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity')
                 ->orderBy('name')
                 ->get();
@@ -473,12 +473,12 @@ public function submitRequest(Request $request)
         $apparatuses = collect();
 
         if ($labRequest->experiment_id) {
-            $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+            $materials = Defaultmaterial::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity', 'unit')
                 ->orderBy('name')
                 ->get();
 
-            $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+            $apparatuses = Defaultapparatus::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity')
                 ->orderBy('name')
                 ->get();
@@ -538,12 +538,12 @@ public function submitRequest(Request $request)
             $apparatuses = collect();
 
             if ($labRequest->experiment_id) {
-                $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+                $materials = Defaultmaterial::where('experiment_id', $labRequest->experiment_id)
                     ->select('id', 'name', 'quantity', 'unit')
                     ->orderBy('name')
                     ->get();
 
-                $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+                $apparatuses = Defaultapparatus::where('experiment_id', $labRequest->experiment_id)
                     ->select('id', 'name', 'quantity')
                     ->orderBy('name')
                     ->get();
@@ -644,7 +644,7 @@ public function submitRequest(Request $request)
             '14:00', '14:30', '15:00', '15:30', '16:00', '16:30',
         ];
 
-        return view('teacher.timetable', [
+        return view('Teacher.timetable', [
             'schedules' => $processedSchedules,
             'schedulesByDate' => $schedulesByDate,
             'labs' => $labs,

@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SubjectSeeder::class);
         $this->call(TopicSeeder::class);
         $this->call(ExperimentSeeder::class);
-        $this->call(defaultmaterialSeeder::class);
-        $this->call(defaultapparatusSeeder::class);
+        $this->call(DefaultmaterialSeeder::class);
+        $this->call(DefaultapparatusSeeder::class);
         $this->call(ReagentSeeder::class);
         $this->call(LabrequestSeeder::class);
     }

@@ -119,13 +119,40 @@
             @else
                 <ul class="materials-list">
                     @foreach($materials as $material)
+                        @php
+                            $totalRequired = $material->quantity * $numberOfGroups * $repetition;
+                            $availability = $materialAvailability[$material->id] ?? null;
+                        @endphp
                         <li>
-                            <span class="item-name">{{ $material->name }}</span>
-                            @if(!is_null($material->concentration))
-                                <span class="item-quantity">{{ $material->concentration }} mol/dm³ {{ $material->quantity }} {{ $material->unit }} x {{ $numberOfGroups }} x {{ $repetition }} = {{ $material->quantity * $numberOfGroups * $repetition }} {{ $material->unit }}</span>
+                            <div class="item-row">
+                                <span class="item-name">{{ $material->name }}</span>
+
+                            </div>
+                            
+                            @if($availability)
+                                <div class="availability-indicator {{ $availability['sufficient'] ? 'sufficient' : 'insufficient' }}">
+                                    @if($availability['sufficient'])
+                                        ✓ Available: {{ $availability['available'] }} {{ $material->unit }}
+                                    @else
+                                        ⚠️ Insufficient! Need: {{ $totalRequired }} {{ $material->unit }} | 
+                                        Available: {{ $availability['available'] }} {{ $material->unit }}
+                                    @endif
+                                </div>
                             @else
-                                <span class="item-quantity">{{ $material->quantity }} {{ $material->unit }} x {{ $numberOfGroups }} x {{ $repetition }} = {{ $material->quantity * $numberOfGroups * $repetition }} {{ $material->unit }}</span>
+                                <div class="availability-indicator not-tracked">
+                                    ℹ️ Not in inventory system
+                                </div>
                             @endif
+                                @if(!is_null($material->concentration))
+                                    <span class="item-quantity">
+                                        {{ $material->concentration }} mol/dm³ 
+                                        {{ $totalRequired }} {{ $material->unit }}
+                                    </span>
+                                @else
+                                    <span class="item-quantity">
+                                        {{ $totalRequired }} {{ $material->unit }}
+                                    </span>
+                                @endif
                         </li>
                     @endforeach
                 </ul>
@@ -355,9 +382,31 @@
             @else
                 <ul class="apparatus-list">
                     @foreach($apparatuses as $apparatus)
+                        @php
+                            $totalRequired = $apparatus->quantity * $numberOfGroups * $repetition;
+                            $availability = $apparatusAvailability[$apparatus->id] ?? null;
+                        @endphp
                         <li>
-                            <span class="item-name">{{ $apparatus->name }}</span>
-                            <span class="item-quantity">{{ $apparatus->quantity }} x {{ $numberOfGroups }} x {{ $repetition }} = {{ $apparatus->quantity * $numberOfGroups * $repetition }}</span>
+                            <div class="item-row">
+                                <span class="item-name">{{ $apparatus->name }}</span>
+                                
+                            </div>
+                            
+                            @if($availability)
+                                <div class="availability-indicator {{ $availability['sufficient'] ? 'sufficient' : 'insufficient' }}">
+                                    @if($availability['sufficient'])
+                                        ✓ Available: {{ $availability['available'] }}
+                                    @else
+                                        ⚠️ Insufficient! Need: {{ $totalRequired }} | 
+                                        Available: {{ $availability['available'] }}
+                                    @endif
+                                </div>
+                            @else
+                                <div class="availability-indicator not-tracked">
+                                    ℹ️ Not in inventory system
+                                </div>
+                            @endif
+                            <span class="item-quantity">{{ $totalRequired }}</span>
                         </li>
                     @endforeach
                 </ul>

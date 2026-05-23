@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>@yield('title', 'My App')</title>
+  <title>@yield('title', '🧪 LabCore')</title>
 
   <!-- change paths to suit your build (Vite/Mix/public) -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -36,8 +36,8 @@
             <li role="none"><a role="menuitem" href="{{ route('admin.history') }}" class="nav-link {{ request()->routeIs('admin.history') ? 'active' : '' }}">History</a></li>
             <li role="none"><a role="menuitem" href="{{ route('admin.users') }}" class="nav-link {{ request()->routeIs('admin.users') ? 'active' : '' }}">Manage Users</a></li>
             <li role="none">
-              <a role="menuitem" 
-                href="{{ route('admin.manage_experiments.index') }}" 
+              <a role="menuitem"
+                href="{{ route('admin.manage_experiments.index') }}"
                 class="nav-link {{ request()->routeIs('admin.manage_experiments.*') ? 'active' : '' }}">
                 Experiments
               </a>
@@ -55,10 +55,10 @@
             @guest
             <a href="{{ route('show.login') }}" class="nav-link">Login</a>
             <a href="{{ route('show.register') }}" class="nav-link">Register</a>
-              
+
             @endguest
-            
-            
+
+
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Defaultapparatus;
 
-class DefaultApparatusSeeder extends Seeder
+class DefaultapparatusSeeder extends Seeder
 {
     /**
      * Run the database seeds.

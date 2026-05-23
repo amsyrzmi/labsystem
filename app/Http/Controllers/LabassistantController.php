@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Topic;
 use App\Models\Experiment;
-use App\Models\DefaultMaterial;
-use App\Models\DefaultApparatus;
+use App\Models\Defaultmaterial;
+use App\Models\Defaultapparatus;
 use App\Models\LabRequest;
 use App\Models\Reagent;
+use App\Models\InventoryApparatus;
+use App\Models\InventoryMaterial;
+use App\Models\InventoryTransaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -62,7 +65,8 @@ class LabassistantController extends Controller
             ->toArray();
         
         // Add labs with no sessions
-        $allLabs = ['Lab 1', 'Lab 2', 'Lab 3', 'Lab 4']; // Adjust based on your labs
+        $allLabs = ['Science Lab 1', 'Science Lab 2', 'Science Lab 3', 'Chemistry Lab','Physics Lab','Biology Lab']; // Adjust based on your labs
+
         $existingLabs = array_column($labStatus, 'name');
         foreach ($allLabs as $lab) {
             if (!in_array($lab, $existingLabs)) {
@@ -206,16 +210,47 @@ class LabassistantController extends Controller
         $numberOfGroups = intdiv($numStudents, $groupSize);
         $repetition = (int)$labRequest->repetition;
 
+        // Inventory availability checks
+        $materialAvailability = [];
+        $apparatusAvailability = [];
+
         if ($labRequest->experiment_id) {
-            $materials = \App\Models\DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+            $materials = \App\Models\Defaultmaterial::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity', 'unit', 'concentration')
                 ->orderBy('name')
                 ->get();
 
-            $apparatuses = \App\Models\DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+            $apparatuses = \App\Models\Defaultapparatus::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity')
                 ->orderBy('name')
                 ->get();
+        }
+
+
+        // Check material availability
+        foreach ($materials as $material) {
+            $requiredQty = $material->quantity * $numberOfGroups * $repetition;
+            $inventory = InventoryMaterial::where('name', $material->name)->first();
+            
+            $materialAvailability[$material->id] = [
+                'required' => $requiredQty,
+                'available' => $inventory ? $inventory->quantity : 0,
+                'sufficient' => $inventory && $inventory->isSufficient($requiredQty),
+                'inventory_id' => $inventory->id ?? null,
+            ];
+        }
+
+        // Check apparatus availability
+        foreach ($apparatuses as $apparatus) {
+            $requiredQty = $apparatus->quantity * $numberOfGroups * $repetition;
+            $inventory = InventoryApparatus::where('name', $apparatus->name)->first();
+            
+            $apparatusAvailability[$apparatus->id] = [
+                'required' => $requiredQty,
+                'available' => $inventory ? $inventory->available_quantity : 0,
+                'sufficient' => $inventory && $inventory->isSufficient($requiredQty),
+                'inventory_id' => $inventory->id ?? null,
+            ];
         }
 
         // Get materials with concentration
@@ -255,6 +290,8 @@ class LabassistantController extends Controller
             'materialsWithConcentration' => $materialsWithConcentration,
             'reagentMatches' => $reagentMatches,
             'savedCalculations' => $savedCalculations,
+            'materialAvailability' => $materialAvailability,
+            'apparatusAvailability' => $apparatusAvailability,
         ]);
     }
 
@@ -281,7 +318,7 @@ class LabassistantController extends Controller
         $repetition = (int) $labRequest->repetition;
 
         foreach ($validated['calculations'] as $calc) {
-            $material = DefaultMaterial::findOrFail($calc['material_id']);
+            $material = Defaultmaterial::findOrFail($calc['material_id']);
             $reagent = Reagent::findOrFail($calc['reagent_id']);
             
             $totalQuantity = $material->quantity * $numberOfGroups * $repetition;
@@ -376,26 +413,253 @@ class LabassistantController extends Controller
             ])->withInput();
         }
 
-        $labRequest->update([
-            'status' => 'approved',
-            'approved_date' => $validated['approved_date'],
-            'approved_time' => $validated['approved_time'],
-            'duration' => $validated['duration'],
-            'approved_at' => now(),
-        ]);
-
-        // Send approval email
+        DB::beginTransaction();
         try {
-            if ($labRequest->user && $labRequest->user->email) {
-                Mail::to($labRequest->user->email)->send(new RequestApproved($labRequest));
+            // Update request status
+            $labRequest->update([
+                'status' => 'approved',
+                'approved_date' => $validated['approved_date'],
+                'approved_time' => $validated['approved_time'],
+                'duration' => $validated['duration'],
+                'approved_at' => now(),
+            ]);
+
+            // Deduct inventory
+            $this->deductInventory($labRequest);
+
+            DB::commit();
+
+            // Send approval email
+            try {
+                if ($labRequest->user && $labRequest->user->email) {
+                    Mail::to($labRequest->user->email)->send(new RequestApproved($labRequest));
+                }
+            } catch (\Exception $e) {
+                Log::error('Failed to send approval email: ' . $e->getMessage());
             }
+
+            return redirect()->route('lab_assistant.requests.list')
+                ->with('success', 'Request approved, inventory updated, and notification sent.');
+
         } catch (\Exception $e) {
-            Log::error('Failed to send approval email: ' . $e->getMessage());
-            // Continue execution even if email fails
+            DB::rollBack();
+            Log::error('Approval failed: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to approve request: ' . $e->getMessage());
+        }
+    }
+
+    private function deductInventory(LabRequest $labRequest)
+    {
+        $numStudents = (int) $labRequest->num_students;
+        $groupSize = (int) $labRequest->group_size;
+        $numberOfGroups = intdiv($numStudents, $groupSize);
+        $repetition = (int) $labRequest->repetition;
+
+        // Deduct materials (permanent)
+        $materials = Defaultmaterial::where('experiment_id', $labRequest->experiment_id)->get();
+        foreach ($materials as $material) {
+            $requiredQty = $material->quantity * $numberOfGroups * $repetition;
+            $inventory = InventoryMaterial::where('name', $material->name)->first();
+            
+            if ($inventory) {
+                $inventory->decrement('quantity', $requiredQty);
+                
+                // Create transaction record
+                InventoryTransaction::create([
+                    'lab_request_id' => $labRequest->id,
+                    'item_type' => 'material',
+                    'item_id' => $inventory->id,
+                    'item_name' => $inventory->name,
+                    'quantity' => $requiredQty,
+                    'unit' => $material->unit,
+                    'transaction_type' => 'deduct',
+                    'status' => 'completed',
+                    'completed_at' => now(),
+                ]);
+            }
         }
 
-        return redirect()->route('lab_assistant.requests.list')
-            ->with('success', 'Request approved, scheduled, and notification email sent.');
+        // Allocate apparatus (temporary)
+        $apparatuses = Defaultapparatus::where('experiment_id', $labRequest->experiment_id)->get();
+        foreach ($apparatuses as $apparatus) {
+            $requiredQty = $apparatus->quantity * $numberOfGroups * $repetition;
+            $inventory = InventoryApparatus::where('name', $apparatus->name)->first();
+            
+            if ($inventory) {
+                $inventory->decrement('available_quantity', $requiredQty);
+                
+                // Create transaction record
+                InventoryTransaction::create([
+                    'lab_request_id' => $labRequest->id,
+                    'item_type' => 'apparatus',
+                    'item_id' => $inventory->id,
+                    'item_name' => $inventory->name,
+                    'quantity' => $requiredQty,
+                    'transaction_type' => 'deduct',
+                    'status' => 'pending',
+                ]);
+            }
+        }
+    }
+
+    // ============================================
+    // INVENTORY MANAGEMENT METHODS - ADD THESE
+    // ============================================
+
+    public function inventoryIndex()
+    {
+        $lowStockMaterials = InventoryMaterial::whereColumn('quantity', '<=', 'minimum_quantity')->count();
+        $lowStockApparatus = InventoryApparatus::whereColumn('available_quantity', '<=', 'minimum_quantity')->count();
+        
+        $totalMaterials = InventoryMaterial::count();
+        $totalApparatus = InventoryApparatus::count();
+        
+        $recentTransactions = InventoryTransaction::with('labRequest')
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get();
+        
+        return view('Labassistant.inventory.index', compact(
+            'lowStockMaterials',
+            'lowStockApparatus',
+            'totalMaterials',
+            'totalApparatus',
+            'recentTransactions'
+        ));
+    }
+
+    public function inventoryMaterials(Request $request)
+    {
+        $query = InventoryMaterial::query();
+        
+        if ($request->has('search') && $request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        
+        if ($request->has('low_stock') && $request->low_stock) {
+            $query->whereColumn('quantity', '<=', 'minimum_quantity');
+        }
+        
+        $materials = $query->orderBy('name')->paginate(15);
+        
+        return view('Labassistant.inventory.materials', compact('materials'));
+    }
+
+    public function inventoryStoreMaterial(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'quantity' => 'required|numeric|min:0',
+            'unit' => 'required|string|max:50',
+            'concentration' => 'nullable|numeric|min:0',
+            'minimum_quantity' => 'required|numeric|min:0',
+            'notes' => 'nullable|string',
+        ]);
+        
+        InventoryMaterial::create($validated);
+        
+        return redirect()->back()->with('success', 'Material added successfully!');
+    }
+
+    public function inventoryUpdateMaterial(Request $request, $id)
+    {
+        $material = InventoryMaterial::findOrFail($id);
+        
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'quantity' => 'required|numeric|min:0',
+            'unit' => 'required|string|max:50',
+            'concentration' => 'nullable|numeric|min:0',
+            'minimum_quantity' => 'required|numeric|min:0',
+            'notes' => 'nullable|string',
+        ]);
+        
+        $material->update($validated);
+        
+        return redirect()->back()->with('success', 'Material updated successfully!');
+    }
+
+    public function inventoryDestroyMaterial($id)
+    {
+        $material = InventoryMaterial::findOrFail($id);
+        $material->delete();
+        
+        return redirect()->back()->with('success', 'Material deleted successfully!');
+    }
+
+    public function inventoryApparatus(Request $request)
+    {
+        $query = InventoryApparatus::query();
+        
+        if ($request->has('search') && $request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        
+        if ($request->has('low_stock') && $request->low_stock) {
+            $query->whereColumn('available_quantity', '<=', 'minimum_quantity');
+        }
+        
+        $apparatus = $query->orderBy('name')->paginate(15);
+        
+        return view('Labassistant.inventory.apparatus', compact('apparatus'));
+    }
+
+    public function inventoryStoreApparatus(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'total_quantity' => 'required|integer|min:0',
+            'minimum_quantity' => 'required|integer|min:0',
+            'notes' => 'nullable|string',
+        ]);
+        
+        $validated['available_quantity'] = $validated['total_quantity'];
+        
+        InventoryApparatus::create($validated);
+        
+        return redirect()->back()->with('success', 'Apparatus added successfully!');
+    }
+
+    public function inventoryUpdateApparatus(Request $request, $id)
+    {
+        $apparatus = InventoryApparatus::findOrFail($id);
+        
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'total_quantity' => 'required|integer|min:0',
+            'minimum_quantity' => 'required|integer|min:0',
+            'notes' => 'nullable|string',
+        ]);
+        
+        // Adjust available quantity proportionally
+        $difference = $validated['total_quantity'] - $apparatus->total_quantity;
+        $validated['available_quantity'] = max(0, $apparatus->available_quantity + $difference);
+        
+        $apparatus->update($validated);
+        
+        return redirect()->back()->with('success', 'Apparatus updated successfully!');
+    }
+
+    public function inventoryDestroyApparatus($id)
+    {
+        $apparatus = InventoryApparatus::findOrFail($id);
+        
+        if ($apparatus->available_quantity < $apparatus->total_quantity) {
+            return redirect()->back()->with('error', 'Cannot delete apparatus that is currently in use!');
+        }
+        
+        $apparatus->delete();
+        
+        return redirect()->back()->with('success', 'Apparatus deleted successfully!');
+    }
+
+    public function inventoryTransactions()
+    {
+        $transactions = InventoryTransaction::with(['labRequest.user', 'labRequest.experiment'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+        
+        return view('Labassistant.inventory.transactions', compact('transactions'));
     }
 
     public function timetable(Request $request)
@@ -497,12 +761,12 @@ class LabassistantController extends Controller
         $apparatuses = collect();
 
         if ($labRequest->experiment_id) {
-            $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+            $materials = Defaultmaterial::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity', 'unit')
                 ->orderBy('name')
                 ->get();
 
-            $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+            $apparatuses = Defaultapparatus::where('experiment_id', $labRequest->experiment_id)
                 ->select('id', 'name', 'quantity')
                 ->orderBy('name')
                 ->get();
@@ -560,12 +824,12 @@ class LabassistantController extends Controller
             $apparatuses = collect();
 
             if ($labRequest->experiment_id) {
-                $materials = DefaultMaterial::where('experiment_id', $labRequest->experiment_id)
+                $materials = Defaultmaterial::where('experiment_id', $labRequest->experiment_id)
                     ->select('id', 'name', 'quantity', 'unit')
                     ->orderBy('name')
                     ->get();
 
-                $apparatuses = DefaultApparatus::where('experiment_id', $labRequest->experiment_id)
+                $apparatuses = Defaultapparatus::where('experiment_id', $labRequest->experiment_id)
                     ->select('id', 'name', 'quantity')
                     ->orderBy('name')
                     ->get();
@@ -662,7 +926,7 @@ class LabassistantController extends Controller
             // Add materials
             if (!empty($validated['materials'])) {
                 foreach ($validated['materials'] as $material) {
-                    DefaultMaterial::create([
+                    Defaultmaterial::create([
                         'experiment_id' => $experiment->id,
                         'name' => $material['name'],
                         'quantity' => $material['quantity'],
@@ -675,7 +939,7 @@ class LabassistantController extends Controller
             // Add apparatus
             if (!empty($validated['apparatus'])) {
                 foreach ($validated['apparatus'] as $item) {
-                    DefaultApparatus::create([
+                    Defaultapparatus::create([
                         'experiment_id' => $experiment->id,
                         'name' => $item['name'],
                         'quantity' => $item['quantity'],
@@ -743,7 +1007,7 @@ class LabassistantController extends Controller
             if (!empty($validated['deleted_materials'])) {
                 $deletedMaterialIds = json_decode($validated['deleted_materials'], true);
                 if (is_array($deletedMaterialIds)) {
-                    DefaultMaterial::whereIn('id', $deletedMaterialIds)->delete();
+                    Defaultmaterial::whereIn('id', $deletedMaterialIds)->delete();
                 }
             }
             
@@ -751,7 +1015,7 @@ class LabassistantController extends Controller
             if (!empty($validated['deleted_apparatus'])) {
                 $deletedApparatusIds = json_decode($validated['deleted_apparatus'], true);
                 if (is_array($deletedApparatusIds)) {
-                    DefaultApparatus::whereIn('id', $deletedApparatusIds)->delete();
+                    Defaultapparatus::whereIn('id', $deletedApparatusIds)->delete();
                 }
             }
             
@@ -761,7 +1025,7 @@ class LabassistantController extends Controller
                     // Check if this is an existing material (starts with "existing_")
                     if (strpos($key, 'existing_') === 0 && !empty($material['id'])) {
                         // Update existing
-                        DefaultMaterial::where('id', $material['id'])->update([
+                        Defaultmaterial::where('id', $material['id'])->update([
                             'name' => $material['name'],
                             'quantity' => $material['quantity'],
                             'unit' => $material['unit'],
@@ -769,7 +1033,7 @@ class LabassistantController extends Controller
                         ]);
                     } elseif (strpos($key, 'new_') === 0) {
                         // Create new
-                        DefaultMaterial::create([
+                        Defaultmaterial::create([
                             'experiment_id' => $experiment->id,
                             'name' => $material['name'],
                             'quantity' => $material['quantity'],
@@ -786,13 +1050,13 @@ class LabassistantController extends Controller
                     // Check if this is an existing apparatus (starts with "existing_")
                     if (strpos($key, 'existing_') === 0 && !empty($item['id'])) {
                         // Update existing
-                        DefaultApparatus::where('id', $item['id'])->update([
+                        Defaultapparatus::where('id', $item['id'])->update([
                             'name' => $item['name'],
                             'quantity' => $item['quantity'],
                         ]);
                     } elseif (strpos($key, 'new_') === 0) {
                         // Create new
-                        DefaultApparatus::create([
+                        Defaultapparatus::create([
                             'experiment_id' => $experiment->id,
                             'name' => $item['name'],
                             'quantity' => $item['quantity'],

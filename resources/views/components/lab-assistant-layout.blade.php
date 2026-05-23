@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>@yield('title', 'My App')</title>
+  <title>@yield('title', '🧪 LabCore')</title>
 
   <!-- change paths to suit your build (Vite/Mix/public) -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -32,38 +32,45 @@
           @auth
       <ul class="nav-left" role="menubar" aria-label="Primary">
           <li role="none">
-              <a role="menuitem" 
-                href="{{ route('lab_assistant.index') }}" 
+              <a role="menuitem"
+                href="{{ route('lab_assistant.index') }}"
                 class="nav-link {{ request()->routeIs('lab_assistant.index') ? 'active' : '' }}">
                 Home
               </a>
           </li>
           <li role="none">
-              <a role="menuitem" 
-                href="{{ route('lab_assistant.requests.list') }}" 
+              <a role="menuitem"
+                href="{{ route('lab_assistant.requests.list') }}"
                 class="nav-link {{ request()->routeIs('lab_assistant.requests.*') ? 'active' : '' }}">
                 Requests
               </a>
           </li>
           <li role="none">
-              <a role="menuitem" 
-                href="{{ route('lab_assistant.timetable') }}" 
+              <a role="menuitem"
+                href="{{ route('lab_assistant.timetable') }}"
                 class="nav-link {{ request()->routeIs('lab_assistant.timetable') ? 'active' : '' }}">
                 Timetable
               </a>
           </li>
           <li role="none">
-            <a role="menuitem" 
-              href="{{ route('lab_assistant.manage_experiments.index') }}" 
+            <a role="menuitem"
+              href="{{ route('lab_assistant.manage_experiments.index') }}"
               class="nav-link {{ request()->routeIs('lab_assistant.manage_experiments.*') ? 'active' : '' }}">
               Experiments
             </a>
           </li>
           <li role="none">
-              <a role="menuitem" 
-                href="{{ route('lab_assistant.history') }}" 
+              <a role="menuitem"
+                href="{{ route('lab_assistant.history') }}"
                 class="nav-link {{ request()->routeIs('lab_assistant.history') ? 'active' : '' }}">
                 History
+              </a>
+          </li>
+          <li role="none">
+              <a role="menuitem"
+                href="{{ route('lab_assistant.inventory.index') }}"
+                class="nav-link {{ request()->routeIs('lab_assistant.inventory.*') ? 'active' : '' }}">
+                Inventory
               </a>
           </li>
       </ul>
@@ -79,10 +86,10 @@
             @guest
             <a href="{{ route('show.login') }}" class="nav-link">Login</a>
             <a href="{{ route('show.register') }}" class="nav-link">Register</a>
-              
+
             @endguest
-            
-            
+
+
           </div>
         </div>
       </div>

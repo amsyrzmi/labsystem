@@ -13,12 +13,12 @@ class topic extends Model
 
     public function subject() :BelongsTo
     {
-        return $this->belongsTo(subject::class);
+        return $this->belongsTo(Subject::class);
     }
 
     public function experiments() :HasMany
     {
-        return $this->hasMany(experiment::class);
+        return $this->hasMany(Experiment::class);
     }
 
 }

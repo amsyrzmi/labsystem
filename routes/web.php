@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
     //! Role lab assistant
     Route::middleware('role:lab_assistant')->group(function () {
         Route::get('/lab-assistant', [LabassistantController::class, 'index'])->name('lab_assistant.index');
-    
+
         Route::get('/lab-assistant/requests', [LabassistantController::class, 'listAllRequests'])->name('lab_assistant.requests.list');
         Route::get('/lab-assistant/history', [LabassistantController::class, 'listAllHistory'])->name('lab_assistant.history');
         Route::get('/lab-assistant/requests/{id}', [LabassistantController::class, 'requestDetails'])->name('lab_assistant.requests.details');
@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
         
         Route::post('/lab-assistant/requests/{id}/reject', [LabassistantController::class, 'rejectRequest'])->name('lab_assistant.requests.reject');
         
-       //? Timetable
+    //? Timetable
         Route::get('/lab-assistant/timetable', [LabassistantController::class, 'timetable'])->name('lab_assistant.timetable');
 
         //? Print routes
@@ -116,6 +116,27 @@ Route::middleware('auth')->group(function () {
         //? AJAX endpoints for dynamic dropdowns
         Route::get('/lab-assistant/api/subjects/{formLevel}', [LabassistantController::class, 'getSubjectsByForm'])->name('lab_assistant.api.subjects');
         Route::get('/lab-assistant/api/topics/{subjectId}', [LabassistantController::class, 'getTopicsBySubject'])->name('lab_assistant.api.topics');
+
+        //? NEW: Inventory Management Routes
+        Route::prefix('lab-assistant/inventory')->name('lab_assistant.inventory.')->group(function () {
+            // Dashboard
+            Route::get('/', [LabassistantController::class, 'inventoryIndex'])->name('index');
+            
+            // Materials Management
+            Route::get('/materials', [LabassistantController::class, 'inventoryMaterials'])->name('materials');
+            Route::post('/materials', [LabassistantController::class, 'inventoryStoreMaterial'])->name('materials.store');
+            Route::put('/materials/{id}', [LabassistantController::class, 'inventoryUpdateMaterial'])->name('materials.update');
+            Route::delete('/materials/{id}', [LabassistantController::class, 'inventoryDestroyMaterial'])->name('materials.destroy');
+            
+            // Apparatus Management
+            Route::get('/apparatus', [LabassistantController::class, 'inventoryApparatus'])->name('apparatus');
+            Route::post('/apparatus', [LabassistantController::class, 'inventoryStoreApparatus'])->name('apparatus.store');
+            Route::put('/apparatus/{id}', [LabassistantController::class, 'inventoryUpdateApparatus'])->name('apparatus.update');
+            Route::delete('/apparatus/{id}', [LabassistantController::class, 'inventoryDestroyApparatus'])->name('apparatus.destroy');
+            
+            // Transactions & History
+            Route::get('/transactions', [LabassistantController::class, 'inventoryTransactions'])->name('transactions');
+        });
     });
 
     
